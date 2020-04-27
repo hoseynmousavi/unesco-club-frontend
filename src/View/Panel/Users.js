@@ -1,8 +1,6 @@
 import React, {PureComponent} from "react"
 import api from "../../Functions/api"
 import {ClipLoader} from "react-spinners"
-import Material from "../Components/Material"
-import Arrow from "../../Media/Svgs/Arrow"
 import UserItem from "./UserItem"
 
 class Users extends PureComponent

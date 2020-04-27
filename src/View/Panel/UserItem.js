@@ -2,8 +2,10 @@ import React, {PureComponent} from "react"
 import Arrow from "../../Media/Svgs/Arrow"
 import Material from "../Components/Material"
 import TickSvg from "../../Media/Svgs/TickSvg"
-import api from "../../Functions/api"
+import api, {REST_URL} from "../../Functions/api"
 import {NotificationManager} from "react-notifications"
+import Profile from "../../Media/Svgs/Profile"
+import numberCorrection from "../../Helpers/numberCorrection"
 
 class UserItem extends PureComponent
 {
@@ -60,7 +62,14 @@ class UserItem extends PureComponent
         return (
             <div className={`panel-users-item-cont ${is_deleted ? "deleted" : ""}`}>
                 <div className="panel-users-item">
-                    <Material className="panel-users-item-name" onClick={this.toggleOpen}>{user.name}</Material>
+                    <Material className="panel-users-item-name" onClick={this.toggleOpen}>
+                        {user.avatar ?
+                            <img src={REST_URL + user.avatar} className="panel-users-item-img" alt={user.name}/>
+                            :
+                            <Profile className="panel-users-item-img"/>
+                        }
+                        <div>{user.name}</div>
+                    </Material>
                     <div className="panel-users-item-svg-cont">
                         <button className="panel-users-item-remove" onClick={this.removeItem}>حذف</button>
                         {
@@ -104,7 +113,7 @@ class UserItem extends PureComponent
                                 سن
                             </div>
                             <div className="panel-users-item-detail-row-value">
-                                {user.birth_date_year}
+                                {parseInt(numberCorrection(new Date().toLocaleDateString("fa-ir").slice(0, 4))) - parseInt(user.birth_date_year)}
                             </div>
                         </div>
                     }

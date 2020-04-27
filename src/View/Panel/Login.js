@@ -61,7 +61,7 @@ class Login extends PureComponent
     {
         const {loading} = this.state
         return (
-            <div className="sign-up-page-cont">
+            <div className="sign-up-page-cont admin">
 
                 {
                     loading &&
@@ -70,7 +70,7 @@ class Login extends PureComponent
                     </div>
                 }
 
-                <div className="sign-up-page-form">
+                <div className="sign-up-page-form admin">
                     <div className="sign-up-page-title">ورود</div>
                     <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="username" backgroundColor="white" maxLength={11} label={<span>نام کاربری</span>} getValue={this.setValue}/>
                     <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="password" type="password" backgroundColor="white" maxLength={50} label={<span>رمز عبور</span>} getValue={this.setValue}/>

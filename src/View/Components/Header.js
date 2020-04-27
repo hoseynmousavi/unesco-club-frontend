@@ -145,6 +145,7 @@ class Header extends PureComponent
                     <NavLink to="/documents" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پرونده‌ها</Material></NavLink>
                     <NavLink to="/users" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">فعالین</Material></NavLink>
                     <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
+                    <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
                 </div>
 
                 <div className="header-section show-desktop">

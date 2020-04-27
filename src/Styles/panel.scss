@@ -146,6 +146,17 @@
   padding: 15px;
   text-align: right;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.panel-users-item-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-left: 15px;
+  border-radius: 50%;
+  fill: var(--post-like-comment-color);
 }
 
 .panel-users-item-svg-cont {
