@@ -1,7 +1,7 @@
 @import "variables";
 
 .sign-up-page-cont {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   background-color: var(--primary-color);
 }
 
@@ -124,6 +124,7 @@
 
 .sign-up-page-avatar-cont-material {
   margin: 15px 0 25px 0;
+  border-radius: 5px;
 }
 
 .sign-up-page-avatar-cont {
@@ -172,7 +173,7 @@
   left: 0;
   right: 0;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,4 +183,9 @@
   background-color: var(--login-page-background-color);
   padding: 20px 30px;
   color: var(--secondary-color);
+  border-radius: 5px;
+
+  &.loading {
+    padding: 25px 30px 20px 30px;
+  }
 }

@@ -21,6 +21,11 @@ class SignUpPage extends PureComponent
         }
     }
 
+    componentDidMount()
+    {
+        window.scroll({top: 0})
+    }
+
     setLanguage(familiarity_with_language)
     {
         this.setState({...this.state, familiarity_with_language})
@@ -142,7 +147,7 @@ class SignUpPage extends PureComponent
                 <div className="sign-up-page-form">
                     <div className="sign-up-page-title">ثبت نام</div>
                     <div className="sign-up-page-section">مشخصات فردی</div>
-                    <Material className="sign-up-page-avatar-cont-material">
+                    <Material className="sign-up-page-avatar-cont-material" backgroundColor="var(--transparent-second)">
                         <label className="sign-up-page-avatar-cont">
                             {
                                 selectedImagePreview ?
@@ -217,7 +222,7 @@ class SignUpPage extends PureComponent
                     <MaterialInput className="sign-up-page-input" name="experience" backgroundColor="white" label="سابقه فعالیت" getValue={this.setValue}/>
                     <MaterialInput className="sign-up-page-input" name="current_organ" backgroundColor="white" label="مجموعه درحال فعالیت" getValue={this.setValue}/>
                     <MaterialInput className="sign-up-page-input" name="description" backgroundColor="white" label={<span>توضیحات <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
-                    <Material className="sign-up-page-submit" onClick={this.submit}>ثبت</Material>
+                    <Material className="sign-up-page-submit" backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
                 </div>
             </div>
         )

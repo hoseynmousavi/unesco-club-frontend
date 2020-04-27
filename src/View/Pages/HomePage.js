@@ -5,8 +5,8 @@ class HomePage extends PureComponent
     render()
     {
         return (
-            <div>
-                Home page
+            <div className="home-page-cont">
+                به صفحه اصلی خوش آمدید!
             </div>
         )
     }

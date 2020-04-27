@@ -1,9 +1,13 @@
 @import "css-variables.css";
+@import "header";
+@import "home-page";
 @import "sign-up";
 @import "Material.css";
 @import "MaterialInput.css";
 @import "hamburger";
 @import "my-slider";
+@import "not-found";
+@import "panel";
 @import "fluent";
 @import "~react-notifications/lib/notifications.css";
 
@@ -49,7 +53,8 @@ input[type=number]::-webkit-outer-spin-button {
 .main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  padding-top: 80px;
+  min-height: calc(100vh - 80px);
 }
 
 ::-webkit-scrollbar {

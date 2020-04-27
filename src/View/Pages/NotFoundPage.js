@@ -5,8 +5,8 @@ class NotFoundPage extends PureComponent
     render()
     {
         return (
-            <div>
-                404
+            <div className="not-found-page-cont">
+                صفحه مورد نظر پیدا نشد!
             </div>
         )
     }
