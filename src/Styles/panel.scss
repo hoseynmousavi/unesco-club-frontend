@@ -452,7 +452,16 @@
 }
 
 .panel-select-show-categories {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
 
+.panel-select-show-categories-none {
+  font-size: $small-font-size;
+  color: var(--text-light-color);
+  padding: 6px 0;
 }
 
 .panel-select-show-categories-item {
@@ -462,7 +471,7 @@
   color: var(--background-color);
   font-size: $regular-font-size;
   display: inline-block;
-  margin: 0 5px 15px 5px;
+  margin: 2px;
   cursor: pointer;
 }
 
@@ -509,7 +518,7 @@
 
 .panel-select-all-categories-item {
   font-size: $regular-font-size;
-  padding: 6px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border-color);
   cursor: pointer;
 }
@@ -518,7 +527,8 @@
   position: absolute;
   left: 15px;
   width: 20px;
-  top: 5px;
+  top: 10px;
+  fill: var(--success-color);
 }
 
 .panel-select-all-categories-btn {

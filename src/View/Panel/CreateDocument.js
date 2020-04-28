@@ -23,6 +23,7 @@ class CreateDocument extends PureComponent
             selectedCategories: [],
             imageModal: false,
             videoModal: false,
+            loadingPercent: 0,
         }
 
         this.pictures = []
@@ -131,33 +132,36 @@ class CreateDocument extends PureComponent
         {
             if (title)
             {
-                let form = new FormData()
-                form.append("title", title)
-                selectedCategories.length > 0 && form.append("categories", JSON.stringify(selectedCategories))
-                summary && form.append("summary", summary)
-                description && form.append("description", description)
-                location && form.append("location", location)
-                videos.forEach((video, index) =>
+                this.setState({...this.state, modalLoading: true, loadingPercent: 0}, () =>
                 {
-                    form.append("film" + index, video.file)
-                    form.append("film" + index, video.description)
-                })
-                compressImage(thumbnail).then(thumb =>
-                {
-                    thumb && form.append("thumbnail", thumb)
-                    if (pictures.length > 0)
+                    let form = new FormData()
+                    form.append("title", title)
+                    selectedCategories.length > 0 && form.append("categories", JSON.stringify(selectedCategories))
+                    summary && form.append("summary", summary)
+                    description && form.append("description", description)
+                    location && form.append("location", location)
+                    videos.forEach((video, index) =>
                     {
-                        pictures.forEach((pic, index) =>
+                        form.append("film" + index, video.file)
+                        form.append("film" + index, video.description)
+                    })
+                    compressImage(thumbnail).then(thumb =>
+                    {
+                        thumb && form.append("thumbnail", thumb)
+                        if (pictures.length > 0)
                         {
-                            compressImage(pic.file).then(image =>
+                            pictures.forEach((pic, index) =>
                             {
-                                form.append("picture" + index, image)
-                                form.append("picture" + index, pic.description)
-                                if (index === pictures.length - 1) this.send(form)
+                                compressImage(pic.file).then(image =>
+                                {
+                                    form.append("picture" + index, image)
+                                    form.append("picture" + index, pic.description)
+                                    if (index === pictures.length - 1) this.send(form)
+                                })
                             })
-                        })
-                    }
-                    else this.send(form)
+                        }
+                        else this.send(form)
+                    })
                 })
             }
             else NotificationManager.error("عنوان پرونده را وارد کنید!")
@@ -166,7 +170,7 @@ class CreateDocument extends PureComponent
 
     send(form)
     {
-        api.post("document", form)
+        api.post("document", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
             .then((document) =>
             {
                 const {addDocument, toggleModal, categories} = this.props
@@ -181,7 +185,7 @@ class CreateDocument extends PureComponent
                 addDocument(newDocument)
                 toggleModal()
             })
-            .catch(() => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!"))
+            .catch(() => this.setState({...this.state, modalLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
     }
 
     toggleCategories = () => this.setState({...this.state, categoryModal: !this.state.categoryModal})
@@ -196,155 +200,162 @@ class CreateDocument extends PureComponent
 
     render()
     {
-        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview} = this.state
+        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent} = this.state
         const {toggleModal, categories} = this.props
         return (
-            <div className="panel-add-item-back" onClick={modalLoading ? null : categoryModal ? this.toggleCategories : imageModal ? this.toggleImageModal : videoModal ? this.toggleVideoModal : toggleModal}>
-                <div className="panel-add-item-model-cont static" onClick={e => e.stopPropagation()}>
-                    <div className="sign-up-page-title">ایجاد پرونده</div>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
+            <React.Fragment>
+                <div className="panel-add-item-back" onClick={modalLoading ? null : toggleModal}>
+                    <div className="panel-add-item-model-cont static" onClick={e => e.stopPropagation()}>
+                        <div className="sign-up-page-title">ایجاد پرونده</div>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
+                        <MaterialInput isTextArea={true} className="sign-up-page-area" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
 
-                    <Material className="panel-select-categories" onClick={this.toggleCategories}>انتخاب دسته‌بندی</Material>
-                    {
-                        selectedCategories.length > 0 &&
+                        <Material className="panel-select-categories" onClick={this.toggleCategories}>افزودن دسته‌بندی</Material>
+
                         <div className="panel-select-show-categories">
                             {
-                                selectedCategories.map(cat =>
-                                    <Material key={cat} className="panel-select-show-categories-item" onClick={() => this.selectCategory(cat)}>
-                                        {categories[cat].name}
-                                        <span> </span>
-                                        <span>✕</span>
-                                    </Material>,
-                                )
-                            }
-                        </div>
-                    }
-
-                    {
-                        categoryModal &&
-                        <React.Fragment>
-                            <div className="panel-select-all-categories-back" onClick={this.toggleCategories}/>
-                            <div className="panel-select-all-categories">
-                                <div className="panel-select-all-categories-scroll">
-                                    {
-                                        Object.values(categories).map(category =>
-                                            <Material key={category._id} className="panel-select-all-categories-item" onClick={() => this.selectCategory(category._id)}>
-                                                {category.name}
-                                                {selectedCategories.indexOf(category._id) !== -1 && <TickSvg className="panel-select-all-categories-item-select"/>}
-                                            </Material>,
-                                        )
-                                    }
-                                </div>
-                                <Material className="panel-select-all-categories-btn" onClick={this.toggleCategories}>ثبت</Material>
-                            </div>
-                        </React.Fragment>
-                    }
-
-                    <Material className="panel-add-item-thumb-cont">
-                        <label className="panel-add-item-thumb">
-                            {
-                                thumbnailPreview ?
-                                    <img className="panel-add-item-thumb-file" src={thumbnailPreview} alt=""/>
+                                selectedCategories.length > 0 ?
+                                    selectedCategories.map(cat =>
+                                        <Material key={cat} className="panel-select-show-categories-item" onClick={() => this.selectCategory(cat)}>
+                                            {categories[cat].name}
+                                            <span> </span>
+                                            <span>✕</span>
+                                        </Material>,
+                                    )
                                     :
-                                    <ImageSvg className="panel-add-item-pic-svg image"/>
-                            }
-                            <input type="file" hidden accept="image/*" onChange={this.selectThumbnail}/>
-                        </label>
-                    </Material>
-
-                    <Material onClick={this.toggleImageModal}>
-                        <label className="panel-add-item-pic">
-                            <CameraSvg className="panel-add-item-pic-svg"/>
-                        </label>
-                    </Material>
-                    {
-                        picturePreviews.length > 0 &&
-                        <div className="panel-add-item-show-pics">
-                            {
-                                picturePreviews.map((item, index) =>
-                                    <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removePicture(index)}>
-                                        <img src={item} className="panel-add-item-show-pics-item" alt=""/>
-                                        <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
-                                    </Material>,
-                                )
+                                    <div className="panel-select-show-categories-none">بدون دسته‌بندی</div>
                             }
                         </div>
-                    }
 
-                    {
-                        imageModal &&
-                        <React.Fragment>
-                            <div className="panel-select-all-categories-back" onClick={this.toggleImageModal}/>
-                            <div className="panel-select-all-categories center">
-                                <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
-                                <Material className="panel-add-item-pic-cont">
-                                    <label className="panel-add-item-pic">
-                                        {
-                                            tempImagePreview ?
-                                                <img src={tempImagePreview} className="panel-add-item-temp-pic" alt=""/>
-                                                :
-                                                <CameraSvg className="panel-add-item-pic-svg"/>
-                                        }
-                                        <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
-                                    </label>
-                                </Material>
-                                <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
+
+                        <Material className="panel-add-item-thumb-cont">
+                            <label className="panel-add-item-thumb">
+                                {
+                                    thumbnailPreview ?
+                                        <img className="panel-add-item-thumb-file" src={thumbnailPreview} alt=""/>
+                                        :
+                                        <ImageSvg className="panel-add-item-pic-svg image"/>
+                                }
+                                <input type="file" hidden accept="image/*" onChange={this.selectThumbnail}/>
+                            </label>
+                        </Material>
+
+                        <Material onClick={this.toggleImageModal}>
+                            <label className="panel-add-item-pic">
+                                <CameraSvg className="panel-add-item-pic-svg"/>
+                            </label>
+                        </Material>
+                        {
+                            picturePreviews.length > 0 &&
+                            <div className="panel-add-item-show-pics">
+                                {
+                                    picturePreviews.map((item, index) =>
+                                        <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removePicture(index)}>
+                                            <img src={item} className="panel-add-item-show-pics-item" alt=""/>
+                                            <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
+                                        </Material>,
+                                    )
+                                }
                             </div>
-                        </React.Fragment>
-                    }
+                        }
 
 
-                    <Material className="panel-add-item-video" onClick={this.toggleVideoModal}>
-                        <label className="panel-add-item-pic">
-                            <VideoSvg className="panel-add-item-video-svg"/>
-                        </label>
-                    </Material>
-                    {
-                        videoPreviews.length > 0 &&
-                        <div className="panel-add-item-show-pics">
-                            {
-                                videoPreviews.map((item, index) =>
-                                    <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(index)}>
-                                        <video preload="none" className="panel-add-item-show-pics-item" controls controlsList="nodownload">
-                                            <source src={item}/>
-                                        </video>
-                                        <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
-                                    </Material>,
-                                )
-                            }
-                        </div>
-                    }
-
-                    {
-                        videoModal &&
-                        <React.Fragment>
-                            <div className="panel-select-all-categories-back" onClick={this.toggleVideoModal}/>
-                            <div className="panel-select-all-categories center">
-                                <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
-                                <Material className="panel-add-item-pic-cont">
-                                    <label className="panel-add-item-pic">
-                                        {
-                                            tempImagePreview ?
-                                                <video preload="none" className="panel-add-item-temp-pic" controls controlsList="nodownload">
-                                                    <source src={tempImagePreview}/>
-                                                </video>
-                                                :
-                                                <VideoSvg className="panel-add-item-pic-svg"/>
-                                        }
-                                        <input type="file" hidden accept="video/*" onChange={this.selectVideo}/>
-                                    </label>
-                                </Material>
-                                <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectVideo : null}>ثبت</Material>
+                        <Material className="panel-add-item-video" onClick={this.toggleVideoModal}>
+                            <label className="panel-add-item-pic">
+                                <VideoSvg className="panel-add-item-video-svg"/>
+                            </label>
+                        </Material>
+                        {
+                            videoPreviews.length > 0 &&
+                            <div className="panel-add-item-show-pics">
+                                {
+                                    videoPreviews.map((item, index) =>
+                                        <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(index)}>
+                                            <video preload="none" className="panel-add-item-show-pics-item" controls controlsList="nodownload">
+                                                <source src={item}/>
+                                            </video>
+                                            <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
+                                        </Material>,
+                                    )
+                                }
                             </div>
-                        </React.Fragment>
-                    }
+                        }
 
-                    <Material className={`sign-up-page-submit ${modalLoading ? "disabled" : ""}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
+                        <Material className={`sign-up-page-submit ${modalLoading ? "disabled" : ""}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
+                    </div>
                 </div>
-            </div>
+                {
+                    modalLoading &&
+                    <div className="sign-up-page-loading">
+                        <div className="sign-up-page-loading-percent">{loadingPercent}</div>
+                    </div>
+                }
+                {
+                    categoryModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleCategories}/>
+                        <div className="panel-select-all-categories">
+                            <div className="panel-select-all-categories-scroll">
+                                {
+                                    Object.values(categories).map(category =>
+                                        <Material key={category._id} className="panel-select-all-categories-item" onClick={() => this.selectCategory(category._id)}>
+                                            {category.name}
+                                            {selectedCategories.indexOf(category._id) !== -1 && <TickSvg className="panel-select-all-categories-item-select"/>}
+                                        </Material>,
+                                    )
+                                }
+                            </div>
+                            <Material className="panel-select-all-categories-btn" onClick={this.toggleCategories}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+                {
+                    videoModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleVideoModal}/>
+                        <div className="panel-select-all-categories center">
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <Material className="panel-add-item-pic-cont">
+                                <label className="panel-add-item-pic">
+                                    {
+                                        tempImagePreview ?
+                                            <video preload="none" className="panel-add-item-temp-pic" controls controlsList="nodownload">
+                                                <source src={tempImagePreview}/>
+                                            </video>
+                                            :
+                                            <VideoSvg className="panel-add-item-pic-svg"/>
+                                    }
+                                    <input type="file" hidden accept="video/*" onChange={this.selectVideo}/>
+                                </label>
+                            </Material>
+                            <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectVideo : null}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+                {
+                    imageModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleImageModal}/>
+                        <div className="panel-select-all-categories center">
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <Material className="panel-add-item-pic-cont">
+                                <label className="panel-add-item-pic">
+                                    {
+                                        tempImagePreview ?
+                                            <img src={tempImagePreview} className="panel-add-item-temp-pic" alt=""/>
+                                            :
+                                            <CameraSvg className="panel-add-item-pic-svg"/>
+                                    }
+                                    <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
+                                </label>
+                            </Material>
+                            <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+            </React.Fragment>
         )
     }
 }
