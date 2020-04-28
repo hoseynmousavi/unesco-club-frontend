@@ -207,7 +207,7 @@ class CreateDocument extends PureComponent
                     <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
                     <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
 
-                    <Material className="panel-select-categories" onClick={this.toggleCategories}>انتخاب دسته بندی</Material>
+                    <Material className="panel-select-categories" onClick={this.toggleCategories}>انتخاب دسته‌بندی</Material>
                     {
                         selectedCategories.length > 0 &&
                         <div className="panel-select-show-categories">

@@ -121,7 +121,11 @@ class Categories extends PureComponent
                         NotificationManager.success("حذف شد"),
                     )
                 })
-                .catch(() => NotificationManager.error("خطا در برقراری ارتباط!"))
+                .catch((err) =>
+                {
+                    if (err?.response?.data?.message === "it is using!") NotificationManager.error("این دسته‌بندی توسط پرونده‌ها استفاده میشود!")
+                    else NotificationManager.error("خطا در برقراری ارتباط!")
+                })
         }
     }
 
