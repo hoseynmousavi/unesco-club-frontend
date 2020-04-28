@@ -3,6 +3,8 @@ import {Route, Switch} from "react-router-dom"
 import PanelSidebar from "./PanelSidebar"
 import Login from "./Login"
 import Users from "./Users"
+import Categories from "./Categories"
+import Documents from "./Documents"
 
 class PanelPage extends PureComponent
 {
@@ -21,7 +23,8 @@ class PanelPage extends PureComponent
                     <div className="panel-page-content">
                         <Switch>
                             <Route path="/panel/users" render={() => <Users/>}/>
-                            <Route path="/panel/documents" render={() => <div className="panel-welcome">به زودی :)</div>}/>
+                            <Route path="/panel/documents" render={() => <Documents/>}/>
+                            <Route path="/panel/categories" render={() => <Categories/>}/>
                             <Route path="*" render={() => <div className="panel-welcome">خوش اومدی ادمین :)</div>}/>
                         </Switch>
                     </div>

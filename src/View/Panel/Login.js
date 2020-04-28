@@ -15,7 +15,6 @@ class Login extends PureComponent
         }
     }
 
-
     setValue = (e) =>
     {
         const {name, value} = e.target

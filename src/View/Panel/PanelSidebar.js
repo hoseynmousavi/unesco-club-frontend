@@ -83,14 +83,8 @@ class PanelSidebar extends PureComponent
                         <div className="panel-side-bar-line"/>
                     </Material>
                     <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/users"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">فعالین</Material></NavLink>
-                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/documents"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">پرونده ها</Material></NavLink>
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/off-codes"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">کد تخفیف</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/all-page-views"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">بازدید صفحات</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/all-video-views"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">بازدید ویدیوها</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/all-sales"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">فروش پک</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/class"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">کلاس درس</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/pavilion"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">گپ و گفت</Material></NavLink>*/}
-                    {/*<NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/all-sign-ups"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">کاربران</Material></NavLink>*/}
+                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/documents"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">پرونده‌ها</Material></NavLink>
+                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/categories"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">دسته‌بندی‌ها</Material></NavLink>
                 </div>
                 <div className="panel-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
             </React.Fragment>
