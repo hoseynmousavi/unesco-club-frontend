@@ -6,7 +6,7 @@ class MaterialInput extends Component
     static propTypes = {
         className: PropTypes.string.isRequired,
         backgroundColor: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired,
+        label: PropTypes.any.isRequired,
         getValue: PropTypes.func.isRequired,
         type: PropTypes.string,
         maxLength: PropTypes.number,

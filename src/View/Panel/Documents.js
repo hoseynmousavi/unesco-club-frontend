@@ -1,12 +1,128 @@
 import React, {PureComponent} from "react"
+import Material from "../Components/Material"
+import api, {REST_URL} from "../../Functions/api"
+import {NotificationManager} from "react-notifications"
+import CreateDocument from "./CreateDocument"
+import {ClipLoader} from "react-spinners"
+import PdfSvg from "../../Media/Svgs/PdfSvg"
 
 class Documents extends PureComponent
 {
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            getLoading: true,
+            documents: {},
+            isModalOpen: false,
+            categories: {},
+        }
+
+        this.activeScrollHeight = 0
+        this.page = 2
+    }
+
+    componentDidMount()
+    {
+        window.scroll({top: 0})
+
+        api.get("document", `?limit=20&page=1`)
+            .then(data => this.setState({...this.state, getLoading: false, documents: data.reduce((sum, doc) => ({...sum, [doc._id]: doc}), {})}))
+
+        api.get("document/category", `?limit=1000&page=1`)
+            .then(data => this.setState({...this.state, categories: data.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}))
+
+        document.addEventListener("scroll", this.onScroll)
+    }
+
+    componentWillUnmount()
+    {
+        document.removeEventListener("scroll", this.onScroll)
+    }
+
+    onScroll = () =>
+    {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() =>
+        {
+            const {documents} = this.state
+            const scrollHeight = document.body ? document.body.scrollHeight : 0
+            if (Object.values(documents).length > 0 && window.innerHeight + window.scrollY >= scrollHeight - 200 && scrollHeight > this.activeScrollHeight)
+            {
+                this.setState({...this.state, getLoading: true}, () =>
+                {
+                    this.activeScrollHeight = scrollHeight
+                    api.get("document", `?limit=20&page=${this.page}`)
+                        .then(data =>
+                        {
+                            this.page += 1
+                            this.setState({...this.state, getLoading: false, documents: {...documents, ...data.reduce((sum, doc) => ({...sum, [doc._id]: doc}), {})}})
+                        })
+                })
+            }
+        }, 20)
+    }
+
+    toggleModal = () => this.setState({...this.state, isModalOpen: !this.state.isModalOpen})
+
+    removeItem(document_id)
+    {
+        let result = window.confirm("از حذف مطمئنید؟")
+        if (result)
+        {
+            api.del("document", {document_id})
+                .then(() =>
+                {
+                    const documents = {...this.state.documents}
+                    delete documents[document_id]
+                    this.setState({...this.state, documents}, () =>
+                        NotificationManager.success("حذف شد"),
+                    )
+                })
+                .catch(() => NotificationManager.error("خطا در برقراری ارتباط!"))
+        }
+    }
+
+    addDocument = doc => this.setState({...this.state, documents: {[doc._id]: {...doc}, ...this.state.documents}})
+
     render()
     {
+        const {isModalOpen, categories, documents, getLoading} = this.state
         return (
-            <div>
-                documents
+            <div className="panel-section">
+                <div className="panel-document-cont">
+                    {
+                        Object.values(documents).map(doc =>
+                            <Material className="panel-document-item" key={doc._id}>
+                                {
+                                    doc.thumbnail ?
+                                        <img className="panel-document-thumb" src={REST_URL + doc.thumbnail} alt=""/>
+                                        :
+                                        <PdfSvg className="panel-document-thumb-default"/>
+                                }
+                                <div className="panel-document-item-title">{doc.title}</div>
+                                {
+                                    doc.summary &&
+                                    <div className="panel-document-item-title">{doc.summary}</div>
+                                }
+                            </Material>,
+                        )
+                    }
+                    <div className="panel-document-item-hide"/>
+                    <div className="panel-document-item-hide"/>
+                    <div className="panel-document-item-hide"/>
+                    <div className="panel-document-item-hide"/>
+                </div>
+                {
+                    getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                }
+
+
+                <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
+                {
+                    isModalOpen &&
+                    <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>
+                }
             </div>
         )
     }

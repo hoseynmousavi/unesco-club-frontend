@@ -138,7 +138,7 @@ class Categories extends PureComponent
                 </div>
                 {
                     Object.values(categories).map(category =>
-                        <div className="panel-row-cont">
+                        <div key={category._id} className="panel-row-cont">
                             <div className="panel-row-item">{category.name}</div>
                             <div className="panel-row-item">{category.description}</div>
                             <div className="panel-row-item-small"><CancelSvg className="panel-row-item-remove" onClick={() => this.removeItem(category._id)}/></div>

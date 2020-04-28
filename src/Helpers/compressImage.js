@@ -5,7 +5,8 @@ const compressImage = (img) =>
 {
     return new Promise(resolve =>
     {
-        if (img.type.includes("svg") || img.type.includes("gif")) resolve(img)
+        if (!img) resolve(undefined)
+        else if (img.type.includes("svg") || img.type.includes("gif")) resolve(img)
         else
         {
             imageCompression(img, Constant.COMPRESSION).then(compressedFile =>
