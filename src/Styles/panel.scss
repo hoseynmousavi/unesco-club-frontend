@@ -211,6 +211,10 @@
 .panel-section-loading-cont {
   padding: 10px;
   font-size: $title-font-size;
+
+  &.clip {
+    padding-top: 13px;
+  }
 }
 
 .panel-users-item-detail {

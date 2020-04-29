@@ -232,6 +232,22 @@ class PanelShowDocument extends PureComponent
         }
     }
 
+    updateField(field)
+    {
+        this.setState({...this.state, sendLoading: true}, () =>
+        {
+            const {id} = this.props
+            api.patch("document", {document_id: id, [field]: this.state[field]})
+                .then((updated) =>
+                {
+                    this.setState({...this.state, sendLoading: false, document: {...this.state.document, [field]: updated[field]}}, () =>
+                        NotificationManager.success("با موفقیت بروز شد!"),
+                    )
+                })
+                .catch(() => this.setState({...this.state, sendLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
+        })
+    }
+
     render()
     {
         const {getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal} = this.state
@@ -245,7 +261,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.title} className={`panel-show-doc-input ${title !== document.title ? "changed" : ""}`} name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
                             {
                                 title !== document.title &&
-                                <Material className="panel-show-doc-input-svg-cont">
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("title")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -254,7 +270,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.summary} className={`panel-show-doc-input ${summary !== document.summary ? "changed" : ""}`} name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
                             {
                                 summary !== document.summary &&
-                                <Material className="panel-show-doc-input-svg-cont">
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("summary")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -263,7 +279,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.description} className={`panel-show-doc-area ${description !== document.description ? "changed" : ""}`} isTextArea={true} name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
                             {
                                 description !== document.description &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)">
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("description")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -272,7 +288,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.location} className={`panel-show-doc-input ${location !== document.location ? "changed" : ""}`} name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
                             {
                                 location !== document.location &&
-                                <Material className="panel-show-doc-input-svg-cont">
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("location")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -364,7 +380,9 @@ class PanelShowDocument extends PureComponent
                 {
                     sendLoading &&
                     <div className="sign-up-page-loading">
-                        <div className="sign-up-page-loading-percent">{loadingPercent}</div>
+                        <div className="sign-up-page-loading-percent">
+                            {loadingPercent === 0 || loadingPercent === 100 ? <div className="panel-section-loading-cont clip"><ClipLoader size={20} color="var(--primary-color)"/></div> : <span>{loadingPercent} %</span>}
+                        </div>
                     </div>
                 }
 

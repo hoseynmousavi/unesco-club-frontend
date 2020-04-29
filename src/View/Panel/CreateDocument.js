@@ -150,13 +150,15 @@ class CreateDocument extends PureComponent
                         thumb && form.append("thumbnail", thumb)
                         if (pictures.length > 0)
                         {
+                            let counter = 0
                             pictures.forEach((pic, index) =>
                             {
                                 compressImage(pic.file).then(image =>
                                 {
                                     form.append("picture" + index, image)
                                     pic.description && form.append("picture" + index, pic.description)
-                                    if (index === pictures.length - 1) this.send(form)
+                                    counter++
+                                    if (counter === pictures.length) this.send(form)
                                 })
                             })
                         }
