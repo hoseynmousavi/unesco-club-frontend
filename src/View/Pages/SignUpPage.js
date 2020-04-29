@@ -112,7 +112,7 @@ class SignUpPage extends PureComponent
             if (!email) NotificationManager.error("لطفا ایمیل را وارد کنید!")
             if (!grade) NotificationManager.error("لطفا مقطع تحصیلی را وارد کنید!")
             if (!description) NotificationManager.error("لطفا توضیحات را وارد کنید!")
-            if (!(!birth_date_year || (!isNaN(birth_date_year) && parseInt(birth_date_year) < 1400 && parseInt(birth_date_year) > 1300))) if (!description) NotificationManager.error("سال تولد وارد شده معتبر نیست!")
+            if (!(!birth_date_year || (!isNaN(birth_date_year) && parseInt(birth_date_year) < 1400 && parseInt(birth_date_year) > 1300))) NotificationManager.error("سال تولد وارد شده معتبر نیست!")
         }
     }
 
