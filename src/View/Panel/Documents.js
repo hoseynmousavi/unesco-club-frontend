@@ -122,10 +122,7 @@ class Documents extends PureComponent
                                         <PdfSvg className="panel-document-thumb-default"/>
                                 }
                                 <div className="panel-document-item-title">{doc.title}</div>
-                                {
-                                    doc.summary &&
-                                    <div className="panel-document-item-title">{doc.summary}</div>
-                                }
+                                {doc.summary && <div className="panel-document-item-summary">{doc.summary}</div>}
                             </Material>,
                         )
                     }
