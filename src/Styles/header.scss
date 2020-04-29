@@ -83,8 +83,13 @@
 }
 
 .header-name {
-  font-size: 18px;
+  font-size: $huge-font-size;
   margin-left: 20px;
+
+  @media screen and (max-width: 480px) {
+    margin-left: 0;
+    font-size: $big-font-size;
+  }
 }
 
 .header-sidebar-back {

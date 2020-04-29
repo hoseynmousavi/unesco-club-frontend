@@ -1,8 +1,8 @@
 import React, {PureComponent} from "react"
-import CancelSvg from "../../Media/Svgs/CancelSvg"
 import Material from "./Material"
 import {Link, NavLink} from "react-router-dom"
 import Hamburger from "./Hamburger"
+import TickSvg from "../../Media/Svgs/TickSvg"
 
 class Header extends PureComponent
 {
@@ -157,7 +157,7 @@ class Header extends PureComponent
                 </div>
                 <div className="header-section">
                     <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
-                    <Link to="/"><CancelSvg className="header-logo"/></Link>
+                    <Link to="/"><TickSvg className="header-logo"/></Link>
                 </div>
             </div>
         )
