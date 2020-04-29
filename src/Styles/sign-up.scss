@@ -202,9 +202,15 @@
 
 .sign-up-page-loading-percent {
   background-color: var(--login-page-background-color);
-  padding: 20px 30px;
   color: var(--secondary-color);
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 100px;
+  direction: ltr;
+  font-weight: bold;
 
   &.loading {
     padding: 25px 30px 20px 30px;
