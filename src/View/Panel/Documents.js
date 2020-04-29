@@ -33,11 +33,22 @@ class Documents extends PureComponent
             .then(data => this.setState({...this.state, categories: data.reduce((sum, cat) => ({...sum, [cat._id]: cat}), {})}))
 
         document.addEventListener("scroll", this.onScroll)
+        window.addEventListener("popstate", this.onPop)
     }
 
     componentWillUnmount()
     {
         document.removeEventListener("scroll", this.onScroll)
+        window.removeEventListener("popstate", this.onPop)
+    }
+
+    onPop = () =>
+    {
+        if (this.state.isModalOpen)
+        {
+            document.body.style.overflow = "auto"
+            this.setState({...this.state, isModalOpen: false})
+        }
     }
 
     onScroll = () =>
@@ -63,7 +74,17 @@ class Documents extends PureComponent
         }, 20)
     }
 
-    toggleModal = () => this.setState({...this.state, isModalOpen: !this.state.isModalOpen})
+    toggleModal = () =>
+    {
+        const isModalOpen = !this.state.isModalOpen
+        if (isModalOpen)
+        {
+            document.body.style.overflow = "hidden"
+            window.history.pushState("", "", "/panel/documents/add")
+            this.setState({...this.state, isModalOpen})
+        }
+        else window.history.back()
+    }
 
     removeItem(document_id)
     {
@@ -89,7 +110,7 @@ class Documents extends PureComponent
     {
         const {isModalOpen, categories, documents, getLoading} = this.state
         return (
-            <div className="panel-section">
+            <div className="panel-section-big">
                 <div className="panel-document-cont">
                     {
                         Object.values(documents).map(doc =>
@@ -117,12 +138,8 @@ class Documents extends PureComponent
                     getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
                 }
 
-
                 <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
-                {
-                    isModalOpen &&
-                    <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>
-                }
+                {isModalOpen && <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>}
             </div>
         )
     }

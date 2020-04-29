@@ -1,7 +1,7 @@
 @import "variables";
 
 .panel-page-container {
-  padding: 10px 5%;
+  padding: 10px 5% 60px 5%;
 }
 
 .panel-welcome {
@@ -104,6 +104,18 @@
   overflow: hidden;
 }
 
+.panel-section-big {
+  border-radius: 5px;
+  overflow: hidden;
+  width: calc(100% + 16px);
+  margin-right: -8px;
+  margin-top: -8px;
+
+  @media screen and (max-width: 480px) {
+    margin-top: 0;
+  }
+}
+
 .panel-page-section-title {
   background-color: var(--dark-color);
   color: var(--background-color);
@@ -123,11 +135,11 @@
     background-color: var(--transparent-second) !important;
   }
 
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background-color: var(--login-page-background-color);
   }
 
-  &:nth-child(odd) {
+  &:nth-child(even) {
     background-color: var(--background-color);
   }
 }
@@ -497,6 +509,7 @@
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
   overflow: hidden;
+  animation: fadein linear 0.1s;
 
   @media screen and (max-width: 480px) {
     width: 300px;
@@ -567,7 +580,7 @@
   width: 150px;
   flex-grow: 1;
   padding: 0 15px;
-  margin: 0 10px;
+  margin: 0 8px;
 }
 
 .panel-document-item {
@@ -576,7 +589,7 @@
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 15px;
-  margin: 10px;
+  margin: 8px;
   background-color: var(--login-page-background-color);
   cursor: pointer;
   transition: all linear 0.2s;
