@@ -6,6 +6,7 @@ import CameraSvg from "../../Media/Svgs/Camera"
 import CancelSvg from "../../Media/Svgs/CancelSvg"
 import compressImage from "../../Helpers/compressImage"
 import api from "../../Functions/api"
+import {ClipLoader} from "react-spinners"
 
 class SignUpPage extends PureComponent
 {
@@ -140,7 +141,9 @@ class SignUpPage extends PureComponent
                 {
                     loading &&
                     <div className="sign-up-page-loading">
-                        <div className="sign-up-page-loading-percent">{loadingPercent}</div>
+                        <div className="sign-up-page-loading-percent">
+                            {loadingPercent === 0 || loadingPercent === 100 ? <div className="panel-section-loading-cont clip"><ClipLoader size={20} color="var(--primary-color)"/></div> : <span>{loadingPercent} %</span>}
+                        </div>
                     </div>
                 }
 

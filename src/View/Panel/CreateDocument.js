@@ -9,6 +9,7 @@ import {NotificationManager} from "react-notifications"
 import compressImage from "../../Helpers/compressImage"
 import api from "../../Functions/api"
 import TickSvg from "../../Media/Svgs/TickSvg"
+import {ClipLoader} from "react-spinners"
 
 class CreateDocument extends PureComponent
 {
@@ -291,7 +292,9 @@ class CreateDocument extends PureComponent
                 {
                     modalLoading &&
                     <div className="sign-up-page-loading">
-                        <div className="sign-up-page-loading-percent">{loadingPercent}</div>
+                        <div className="sign-up-page-loading-percent">
+                            {loadingPercent === 0 || loadingPercent === 100 ? <div className="panel-section-loading-cont clip"><ClipLoader size={20} color="var(--primary-color)"/></div> : <span>{loadingPercent} %</span>}
+                        </div>
                     </div>
                 }
                 {
