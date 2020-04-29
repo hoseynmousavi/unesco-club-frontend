@@ -5,6 +5,8 @@ import {NotificationManager} from "react-notifications"
 import CreateDocument from "./CreateDocument"
 import {ClipLoader} from "react-spinners"
 import PdfSvg from "../../Media/Svgs/PdfSvg"
+import {Switch, Route, Link} from "react-router-dom"
+import PanelShowDocument from "./PanelShowDocument"
 
 class Documents extends PureComponent
 {
@@ -110,34 +112,45 @@ class Documents extends PureComponent
     {
         const {isModalOpen, categories, documents, getLoading} = this.state
         return (
-            <div className="panel-section-big">
-                <div className="panel-document-cont">
-                    {
-                        Object.values(documents).map(doc =>
-                            <Material className="panel-document-item" key={doc._id}>
-                                {
-                                    doc.thumbnail ?
-                                        <img className="panel-document-thumb" src={REST_URL + doc.thumbnail} alt=""/>
-                                        :
-                                        <PdfSvg className="panel-document-thumb-default"/>
-                                }
-                                <div className="panel-document-item-title">{doc.title}</div>
-                                {doc.summary && <div className="panel-document-item-summary">{doc.summary}</div>}
-                            </Material>,
-                        )
-                    }
-                    <div className="panel-document-item-hide"/>
-                    <div className="panel-document-item-hide"/>
-                    <div className="panel-document-item-hide"/>
-                    <div className="panel-document-item-hide"/>
-                </div>
-                {
-                    getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                }
+            <Switch>
+                <Route path="/panel/documents/:id" render={(route) => <PanelShowDocument id={route.match.params.id} categories={categories} document={documents[route.match.params.id]}/>}/>
 
-                <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
-                {isModalOpen && <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>}
-            </div>
+                <React.Fragment>
+                    <div className="panel-section-big">
+                        <div className="panel-document-cont">
+                            {
+                                Object.values(documents).map(doc =>
+                                    <Link key={doc._id} className="panel-document-item-link" to={`/panel/documents/${doc._id}`}>
+                                        <Material className="panel-document-item">
+                                            {
+                                                doc.thumbnail ?
+                                                    <img className="panel-document-thumb" src={REST_URL + doc.thumbnail} alt=""/>
+                                                    :
+                                                    <PdfSvg className="panel-document-thumb-default"/>
+                                            }
+                                            <div className="panel-document-item-title">{doc.title}</div>
+                                            {doc.summary && <div className="panel-document-item-summary">{doc.summary}</div>}
+                                        </Material>
+                                    </Link>,
+                                )
+                            }
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
+                        </div>
+                        {
+                            getLoading ?
+                                <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                                :
+                                Object.values(documents).length === 0 && <div className="panel-section-loading-cont">پرونده ای یافت نشد!</div>
+                        }
+
+                        <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
+                        {isModalOpen && <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>}
+                    </div>
+                </React.Fragment>
+            </Switch>
         )
     }
 }

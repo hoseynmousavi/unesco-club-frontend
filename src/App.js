@@ -23,6 +23,17 @@ class App extends PureComponent
     {
         window.scroll({top: 0})
 
+        const {location} = this.props
+        if (
+            location.pathname.includes("/add")
+        )
+        {
+            let currentPath = location.pathname
+                .replace("/add", "")
+            window.history.replaceState("", "", currentPath ? currentPath : "/")
+            document.location.reload()
+        }
+
         let admin = null
 
         if (localStorage.hasOwnProperty("admin"))

@@ -210,6 +210,7 @@
 
 .panel-section-loading-cont {
   padding: 10px;
+  font-size: $title-font-size;
 }
 
 .panel-users-item-detail {
@@ -247,7 +248,8 @@
 
 .panel-add-item-btn {
   width: 50px;
-  height: 50px;
+  padding-top: 2px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -426,10 +428,17 @@
   overflow-y: hidden;
 }
 
+.panel-add-item-show-pics-item-desc {
+  font-size: $regular-font-size;
+  line-height: 28px;
+}
+
 .panel-add-item-show-pics-item-material {
   display: inline-block;
   margin: 0 15px;
   cursor: pointer;
+  background-color: var(--login-page-background-color);
+  border-radius: 4px;
 
   &:hover {
     .panel-add-item-show-pics-item-cancel {
@@ -444,7 +453,6 @@
   display: block;
   object-fit: contain;
   border-radius: 4px;
-  background-color: var(--login-page-background-color);
 }
 
 .panel-add-item-show-pics-item-cancel {
@@ -536,6 +544,11 @@
   cursor: pointer;
 }
 
+.panel-select-all-categories-empty {
+  font-size: $title-font-size;
+  margin-top: 150px;
+}
+
 .panel-select-all-categories-item-select {
   position: absolute;
   left: 15px;
@@ -583,15 +596,19 @@
   margin: 0 8px;
 }
 
-.panel-document-item {
+.panel-document-item-link {
+  margin: 8px;
   flex-grow: 1;
-  width: 150px;
+  width: 180px;
+}
+
+.panel-document-item {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 15px;
-  margin: 8px;
   background-color: var(--login-page-background-color);
   cursor: pointer;
+  height: calc(100% - 30px);
   transition: all linear 0.2s;
 
   &:hover {
@@ -618,4 +635,55 @@
 
 .panel-document-item-summary {
   font-size: $regular-font-size;
+}
+
+.panel-show-doc-cont {
+  width: calc(100% - 2px);
+  margin-top: -10px;
+}
+
+.panel-show-doc-input-cont {
+  display: flex;
+  align-items: center;
+}
+
+.panel-show-doc-input-svg-cont {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: -1px;
+  animation: scale-static linear 0.1s;
+}
+
+.panel-show-doc-input-svg {
+  display: block;
+  width: 30px;
+  cursor: pointer;
+  fill: var(--success-color);
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.panel-show-doc-area {
+  height: 100px;
+  margin: 15px 0 40px 0;
+  width: 100%;
+  transition: all linear 0.2s;
+
+  &.changed {
+    margin: 15px 0 40px 10px;
+  }
+}
+
+.panel-show-doc-input {
+  height: 50px;
+  margin: 15px 0 20px 0;
+  width: 100%;
+  transition: all linear 0.2s;
+
+  &.changed {
+    margin: 15px 0 20px 10px;
+  }
 }

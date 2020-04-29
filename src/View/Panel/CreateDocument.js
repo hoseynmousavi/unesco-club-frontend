@@ -143,7 +143,7 @@ class CreateDocument extends PureComponent
                     videos.forEach((video, index) =>
                     {
                         form.append("film" + index, video.file)
-                        form.append("film" + index, video.description)
+                        video.description && form.append("film" + index, video.description)
                     })
                     compressImage(thumbnail).then(thumb =>
                     {
@@ -155,7 +155,7 @@ class CreateDocument extends PureComponent
                                 compressImage(pic.file).then(image =>
                                 {
                                     form.append("picture" + index, image)
-                                    form.append("picture" + index, pic.description)
+                                    pic.description && form.append("picture" + index, pic.description)
                                     if (index === pictures.length - 1) this.send(form)
                                 })
                             })
@@ -299,15 +299,39 @@ class CreateDocument extends PureComponent
                         <div className="panel-select-all-categories">
                             <div className="panel-select-all-categories-scroll">
                                 {
-                                    Object.values(categories).map(category =>
-                                        <Material key={category._id} className="panel-select-all-categories-item" onClick={() => this.selectCategory(category._id)}>
-                                            {category.name}
-                                            {selectedCategories.indexOf(category._id) !== -1 && <TickSvg className="panel-select-all-categories-item-select"/>}
-                                        </Material>,
-                                    )
+                                    Object.values(categories).length > 0 ?
+                                        Object.values(categories).map(category =>
+                                            <Material key={category._id} className="panel-select-all-categories-item" onClick={() => this.selectCategory(category._id)}>
+                                                {category.name}
+                                                {selectedCategories.indexOf(category._id) !== -1 && <TickSvg className="panel-select-all-categories-item-select"/>}
+                                            </Material>,
+                                        )
+                                        :
+                                        <div className="panel-select-all-categories-empty">دسته‌بندی ای پیدا نشد!</div>
                                 }
                             </div>
                             <Material className="panel-select-all-categories-btn" onClick={this.toggleCategories}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+                {
+                    imageModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleImageModal}/>
+                        <div className="panel-select-all-categories center">
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <Material className="panel-add-item-pic-cont">
+                                <label className="panel-add-item-pic">
+                                    {
+                                        tempImagePreview ?
+                                            <img src={tempImagePreview} className="panel-add-item-temp-pic" alt=""/>
+                                            :
+                                            <CameraSvg className="panel-add-item-pic-svg"/>
+                                    }
+                                    <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
+                                </label>
+                            </Material>
+                            <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
                         </div>
                     </React.Fragment>
                 }
@@ -331,27 +355,6 @@ class CreateDocument extends PureComponent
                                 </label>
                             </Material>
                             <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectVideo : null}>ثبت</Material>
-                        </div>
-                    </React.Fragment>
-                }
-                {
-                    imageModal &&
-                    <React.Fragment>
-                        <div className="panel-select-all-categories-back" onClick={this.toggleImageModal}/>
-                        <div className="panel-select-all-categories center">
-                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
-                            <Material className="panel-add-item-pic-cont">
-                                <label className="panel-add-item-pic">
-                                    {
-                                        tempImagePreview ?
-                                            <img src={tempImagePreview} className="panel-add-item-temp-pic" alt=""/>
-                                            :
-                                            <CameraSvg className="panel-add-item-pic-svg"/>
-                                    }
-                                    <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
-                                </label>
-                            </Material>
-                            <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
                         </div>
                     </React.Fragment>
                 }
