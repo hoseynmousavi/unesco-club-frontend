@@ -5,6 +5,8 @@ import Header from "./View/Components/Header"
 import api from "./Functions/api"
 
 const SignUpPage = lazy(() => import("./View/Pages/SignUpPage"))
+const DocumentsPage = lazy(() => import("./View/Pages/DocumentsPage"))
+const UsersPage = lazy(() => import("./View/Pages/UsersPage"))
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const PanelPage = lazy(() => import("./View/Panel/PanelPage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
@@ -86,6 +88,8 @@ class App extends PureComponent
                 <Suspense fallback={null}>
                     <Switch>
                         <Route path="/sign-up" render={() => <SignUpPage/>}/>
+                        <Route path="/documents" render={() => <DocumentsPage/>}/>
+                        <Route path="/users" render={() => <UsersPage/>}/>
                         <Route path="/panel" render={() => <PanelPage admin={admin} setAdmin={this.setAdmin}/>}/>
                         <Route exact path="/" render={() => <HomePage/>}/>
                         <Route path="*" status={404} render={() => <NotFoundPage/>}/>

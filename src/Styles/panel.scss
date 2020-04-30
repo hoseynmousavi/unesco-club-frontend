@@ -591,6 +591,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+
+  &.home {
+    width: calc(100% + 16px);
+    margin-right: -8px;
+    margin-bottom: 50px;
+  }
 }
 
 .panel-document-item-hide {
