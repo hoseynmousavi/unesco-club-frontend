@@ -27,11 +27,12 @@ class App extends PureComponent
 
         const {location} = this.props
         if (
-            location.pathname.includes("/add")
+            location.pathname.includes("/add") || location.pathname.includes("/show-picture")
         )
         {
             let currentPath = location.pathname
                 .replace("/add", "")
+                .replace("/show-picture", "")
             window.history.replaceState("", "", currentPath ? currentPath : "/")
             document.location.reload()
         }

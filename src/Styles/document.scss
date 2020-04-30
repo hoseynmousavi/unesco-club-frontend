@@ -1,0 +1,65 @@
+@import "variables";
+
+.document-page-cont {
+  margin: 20px 12%;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-height: calc(100vh - 120px);
+  border-radius: 5px;
+
+  @media screen and (max-width: 480px) {
+    margin: 20px 5%;
+  }
+}
+
+.document-page-err {
+  color: var(--error-color);
+  font-size: $title-font-size;
+}
+
+.document-page-thumb {
+  margin-top: 15px;
+  width: 500px;
+  object-fit: contain;
+  border-radius: 5px;
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+.document-page-field {
+  text-align: right;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-size: $title-font-size;
+}
+
+.document-page-cats {
+  text-align: right;
+  padding: 10px 5px;
+}
+
+.document-page-pics {
+  text-align: right;
+  margin: 10px 15px 20px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.document-page-pics-item {
+  cursor: pointer;
+  flex-grow: 1;
+  width: 25%;
+  height: 260px;
+  object-fit: cover;
+  cursor: pointer;
+
+  @media screen and (max-width: 480px) {
+    width: 50%;
+    height: 150px;
+  }
+}
