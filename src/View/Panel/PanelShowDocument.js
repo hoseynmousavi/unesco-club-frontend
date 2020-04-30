@@ -75,28 +75,41 @@ class PanelShowDocument extends PureComponent
 
     removeCategory = (category_id, index) =>
     {
-        const {id} = this.props
+        const {id, setDocument} = this.props
         api.del("document-category", {category_id, document_id: id})
             .then(() =>
             {
                 let document = {...this.state.document}
                 document.categories.splice(index, 1)
-                this.setState({...this.state, document}, () => NotificationManager.success("با موفقیت حذف شد!"))
+                this.setState({...this.state, document}, () =>
+                {
+                    setDocument(document)
+                    NotificationManager.success("با موفقیت حذف شد!")
+                })
             })
             .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
     }
 
     addCategory = (category) =>
     {
-        const {id} = this.props
+        const {id, setDocument} = this.props
         api.post("document-category", {category_id: category._id, document_id: id})
             .then(() =>
             {
                 let document = {...this.state.document}
-                document.categories.push(category)
-                this.setState({...this.state, document}, () => NotificationManager.success("با موفقیت اضافه شد!"))
+                if (document.categories) document.categories.push(category)
+                else document.categories = [category]
+                this.setState({...this.state, document}, () =>
+                {
+                    setDocument(document)
+                    NotificationManager.success("با موفقیت اضافه شد!")
+                })
             })
-            .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
+            .catch((e) =>
+            {
+                console.log(e.message)
+                NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!")
+            })
     }
 
     toggleCategories = () => this.setState({...this.state, categoryModal: !this.state.categoryModal})
@@ -109,16 +122,19 @@ class PanelShowDocument extends PureComponent
         {
             compressImage(img).then(thumbnail =>
             {
-                const {id} = this.props
+                const {id, setDocument} = this.props
                 let form = new FormData()
                 form.append("thumbnail", thumbnail)
                 form.append("document_id", id)
                 api.patch("document", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
                     .then((updatedDocument) =>
                     {
-                        this.setState({...this.state, sendLoading: false, document: {...this.state.document, thumbnail: updatedDocument.thumbnail}}, () =>
-                            NotificationManager.success("با موفقیت بروز شد!"),
-                        )
+                        const document = {...this.state.document, thumbnail: updatedDocument.thumbnail}
+                        this.setState({...this.state, sendLoading: false, document}, () =>
+                        {
+                            setDocument(document)
+                            NotificationManager.success("با موفقیت بروز شد!")
+                        })
                     })
                     .catch(() => this.setState({...this.state, sendLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
             })
@@ -150,7 +166,7 @@ class PanelShowDocument extends PureComponent
         {
             compressImage(this.tempImg).then(file =>
             {
-                const {id} = this.props
+                const {id, setDocument} = this.props
                 let form = new FormData()
                 form.append("document_id", id)
                 form.append("file", file)
@@ -158,8 +174,10 @@ class PanelShowDocument extends PureComponent
                 api.post("document-picture", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
                     .then((created) =>
                     {
-                        this.setState({...this.state, sendLoading: false, document: {...this.state.document, pictures: [...this.state.document.pictures || [], created]}}, () =>
+                        const document = {...this.state.document, pictures: [...this.state.document.pictures || [], created]}
+                        this.setState({...this.state, sendLoading: false, document}, () =>
                         {
+                            setDocument(document)
                             this.toggleImageModal()
                             NotificationManager.success("با اضافه بروز شد!")
                         })
@@ -177,9 +195,14 @@ class PanelShowDocument extends PureComponent
             api.del("document-picture", {picture_id})
                 .then(() =>
                 {
+                    const {setDocument} = this.props
                     let document = {...this.state.document}
                     document.pictures.splice(index, 1)
-                    this.setState({...this.state, document}, () => NotificationManager.success("با موفقیت حذف شد!"))
+                    this.setState({...this.state, document}, () =>
+                    {
+                        setDocument(document)
+                        NotificationManager.success("با موفقیت حذف شد!")
+                    })
                 })
                 .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
         }
@@ -198,7 +221,7 @@ class PanelShowDocument extends PureComponent
     {
         this.setState({...this.state, loadingPercent: 0, sendLoading: true}, () =>
         {
-            const {id} = this.props
+            const {id, setDocument} = this.props
             let form = new FormData()
             form.append("document_id", id)
             form.append("file", this.tempImg)
@@ -206,8 +229,10 @@ class PanelShowDocument extends PureComponent
             api.post("document-film", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
                 .then((created) =>
                 {
-                    this.setState({...this.state, sendLoading: false, document: {...this.state.document, films: [...this.state.document.films || [], created]}}, () =>
+                    const document = {...this.state.document, films: [...this.state.document.films || [], created]}
+                    this.setState({...this.state, sendLoading: false, document}, () =>
                     {
+                        setDocument(document)
                         this.toggleVideoModal()
                         NotificationManager.success("با اضافه بروز شد!")
                     })
@@ -224,9 +249,14 @@ class PanelShowDocument extends PureComponent
             api.del("document-film", {film_id})
                 .then(() =>
                 {
+                    const {setDocument} = this.props
                     let document = {...this.state.document}
                     document.films.splice(index, 1)
-                    this.setState({...this.state, document}, () => NotificationManager.success("با موفقیت حذف شد!"))
+                    this.setState({...this.state, document}, () =>
+                    {
+                        setDocument(document)
+                        NotificationManager.success("با موفقیت حذف شد!")
+                    })
                 })
                 .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
         }
@@ -236,13 +266,16 @@ class PanelShowDocument extends PureComponent
     {
         this.setState({...this.state, sendLoading: true}, () =>
         {
-            const {id} = this.props
+            const {id, setDocument} = this.props
             api.patch("document", {document_id: id, [field]: this.state[field]})
                 .then((updated) =>
                 {
-                    this.setState({...this.state, sendLoading: false, document: {...this.state.document, [field]: updated[field]}}, () =>
-                        NotificationManager.success("با موفقیت بروز شد!"),
-                    )
+                    const document = {...this.state.document, [field]: updated[field]}
+                    this.setState({...this.state, sendLoading: false, document}, () =>
+                    {
+                        setDocument(document)
+                        NotificationManager.success("با موفقیت بروز شد!")
+                    })
                 })
                 .catch(() => this.setState({...this.state, sendLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
         })

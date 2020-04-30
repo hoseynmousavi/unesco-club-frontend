@@ -108,12 +108,20 @@ class Documents extends PureComponent
 
     addDocument = doc => this.setState({...this.state, documents: {[doc._id]: {...doc}, ...this.state.documents}})
 
+    setDocument = document => this.setState({...this.state, documents: {...this.state.documents, [document._id]: {...document}}})
+
     render()
     {
         const {isModalOpen, categories, documents, getLoading} = this.state
         return (
             <Switch>
-                <Route path="/panel/documents/:id" render={(route) => <PanelShowDocument id={route.match.params.id} categories={categories} document={documents[route.match.params.id]}/>}/>
+                <Route path="/panel/documents/:id" render={(route) =>
+                    <PanelShowDocument id={route.match.params.id}
+                                       categories={categories}
+                                       document={documents[route.match.params.id]}
+                                       setDocument={this.setDocument}
+                    />}
+                />
 
                 <React.Fragment>
                     <div className="panel-section-big">
