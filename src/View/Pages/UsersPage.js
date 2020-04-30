@@ -2,9 +2,9 @@ import React, {PureComponent} from "react"
 import api, {REST_URL} from "../../Functions/api"
 import {Link, Route, Switch} from "react-router-dom"
 import Material from "../Components/Material"
-import PdfSvg from "../../Media/Svgs/PdfSvg"
 import {ClipLoader} from "react-spinners"
 import ShowUserPage from "./ShowUserPage"
+import Profile from "../../Media/Svgs/Profile"
 
 class UsersPage extends PureComponent
 {
@@ -76,9 +76,9 @@ class UsersPage extends PureComponent
                                             <Material className="panel-document-item">
                                                 {
                                                     user.avatar ?
-                                                        <img className="panel-document-thumb" src={REST_URL + user.avatar} alt={user.name}/>
+                                                        <img className="home-avatar-user" src={REST_URL + user.avatar} alt={user.name}/>
                                                         :
-                                                        <PdfSvg className="panel-document-thumb-default"/>
+                                                        <Profile className="home-avatar-user"/>
                                                 }
                                                 <div className="panel-document-item-title">{user.name}</div>
                                                 {user.description && <div className="panel-document-item-summary">{user.description}</div>}
