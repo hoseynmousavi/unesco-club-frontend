@@ -65,7 +65,7 @@ class MySlider extends PureComponent
                 this.prevX = parseInt(this.prevX / this.slider.clientWidth + 1) * this.slider.clientWidth
         }
         else this.prevX = this.prevX - this.prevX % this.slider.clientWidth
-        this.slider.style.transition = "transform linear 0.2s"
+        this.slider.style.transition = "transform ease-in-out 0.2s"
         this.slider.style.transform = `translateX(${this.prevX}px)`
         this.slider.onmouseup = null
         this.slider.onmouseleave = null
@@ -83,7 +83,7 @@ class MySlider extends PureComponent
         this.setState({...this.state, showIndex: index}, () =>
             {
                 this.prevX = index * this.slider.clientWidth
-                this.slider.style.transition = "transform linear 0.2s"
+                this.slider.style.transition = "transform ease-in-out 0.2s"
                 this.slider.style.transform = `translateX(${this.prevX}px)`
                 setTimeout(() => this.slider.style.transition = "initial", 350)
             },
