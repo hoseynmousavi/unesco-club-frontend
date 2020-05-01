@@ -68,7 +68,7 @@ class DocumentsPage extends PureComponent
                 <React.Fragment>
                     <div className="home-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title">پرونده‌ها</div>
+                            <div className="home-page-docs-title page">پرونده‌ها</div>
                             <div className="panel-document-cont home">
                                 {
                                     Object.values(documents).map(doc =>

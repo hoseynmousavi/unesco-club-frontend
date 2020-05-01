@@ -26,6 +26,7 @@
   background-color: var(--login-page-background-color);
   padding: 15px 0;
   box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+  border: 1px solid var(--transparent-second);
 }
 
 .home-page-slider-item {
@@ -62,6 +63,10 @@
   font-size: $title-font-size;
   margin-top: 50px;
   margin-bottom: 5px;
+
+  &.page {
+    margin-top: 0;
+  }
 }
 
 .home-page-docs-item-hide {

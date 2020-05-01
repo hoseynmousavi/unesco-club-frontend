@@ -68,7 +68,7 @@ class UsersPage extends PureComponent
                 <React.Fragment>
                     <div className="home-page-cont">
                         <div className={`home-page-documents ${Object.values(users).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title">فعالین</div>
+                            <div className="home-page-docs-title page">فعالین</div>
                             <div className="panel-document-cont home">
                                 {
                                     Object.values(users).map(user =>
