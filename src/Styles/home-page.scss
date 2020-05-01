@@ -69,6 +69,18 @@
   }
 }
 
+.home-page-docs-title-svg {
+  width: 25px;
+  fill: var(--secondary-color);
+}
+
+.home-page-docs-title-text {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
 .home-page-docs-item-hide {
   width: 230px;
   flex-grow: 1;
@@ -86,4 +98,5 @@
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
+  fill: var(--secondary-color);
 }

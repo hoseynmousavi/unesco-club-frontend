@@ -5,6 +5,7 @@ import Material from "../Components/Material"
 import {ClipLoader} from "react-spinners"
 import ShowUserPage from "./ShowUserPage"
 import Profile from "../../Media/Svgs/Profile"
+import VerifiedUserSvg from "../../Media/Svgs/VerifiedUserSvg"
 
 class UsersPage extends PureComponent
 {
@@ -68,7 +69,10 @@ class UsersPage extends PureComponent
                 <React.Fragment>
                     <div className="home-page-cont">
                         <div className={`home-page-documents ${Object.values(users).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title page">فعالین</div>
+                            <div className="home-page-docs-title page">
+                                <VerifiedUserSvg className="home-page-docs-title-svg"/>
+                                <div className="home-page-docs-title-text">فعالین</div>
+                            </div>
                             <div className="panel-document-cont home">
                                 {
                                     Object.values(users).map(user =>

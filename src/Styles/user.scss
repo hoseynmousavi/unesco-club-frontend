@@ -1,0 +1,14 @@
+@import "variables";
+
+.user-page-thumb {
+  margin-top: 15px;
+  width: 400px;
+  object-fit: cover;
+  border-radius: 50%;
+  height: 400px;
+  cursor: pointer;
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}

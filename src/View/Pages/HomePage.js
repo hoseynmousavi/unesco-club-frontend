@@ -5,6 +5,8 @@ import {Link} from "react-router-dom"
 import Material from "../Components/Material"
 import PdfSvg from "../../Media/Svgs/PdfSvg"
 import Profile from "../../Media/Svgs/Profile"
+import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
+import VerifiedUserSvg from "../../Media/Svgs/VerifiedUserSvg"
 
 class HomePage extends PureComponent
 {
@@ -53,7 +55,12 @@ class HomePage extends PureComponent
                 />
 
                 <div className={`home-page-documents ${documentsLoading ? "" : "loaded"}`}>
-                    <div className="home-page-docs-title"><Link to="/documents">پرونده‌ها</Link></div>
+                    <div className="home-page-docs-title">
+                        <Link to="/documents">
+                            <DescriptionSvg className="home-page-docs-title-svg"/>
+                            <div className="home-page-docs-title-text">پرونده‌ها</div>
+                        </Link>
+                    </div>
                     <div className="panel-document-cont home">
                         {
                             documents.map(doc =>
@@ -80,7 +87,12 @@ class HomePage extends PureComponent
                 </div>
 
                 <div className={`home-page-documents ${usersLoading ? "" : "loaded"}`}>
-                    <div className="home-page-docs-title"><Link to="/users">فعالین</Link></div>
+                    <div className="home-page-docs-title">
+                        <Link to="/users">
+                            <VerifiedUserSvg className="home-page-docs-title-svg"/>
+                            <div className="home-page-docs-title-text">فعالین</div>
+                        </Link>
+                    </div>
                     <div className="panel-document-cont home">
                         {
                             users.map(user =>

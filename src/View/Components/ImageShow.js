@@ -54,6 +54,7 @@ class ImageShow extends PureComponent
                     copyImage.style.left = "0px"
                     copyImage.style.width = window.innerWidth + "px"
                     copyImage.style.height = (window.innerWidth / copyImage.naturalWidth) * copyImage.naturalHeight + "px"
+                    copyImage.style.borderRadius = "0"
                 }
                 else
                 {
@@ -61,6 +62,7 @@ class ImageShow extends PureComponent
                     copyImage.style.left = (window.innerWidth - (window.innerHeight / copyImage.naturalHeight) * copyImage.naturalWidth) / 2 + "px"
                     copyImage.style.height = window.innerHeight + "px"
                     copyImage.style.width = (window.innerHeight / copyImage.naturalHeight) * copyImage.naturalWidth + "px"
+                    copyImage.style.borderRadius = "0"
                 }
             }, 50)
         })
@@ -77,6 +79,7 @@ class ImageShow extends PureComponent
             copyImage.style.height = rect.height + "px"
             copyImage.style.width = rect.width + "px"
             copyImage.style.left = rect.left + "px"
+            copyImage.style.borderRadius = this.img.style.borderRadius
             copyImage.style.right = "auto"
             setTimeout(() => this.setState({...this.state, showBack: false}, () => copyImage.remove()), 300)
         })

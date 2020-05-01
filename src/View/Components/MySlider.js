@@ -7,15 +7,15 @@ class MySlider extends PureComponent
     constructor(props)
     {
         super(props)
+        this.state = {
+            showIndex: 0,
+        }
         this.deltaX = 0
         this.posX = 0
         this.prevX = 0
         this.deltaY = 0
         this.posY = 0
         this.changing = false
-        this.state = {
-            showIndex: 0,
-        }
     }
 
     dragMouseDown = (e) =>
@@ -49,7 +49,7 @@ class MySlider extends PureComponent
         this.deltaX = this.posX - e.touches[0].clientX
         this.deltaY = this.posY - e.touches[0].clientY
         this.posX = e.touches[0].clientX
-        if (this.changing || (this.deltaY < 7 && this.deltaY > -7))
+        if (this.changing || (this.deltaY < 5 && this.deltaY > -5))
         {
             this.prevX = this.prevX - this.deltaX > 0 && this.prevX - this.deltaX <= this.slider.scrollWidth - this.slider.clientWidth ? this.prevX - this.deltaX : this.prevX
             this.slider.style.transform = `translateX(${this.prevX}px)`

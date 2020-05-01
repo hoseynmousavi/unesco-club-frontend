@@ -648,8 +648,10 @@
 }
 
 .panel-show-doc-cont {
-  width: calc(100% - 2px);
+  width: calc(100% - 32px);
   margin-top: -10px;
+  background-color: var(--background-color);
+  padding: 15px;
 }
 
 .panel-show-doc-input-cont {

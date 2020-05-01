@@ -5,6 +5,7 @@ import Material from "../Components/Material"
 import PdfSvg from "../../Media/Svgs/PdfSvg"
 import {ClipLoader} from "react-spinners"
 import ShowDocumentPage from "./ShowDocumentPage"
+import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
 
 class DocumentsPage extends PureComponent
 {
@@ -68,7 +69,10 @@ class DocumentsPage extends PureComponent
                 <React.Fragment>
                     <div className="home-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title page">پرونده‌ها</div>
+                            <div className="home-page-docs-title page">
+                                <DescriptionSvg className="home-page-docs-title-svg"/>
+                                <div className="home-page-docs-title-text">پرونده‌ها</div>
+                            </div>
                             <div className="panel-document-cont home">
                                 {
                                     Object.values(documents).map(doc =>

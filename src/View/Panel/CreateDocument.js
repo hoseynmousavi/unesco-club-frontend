@@ -252,7 +252,7 @@ class CreateDocument extends PureComponent
                         </Material>
                         {
                             picturePreviews.length > 0 &&
-                            <div className="panel-add-item-show-pics">
+                            <div className="panel-add-item-show-pics dont-gesture">
                                 {
                                     picturePreviews.map((item, index) =>
                                         <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removePicture(index)}>
@@ -272,7 +272,7 @@ class CreateDocument extends PureComponent
                         </Material>
                         {
                             videoPreviews.length > 0 &&
-                            <div className="panel-add-item-show-pics">
+                            <div className="panel-add-item-show-pics dont-gesture">
                                 {
                                     videoPreviews.map((item, index) =>
                                         <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(index)}>

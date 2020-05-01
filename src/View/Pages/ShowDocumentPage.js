@@ -3,6 +3,11 @@ import api, {REST_URL} from "../../Functions/api"
 import {ClipLoader} from "react-spinners"
 import Material from "../Components/Material"
 import ImageShow from "../Components/ImageShow"
+import SummarySvg from "../../Media/Svgs/SummarySvg"
+import TitleSvg from "../../Media/Svgs/TitleSvg"
+import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
+import LocationSvg from "../../Media/Svgs/LocationSvg"
+import CategorySvg from "../../Media/Svgs/CategorySvg"
 
 class ShowDocumentPage extends PureComponent
 {
@@ -44,13 +49,35 @@ class ShowDocumentPage extends PureComponent
                             document ?
                                 <React.Fragment>
                                     {document.thumbnail && <ImageShow className="document-page-thumb" src={REST_URL + document.thumbnail} alt={document.title}/>}
-                                    <div className="document-page-field">{document.title}</div>
-                                    {document.summary && <div className="document-page-field">{document.summary}</div>}
-                                    {document.description && <div className="document-page-field">{document.description}</div>}
-                                    {document.location && <div className="document-page-field">{document.location}</div>}
+                                    <div className="document-page-field">
+                                        <TitleSvg className="document-page-field-svg"/>
+                                        <div className="document-page-field-text">{document.title}</div>
+                                    </div>
+                                    {
+                                        document.summary &&
+                                        <div className="document-page-field">
+                                            <SummarySvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">{document.summary}</div>
+                                        </div>
+                                    }
+                                    {
+                                        document.description &&
+                                        <div className="document-page-field">
+                                            <DescriptionSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">{document.description}</div>
+                                        </div>
+                                    }
+                                    {
+                                        document.location &&
+                                        <div className="document-page-field">
+                                            <LocationSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">{document.location}</div>
+                                        </div>
+                                    }
                                     {
                                         document.categories && document.categories.length > 0 &&
                                         <div className="document-page-cats">
+                                            <CategorySvg className="document-page-field-svg cat"/>
                                             {
                                                 document.categories.map(cat =>
                                                     <Material key={cat._id} className="panel-select-show-categories-item">

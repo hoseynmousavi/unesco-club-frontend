@@ -363,7 +363,7 @@ class PanelShowDocument extends PureComponent
 
                         {
                             document.pictures && document.pictures.length > 0 &&
-                            <div className="panel-add-item-show-pics">
+                            <div className="panel-add-item-show-pics dont-gesture">
                                 {
                                     document.pictures.map((item, index) =>
                                         <Material key={item._id} backgroundColor="rgba(255,255,255,0.3)" className="panel-add-item-show-pics-item-material" onClick={() => this.removePicture(item._id, index)}>
@@ -386,7 +386,7 @@ class PanelShowDocument extends PureComponent
 
                         {
                             document.films && document.films.length > 0 &&
-                            <div className="panel-add-item-show-pics">
+                            <div className="panel-add-item-show-pics dont-gesture">
                                 {
                                     document.films.map((item, index) =>
                                         <Material key={item._id} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(item._id, index)}>
