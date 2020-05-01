@@ -35,11 +35,7 @@ class ShowUserPage extends PureComponent
 
         const {id} = this.props
         api.get("users", id)
-            .then(user =>
-            {
-                console.log(user)
-                this.setState({...this.state, user, isLoading: false})
-            })
+            .then(user => this.setState({...this.state, user, isLoading: false}))
             .catch(err =>
             {
                 if (err?.response?.status === 404) this.setState({...this.state, notFound: true})
