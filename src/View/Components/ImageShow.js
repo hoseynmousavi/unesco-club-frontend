@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react"
+import Helmet from "react-helmet"
 
 class ImageShow extends PureComponent
 {
@@ -94,6 +95,14 @@ class ImageShow extends PureComponent
         return <React.Fragment>
             <img className={className} src={src} alt={alt} ref={e => this.img = e} onClick={this.openImage}/>
             {showBack && <div className={`back-cont ${showPicture ? "" : "hide"}`} onClick={this.back}/>}
+            <Helmet>
+                {
+                    showBack ?
+                        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+                        :
+                        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                }
+            </Helmet>
         </React.Fragment>
     }
 }
