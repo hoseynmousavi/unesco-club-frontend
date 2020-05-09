@@ -2,10 +2,15 @@
 
 .document-page-cont {
   margin: 20px 12%;
-  background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
   text-align: center;
   border-radius: 5px;
+  background-color: var(--transparent-third);
+  min-height: calc(100vh - 120px);
+
+  &.user {
+    background-color: white;
+  }
 
   @media screen and (max-width: 480px) {
     margin: 20px 5%;
@@ -39,7 +44,7 @@
 
 .document-page-field-svg {
   width: 25px;
-  fill: var(--secondary-color);
+  fill: var(--dark-color);
 
   &.cat {
     margin-left: 5px;
@@ -49,11 +54,16 @@
 .document-page-field-text {
   display: inline-block;
   vertical-align: top;
-  margin-top: 2px;
+  margin-top: 3px;
   margin-right: 10px;
 
   &.left {
     margin-left: 15px;
+  }
+
+  &.name {
+    display: inline-flex;
+    align-items: center;
   }
 }
 

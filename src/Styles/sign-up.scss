@@ -14,7 +14,7 @@
 .sign-up-page-form {
   margin: 50px auto;
   width: 500px;
-  background-color: var(--background-color);
+  background-color: white;
   padding: 20px 20px 0 20px;
   border-radius: 4px;
   overflow: hidden;
@@ -94,10 +94,15 @@
 
 .seyed-radio-cont {
   display: flex;
-  align-content: center;
+  align-items: center;
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
+
+  &.no-padding {
+    padding: 5px;
+    margin-right: 10px;
+  }
 
   &:hover {
     .seyed-radio {
@@ -114,6 +119,10 @@
   border: 1px solid var(--border-color);
   position: relative;
   transition: all linear 0.2s;
+
+  &.color-border {
+    border: 1px solid var(--text-light-color);
+  }
 
   &:after {
     content: "";
@@ -141,6 +150,10 @@
 .seyed-radio-label {
   font-size: $regular-font-size;
   margin-right: 10px;
+
+  &.colored {
+    color: var(--primary-color);
+  }
 }
 
 .sign-up-page-avatar-cont-material {

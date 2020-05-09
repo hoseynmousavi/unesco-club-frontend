@@ -1,15 +1,25 @@
 @import "variables";
 
 .home-page-cont {
+  padding-bottom: 20px;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.doc-page-cont {
   padding: 20px 5%;
   text-align: center;
   width: 90%;
   overflow: hidden;
 }
 
+.home-page-cont-child {
+  padding: 0 5%;
+}
+
 .home-page-slider {
   width: 100%;
-  min-height: 606px;
   opacity: 0;
 
   &.loaded {
@@ -19,33 +29,39 @@
 }
 
 .home-page-slider-item-cont {
-  border-radius: 5px;
+  position: relative;
   overflow: hidden;
   margin-bottom: -8px;
   vertical-align: top;
   background-color: var(--login-page-background-color);
-  padding: 15px 0;
   box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
-  border: 1px solid var(--transparent-second);
 }
 
 .home-page-slider-item {
-  height: 500px;
+  height: 80vh;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   margin: auto;
-  border-radius: 5px;
   display: block;
 
   @media screen and (max-width: 480px) {
-    height: calc(100vh - 220px);
+    height: calc(50vh);
   }
 }
 
 .home-page-slider-item-desc {
   font-size: $title-font-size;
   font-weight: bold;
-  padding: 10px 10px 0 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+  display: inline-block;
+  color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px 15px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
 }
 
 .home-page-documents {
@@ -71,7 +87,7 @@
 
 .home-page-docs-title-svg {
   width: 25px;
-  fill: var(--secondary-color);
+  fill: var(--dark-color);
 }
 
 .home-page-docs-title-text {
@@ -88,7 +104,7 @@
 }
 
 .home-page-docs-item {
-  margin: 8px;
+  margin: 10px;
   flex-grow: 1;
   width: 230px;
 }

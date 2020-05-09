@@ -11,8 +11,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--background-color);
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--secondary-color);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  color: var(--background-color);
 }
 
 .header-section {
@@ -36,7 +37,6 @@
   position: relative;
   width: 35px;
   height: 25px;
-  fill: grey;
 }
 
 .header-hamburger-mobile-material {
@@ -73,6 +73,7 @@
 .header-right-section-link-active {
   .header-right-section-link {
     background-color: var(--login-page-background-color);
+    color: var(--secondary-color);
   }
 }
 
@@ -80,6 +81,7 @@
   width: 50px;
   height: 50px;
   display: block;
+  fill: var(--background-color);
 }
 
 .header-name {
@@ -125,6 +127,7 @@
   font-size: $title-font-size;
   font-weight: bold;
   transition: all linear 0.2s;
+  color: var(--secondary-color);
 
   &.active {
     background-color: var(--transparent-third);

@@ -1,11 +1,9 @@
 :root {
-    --transparent-third: rgba(58, 175, 169, 0.1);
-    --transparent-second: rgba(58, 175, 169, 0.4);
-    --transparent-primary: rgba(58, 175, 169, 0.6);
-    --third-color: #75C7C3;
-    --primary-color: #3AAFA9;
-    --secondary-color: #2B7A78;
-    --secondary-color-hover: #2a6f6d;
+    --transparent-third: rgba(0, 117, 209, 0.1);
+    --transparent-second: rgba(0, 117, 209, 0.4);
+    --transparent-primary: rgba(0, 117, 209, 0.6);
+    --primary-color: #0075d1;
+    --secondary-color: #004983;
     --pavilion-background-color: #FFCC44;
     --light-color: #DEF2F1;
     --success-color: #28BF49;
@@ -13,8 +11,8 @@
     --bold-description-color: #505050;
     --post-like-comment-color: #707070;
     --very-light-color: #fafafa;
-    --background-color: #FFFFFF;
-    --login-page-background-color: #DEF2F1;
+    --background-color: #EBEBEB;
+    --login-page-background-color: #aed8fa;
     --border-color: #CDCDCD;
     --text-light-color: #878787;
     --error-color: #C62828;

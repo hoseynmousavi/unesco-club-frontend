@@ -55,9 +55,22 @@ class UserItem extends PureComponent
         }
     }
 
+    toggleTick = () =>
+    {
+        const {is_deleted} = this.state
+        if (!is_deleted)
+        {
+            const {user} = this.props
+            const have_tick = (user.have_tick && this.state.have_tick === undefined) || this.state.have_tick
+            api.post("user/tick", {user_id: user._id, have_tick: !have_tick})
+                .then(() => this.setState({...this.state, have_tick: !have_tick}, () => NotificationManager.success("با موفقیت تایید شد!")))
+                .catch(() => NotificationManager.error("خطا در برقرای ارتباط!"))
+        }
+    }
+
     render()
     {
-        const {isOpen, height, is_deleted, is_verified} = this.state
+        const {isOpen, height, is_deleted, is_verified, have_tick} = this.state
         const {user} = this.props
         return (
             <div className={`panel-users-item-cont ${is_deleted ? "deleted" : ""}`}>
@@ -78,6 +91,12 @@ class UserItem extends PureComponent
                                 :
                                 <button className="panel-users-item-submit" onClick={this.verifyItem}>تایید</button>
                         }
+
+                        <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont no-padding" onClick={this.toggleTick}>
+                            <div className={`seyed-radio color-border ${(user.have_tick && have_tick === undefined) || have_tick ? "selected" : ""} `}/>
+                            <div className="seyed-radio-label colored">رسمی</div>
+                        </Material>
+
                         <Arrow className="panel-users-item-svg"/>
                     </div>
                 </div>

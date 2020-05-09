@@ -1,11 +1,10 @@
 import React, {PureComponent} from "react"
-import api, {REST_URL} from "../../Functions/api"
-import {Link, Route, Switch} from "react-router-dom"
-import Material from "../Components/Material"
-import PdfSvg from "../../Media/Svgs/PdfSvg"
+import api from "../../Functions/api"
+import {Route, Switch} from "react-router-dom"
 import {ClipLoader} from "react-spinners"
 import ShowDocumentPage from "./ShowDocumentPage"
 import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
+import Document from "../Components/Document"
 
 class DocumentsPage extends PureComponent
 {
@@ -67,29 +66,14 @@ class DocumentsPage extends PureComponent
                 <Route path="/documents/:id" render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
-                    <div className="home-page-cont">
+                    <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
                             <div className="home-page-docs-title page">
                                 <DescriptionSvg className="home-page-docs-title-svg"/>
                                 <div className="home-page-docs-title-text">پرونده‌ها</div>
                             </div>
                             <div className="panel-document-cont home">
-                                {
-                                    Object.values(documents).map(doc =>
-                                        <Link key={doc._id} className="home-page-docs-item" to={`/documents/${doc._id}`}>
-                                            <Material className="panel-document-item">
-                                                {
-                                                    doc.thumbnail ?
-                                                        <img className="panel-document-thumb" src={REST_URL + doc.thumbnail} alt=""/>
-                                                        :
-                                                        <PdfSvg className="panel-document-thumb-default"/>
-                                                }
-                                                <div className="panel-document-item-title">{doc.title}</div>
-                                                {doc.summary && <div className="panel-document-item-summary">{doc.summary}</div>}
-                                            </Material>
-                                        </Link>,
-                                    )
-                                }
+                                {Object.values(documents).map(doc => <Document document={doc} key={doc._id}/>)}
                                 <div className="home-page-docs-item-hide"/>
                                 <div className="home-page-docs-item-hide"/>
                                 <div className="home-page-docs-item-hide"/>

@@ -22,9 +22,13 @@
 .hamburger-line {
   position: absolute;
   height: 3px;
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
   border-radius: 3px;
   transition: all linear 0.2s;
+
+  &.open {
+    background-color: var(--secondary-color);
+  }
 }
 
 .hamburger-line-out {

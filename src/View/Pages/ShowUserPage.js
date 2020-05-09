@@ -17,6 +17,7 @@ import LanguageSvg from "../../Media/Svgs/LanguageSvg"
 import AreaSvg from "../../Media/Svgs/AreaSvg"
 import TourismSvg from "../../Media/Svgs/TourismSvg"
 import ExperienceSvg from "../../Media/Svgs/ExperienceSvg"
+import OfficialTickSvg from "../../Media/Svgs/OfficialTickSvg"
 
 class ShowUserPage extends PureComponent
 {
@@ -47,7 +48,7 @@ class ShowUserPage extends PureComponent
     {
         const {notFound, error, user, isLoading} = this.state
         return (
-            <div className="document-page-cont">
+            <div className="document-page-cont user">
                 {
                     error ?
                         <div className="document-page-err">خطایی رخ داد؛ دوباره تلاش کنید!</div>
@@ -65,7 +66,10 @@ class ShowUserPage extends PureComponent
                                     }
                                     <div className="document-page-field">
                                         <TitleSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text">{user.name}</div>
+                                        <div className="document-page-field-text name">
+                                            {user.name}
+                                            {user.have_tick && <OfficialTickSvg className="panel-document-item-official big"/>}
+                                        </div>
                                     </div>
                                     {
                                         user.email &&

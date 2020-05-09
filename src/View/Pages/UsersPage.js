@@ -1,11 +1,10 @@
 import React, {PureComponent} from "react"
-import api, {REST_URL} from "../../Functions/api"
-import {Link, Route, Switch} from "react-router-dom"
-import Material from "../Components/Material"
+import api from "../../Functions/api"
+import {Route, Switch} from "react-router-dom"
 import {ClipLoader} from "react-spinners"
 import ShowUserPage from "./ShowUserPage"
-import Profile from "../../Media/Svgs/Profile"
 import VerifiedUserSvg from "../../Media/Svgs/VerifiedUserSvg"
+import User from "../Components/User"
 
 class UsersPage extends PureComponent
 {
@@ -67,29 +66,14 @@ class UsersPage extends PureComponent
                 <Route path="/users/:id" render={(route) => <ShowUserPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
-                    <div className="home-page-cont">
+                    <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(users).length === 0 ? "" : "loaded"}`}>
                             <div className="home-page-docs-title page">
                                 <VerifiedUserSvg className="home-page-docs-title-svg"/>
                                 <div className="home-page-docs-title-text">فعالین</div>
                             </div>
                             <div className="panel-document-cont home">
-                                {
-                                    Object.values(users).map(user =>
-                                        <Link key={user._id} className="home-page-docs-item" to={`/users/${user._id}`}>
-                                            <Material className="panel-document-item">
-                                                {
-                                                    user.avatar ?
-                                                        <img className="home-avatar-user" src={REST_URL + user.avatar} alt={user.name}/>
-                                                        :
-                                                        <Profile className="home-avatar-user"/>
-                                                }
-                                                <div className="panel-document-item-title">{user.name}</div>
-                                                {user.description && <div className="panel-document-item-summary">{user.description}</div>}
-                                            </Material>
-                                        </Link>,
-                                    )
-                                }
+                                {Object.values(users).map(user => <User user={user} key={user._id}/>,)}
                                 <div className="home-page-docs-item-hide"/>
                                 <div className="home-page-docs-item-hide"/>
                                 <div className="home-page-docs-item-hide"/>
