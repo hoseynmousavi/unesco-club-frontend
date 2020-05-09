@@ -91,6 +91,12 @@
   @media screen and (max-width: 480px) {
     margin-left: 0;
     font-size: $big-font-size;
+
+    &.on-side {
+      position: relative;
+      z-index: 10;
+      color: var(--primary-color);
+    }
   }
 }
 

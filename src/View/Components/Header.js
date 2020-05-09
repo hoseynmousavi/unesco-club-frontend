@@ -136,7 +136,7 @@ class Header extends PureComponent
                     <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
                 </Material>
 
-                <Link className="show-mobile" to="/"><h1 className="header-name">باشگاه یونسکو</h1></Link>
+                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه یونسکو</h1></Link>
 
                 <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
                 <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>

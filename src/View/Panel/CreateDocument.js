@@ -87,7 +87,7 @@ class CreateDocument extends PureComponent
 
     toggleImageModal = () =>
     {
-        this.setState({...this.state, imageModal: !this.state.imageModal, tempImagePreview: undefined}, () =>
+        this.setState({...this.state, imageModal: !this.state.imageModal, tempImagePreview: undefined, previewSlider: undefined}, () =>
         {
             this.tempDesc = undefined
             this.tempImg = undefined
@@ -115,10 +115,10 @@ class CreateDocument extends PureComponent
 
     submitSelectImage = () =>
     {
-        const {tempImagePreview} = this.state
-        this.setState({...this.state, picturePreviews: [...this.state.picturePreviews, tempImagePreview]}, () =>
+        const {picturePreviews, tempImagePreview, previewSlider} = this.state
+        this.setState({...this.state, picturePreviews: [...picturePreviews, tempImagePreview]}, () =>
         {
-            this.pictures.push({file: this.tempImg, description: this.tempDesc})
+            this.pictures.push({file: this.tempImg, description: this.tempDesc, slider: previewSlider})
             this.toggleImageModal()
         })
     }
@@ -158,6 +158,7 @@ class CreateDocument extends PureComponent
                                 {
                                     form.append("picture" + index, image)
                                     pic.description && form.append("picture" + index, pic.description)
+                                    pic.slider && form.append("picture" + index + "slider", pic.slider)
                                     counter++
                                     if (counter === pictures.length) this.send(form)
                                 })
@@ -201,9 +202,11 @@ class CreateDocument extends PureComponent
         this.setState({...this.state, selectedCategories})
     }
 
+    setPreviewSlider = () => this.setState({...this.state, previewSlider: !this.state.previewSlider})
+
     render()
     {
-        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent} = this.state
+        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent, previewSlider} = this.state
         const {toggleModal, categories} = this.props
         return (
             <React.Fragment>
@@ -336,6 +339,12 @@ class CreateDocument extends PureComponent
                                     <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
                                 </label>
                             </Material>
+                            <div className="panel-add-item-pic-slider">
+                                <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont" onClick={this.setPreviewSlider}>
+                                    <div className={`seyed-radio color-border ${previewSlider ? "selected" : ""} `}/>
+                                    <div className="seyed-radio-label">نمایش در اسلایدر</div>
+                                </Material>
+                            </div>
                             <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
                         </div>
                     </React.Fragment>

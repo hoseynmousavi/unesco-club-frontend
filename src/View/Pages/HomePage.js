@@ -41,17 +41,20 @@ class HomePage extends PureComponent
         const {pictures, documents, picturesLoading, documentsLoading, users, usersLoading} = this.state
         return (
             <div className="home-page-cont">
-                <MySlider className={`home-page-slider ${picturesLoading ? "" : "loaded"} dont-gesture`}
-                          dots={true}
-                          arrows={true}
-                          marginArrows="0 50px"
-                          nodes={pictures.map(pic =>
-                              <div className="home-page-slider-item-cont">
-                                  <img className="home-page-slider-item" src={REST_URL + pic.file} alt={pic.description}/>
-                                  {pic.description && <div className="home-page-slider-item-desc">{pic.description}</div>}
-                              </div>,
-                          )}
-                />
+                {
+                    pictures && pictures.length > 0 &&
+                    <MySlider className={`home-page-slider ${picturesLoading ? "" : "loaded"} dont-gesture`}
+                              dots={true}
+                              arrows={true}
+                              marginArrows="0 50px"
+                              nodes={pictures.map(pic =>
+                                  <div className="home-page-slider-item-cont">
+                                      <img className="home-page-slider-item" src={REST_URL + pic.file} alt={pic.description}/>
+                                      {pic.description && <div className="home-page-slider-item-desc">{pic.description}</div>}
+                                  </div>,
+                              )}
+                    />
+                }
                 <div className="home-page-cont-child">
                     <div className={`home-page-documents ${documentsLoading ? "" : "loaded"}`}>
                         <div className="home-page-docs-title">

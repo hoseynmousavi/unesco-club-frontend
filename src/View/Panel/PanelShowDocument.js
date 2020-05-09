@@ -143,7 +143,7 @@ class PanelShowDocument extends PureComponent
 
     toggleImageModal = () =>
     {
-        this.setState({...this.state, imageModal: !this.state.imageModal, tempImagePreview: undefined}, () =>
+        this.setState({...this.state, imageModal: !this.state.imageModal, tempImagePreview: undefined, previewSlider: undefined}, () =>
         {
             this.tempDesc = undefined
             this.tempImg = undefined
@@ -167,9 +167,11 @@ class PanelShowDocument extends PureComponent
             compressImage(this.tempImg).then(file =>
             {
                 const {id, setDocument} = this.props
+                const {previewSlider} = this.state
                 let form = new FormData()
                 form.append("document_id", id)
                 form.append("file", file)
+                previewSlider && form.append("slider", previewSlider)
                 this.tempDesc && form.append("description", this.tempDesc)
                 api.post("document-picture", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
                     .then((created) =>
@@ -206,6 +208,23 @@ class PanelShowDocument extends PureComponent
                 })
                 .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
         }
+    }
+
+    updatePicSlider(picture_id, index, slider)
+    {
+        api.patch("document-picture", {picture_id, slider})
+            .then(() =>
+            {
+                const {setDocument} = this.props
+                let document = {...this.state.document}
+                document.pictures[index].slider = slider
+                this.setState({...this.state, document}, () =>
+                {
+                    setDocument(document)
+                    NotificationManager.success("با موفقیت انجام شد!")
+                })
+            })
+            .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
     }
 
     toggleVideoModal = () =>
@@ -281,9 +300,11 @@ class PanelShowDocument extends PureComponent
         })
     }
 
+    setPreviewSlider = () => this.setState({...this.state, previewSlider: !this.state.previewSlider})
+
     render()
     {
-        const {getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal} = this.state
+        const {getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
         const {categories} = this.props
         return (
             <div className="panel-section">
@@ -294,7 +315,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.title} className={`panel-show-doc-input ${title !== document.title ? "changed" : ""}`} name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
                             {
                                 title !== document.title &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("title")}>
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("title")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -303,7 +324,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.summary} className={`panel-show-doc-input ${summary !== document.summary ? "changed" : ""}`} name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
                             {
                                 summary !== document.summary &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("summary")}>
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("summary")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -312,7 +333,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.description} className={`panel-show-doc-area ${description !== document.description ? "changed" : ""}`} isTextArea={true} name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
                             {
                                 description !== document.description &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("description")}>
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("description")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -321,7 +342,7 @@ class PanelShowDocument extends PureComponent
                             <MaterialInput defaultValue={document.location} className={`panel-show-doc-input ${location !== document.location ? "changed" : ""}`} name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
                             {
                                 location !== document.location &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--)" onClick={() => this.updateField("location")}>
+                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("location")}>
                                     <TickSvg className="panel-show-doc-input-svg"/>
                                 </Material>
                             }
@@ -366,13 +387,19 @@ class PanelShowDocument extends PureComponent
                             <div className="panel-add-item-show-pics dont-gesture">
                                 {
                                     document.pictures.map((item, index) =>
-                                        <Material key={item._id} backgroundColor="rgba(255,255,255,0.3)" className="panel-add-item-show-pics-item-material" onClick={() => this.removePicture(item._id, index)}>
-                                            <img src={REST_URL + item.file} className="panel-add-item-show-pics-item" alt=""/>
-                                            <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
+                                        <div key={item._id} className="panel-add-item-show-pics-item-material">
+                                            <img src={REST_URL + item.file} className="panel-add-item-show-pics-item" alt="" onClick={() => this.removePicture(item._id, index)}/>
+                                            <CancelSvg className="panel-add-item-show-pics-item-cancel" onClick={() => this.removePicture(item._id, index)}/>
+
+                                            <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont" onClick={() => this.updatePicSlider(item._id, index, !item.slider)}>
+                                                <div className={`seyed-radio color-border ${item.slider ? "selected" : ""} `}/>
+                                                <div className="seyed-radio-label">نمایش در اسلایدر</div>
+                                            </Material>
+
                                             <div className="panel-add-item-show-pics-item-desc">
                                                 {item.description}
                                             </div>
-                                        </Material>,
+                                        </div>,
                                     )
                                 }
                             </div>
@@ -475,6 +502,12 @@ class PanelShowDocument extends PureComponent
                                     <input type="file" hidden accept="image/*" onChange={this.selectImage}/>
                                 </label>
                             </Material>
+                            <div className="panel-add-item-pic-slider">
+                                <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont" onClick={this.setPreviewSlider}>
+                                    <div className={`seyed-radio color-border ${previewSlider ? "selected" : ""} `}/>
+                                    <div className="seyed-radio-label">نمایش در اسلایدر</div>
+                                </Material>
+                            </div>
                             <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectImage : null}>ثبت</Material>
                         </div>
                     </React.Fragment>
