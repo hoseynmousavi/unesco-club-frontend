@@ -56,7 +56,12 @@ class HomePage extends PureComponent
                               nodes={pictures.map(pic =>
                                   <div className="home-page-slider-item-cont">
                                       <img className="home-page-slider-item" src={REST_URL + pic.file} alt={pic.description}/>
-                                      {pic.description && <div className="home-page-slider-item-desc">{pic.description}</div>}
+                                      {
+                                          pic.description &&
+                                          <div className="home-page-slider-item-desc">
+                                              <div className="home-page-slider-item-desc-text">{pic.description}</div>
+                                          </div>
+                                      }
                                   </div>,
                               )}
                     />
