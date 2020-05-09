@@ -1,13 +1,13 @@
 @import "variables";
 
 .user-page-thumb {
-  margin-top: 15px;
-  width: 400px;
+  display: block;
+  margin: 15px auto 25px auto;
+  width: 350px;
   object-fit: cover;
   border-radius: 50%;
-  height: 400px;
+  height: 350px;
   cursor: pointer;
-  margin-bottom: 10px;
 
   @media screen and (max-width: 480px) {
     width: 280px;

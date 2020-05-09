@@ -51,12 +51,14 @@ class ShowDocumentPage extends PureComponent
                                     {document.thumbnail && <ImageShow className="document-page-thumb" src={REST_URL + document.thumbnail} alt={document.title}/>}
                                     <div className="document-page-field">
                                         <TitleSvg className="document-page-field-svg"/>
+                                        <div className="document-page-field-dialog">عنوان</div>
                                         <div className="document-page-field-text">{document.title}</div>
                                     </div>
                                     {
                                         document.summary &&
                                         <div className="document-page-field">
                                             <SummarySvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-dialog">خلاصه</div>
                                             <div className="document-page-field-text">{document.summary}</div>
                                         </div>
                                     }
@@ -64,6 +66,7 @@ class ShowDocumentPage extends PureComponent
                                         document.description &&
                                         <div className="document-page-field">
                                             <DescriptionSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-dialog">توضیحات</div>
                                             <div className="document-page-field-text">{document.description}</div>
                                         </div>
                                     }
@@ -71,6 +74,7 @@ class ShowDocumentPage extends PureComponent
                                         document.location &&
                                         <div className="document-page-field">
                                             <LocationSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-dialog">لوکیشن</div>
                                             <div className="document-page-field-text">{document.location}</div>
                                         </div>
                                     }
@@ -78,6 +82,7 @@ class ShowDocumentPage extends PureComponent
                                         document.categories && document.categories.length > 0 &&
                                         <div className="document-page-cats">
                                             <CategorySvg className="document-page-field-svg cat"/>
+                                            <div className="document-page-field-dialog">دسته‌بندی</div>
                                             {
                                                 document.categories.map(cat =>
                                                     <Material key={cat._id} className="panel-select-show-categories-item">

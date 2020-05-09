@@ -6,6 +6,7 @@ import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
 import VerifiedUserSvg from "../../Media/Svgs/VerifiedUserSvg"
 import User from "../Components/User"
 import Document from "../Components/Document"
+import LocationSvg from "../../Media/Svgs/LocationSvg"
 
 class HomePage extends PureComponent
 {
@@ -17,6 +18,8 @@ class HomePage extends PureComponent
             picturesLoading: true,
             documents: [],
             documentsLoading: true,
+            routes: [],
+            routesLoading: true,
             users: [],
             usersLoading: true,
         }
@@ -29,8 +32,11 @@ class HomePage extends PureComponent
         api.get("document-picture")
             .then(pictures => this.setState({...this.state, pictures, picturesLoading: false}))
 
-        api.get("documents", `?limit=15&page=1`)
+        api.get("documents", `?limit=15&page=1&is_route=false`)
             .then(documents => this.setState({...this.state, documents, documentsLoading: false}))
+
+        api.get("documents", `?limit=15&page=1&is_route=true`)
+            .then(routes => this.setState({...this.state, routes, routesLoading: false}))
 
         api.get("users", `?limit=15&page=1`)
             .then(users => this.setState({...this.state, users, usersLoading: false}))
@@ -38,7 +44,7 @@ class HomePage extends PureComponent
 
     render()
     {
-        const {pictures, documents, picturesLoading, documentsLoading, users, usersLoading} = this.state
+        const {pictures, routes, routesLoading, documents, picturesLoading, documentsLoading, users, usersLoading} = this.state
         return (
             <div className="home-page-cont">
                 {
@@ -64,7 +70,24 @@ class HomePage extends PureComponent
                             </Link>
                         </div>
                         <div className="panel-document-cont home">
-                            {documents.map(doc => <Document document={doc} key={doc._id}/>)}
+                            {documents.map((doc, index) => <Document document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
+                            <div className="home-page-docs-item-hide"/>
+                            <div className="home-page-docs-item-hide"/>
+                            <div className="home-page-docs-item-hide"/>
+                            <div className="home-page-docs-item-hide"/>
+                            <div className="home-page-docs-item-hide"/>
+                        </div>
+                    </div>
+
+                    <div className={`home-page-documents ${routesLoading ? "" : "loaded"}`}>
+                        <div className="home-page-docs-title users">
+                            <Link to="/routes">
+                                <LocationSvg className="home-page-docs-title-svg"/>
+                                <div className="home-page-docs-title-text">مسیرها</div>
+                            </Link>
+                        </div>
+                        <div className="panel-document-cont home">
+                            {routes.map((doc, index) => <Document document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
@@ -74,7 +97,7 @@ class HomePage extends PureComponent
                     </div>
 
                     <div className={`home-page-documents ${usersLoading ? "" : "loaded"}`}>
-                        <div className="home-page-docs-title">
+                        <div className="home-page-docs-title users">
                             <Link to="/users">
                                 <VerifiedUserSvg className="home-page-docs-title-svg"/>
                                 <div className="home-page-docs-title-text">فعالین</div>

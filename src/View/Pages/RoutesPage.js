@@ -3,10 +3,10 @@ import api from "../../Functions/api"
 import {Route, Switch} from "react-router-dom"
 import {ClipLoader} from "react-spinners"
 import ShowDocumentPage from "./ShowDocumentPage"
-import DescriptionSvg from "../../Media/Svgs/DescriptionSvg"
 import Document from "../Components/Document"
+import LocationSvg from "../../Media/Svgs/LocationSvg"
 
-class DocumentsPage extends PureComponent
+class RoutesPage extends PureComponent
 {
     constructor(props)
     {
@@ -24,7 +24,7 @@ class DocumentsPage extends PureComponent
     {
         window.scroll({top: 0})
 
-        api.get("documents", `?limit=20&page=1&is_route=false`)
+        api.get("documents", `?limit=20&page=1&is_route=true`)
             .then(documents => this.setState({...this.state, documents: documents.reduce((sum, doc) => ({...sum, [doc._id]: doc}), {}), documentsLoading: false}))
 
         document.addEventListener("scroll", this.onScroll)
@@ -47,7 +47,7 @@ class DocumentsPage extends PureComponent
                 this.setState({...this.state, documentsLoading: true}, () =>
                 {
                     this.activeScrollHeight = scrollHeight
-                    api.get("documents", `?limit=20&page=${this.page}&is_route=false`)
+                    api.get("documents", `?limit=20&page=${this.page}&is_route=true`)
                         .then(data =>
                         {
                             this.page += 1
@@ -69,8 +69,8 @@ class DocumentsPage extends PureComponent
                     <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
                             <div className="home-page-docs-title page">
-                                <DescriptionSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">پرونده‌ها</div>
+                                <LocationSvg className="home-page-docs-title-svg"/>
+                                <div className="home-page-docs-title-text">مسیرها</div>
                             </div>
                             <div className="panel-document-cont home">
                                 {Object.values(documents).map(doc => <Document document={doc} key={doc._id}/>)}
@@ -84,7 +84,7 @@ class DocumentsPage extends PureComponent
                                 documentsLoading ?
                                     <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
                                     :
-                                    Object.values(documents).length === 0 && <div className="panel-section-loading-cont">پرونده ای یافت نشد!</div>
+                                    Object.values(documents).length === 0 && <div className="panel-section-loading-cont">مسیری یافت نشد!</div>
                             }
                         </div>
                     </div>
@@ -94,4 +94,4 @@ class DocumentsPage extends PureComponent
     }
 }
 
-export default DocumentsPage
+export default RoutesPage

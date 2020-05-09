@@ -80,6 +80,11 @@
   margin-top: 50px;
   margin-bottom: 5px;
 
+  &.users {
+    padding-top: 80px;
+    border-top: 1px solid var(--primary-color);
+  }
+
   &.page {
     margin-top: 0;
   }

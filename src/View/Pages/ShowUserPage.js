@@ -64,95 +64,105 @@ class ShowUserPage extends PureComponent
                                             :
                                             <Profile className="user-page-thumb"/>
                                     }
-                                    <div className="document-page-field">
-                                        <TitleSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text name">
-                                            {user.name}
-                                            {user.have_tick && <OfficialTickSvg className="panel-document-item-official big"/>}
-                                        </div>
-                                    </div>
-                                    {
-                                        user.email &&
+                                    <div className="document-page-field-cont">
                                         <div className="document-page-field">
-                                            <EmailSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">{user.email}</div>
-                                        </div>
-                                    }
-                                    {
-                                        user.birth_date_year &&
-                                        <div className="document-page-field">
-                                            <CalendarSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">
-                                                {parseInt(numberCorrection(new Date().toLocaleDateString("fa-ir").slice(0, 4))) - parseInt(user.birth_date_year)}
-                                                <span> </span>
-                                                <span>ساله</span>
+                                            <TitleSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-dialog">نام</div>
+                                            <div className="document-page-field-text name">
+                                                {user.name}
+                                                {user.have_tick && <OfficialTickSvg className="panel-document-item-official big"/>}
                                             </div>
                                         </div>
-                                    }
-                                    <div className="document-page-field">
-                                        <GradeSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text left">{user.grade}</div>
                                         {
-                                            user.major &&
-                                            <React.Fragment>
-                                                <MajorSvg className="document-page-field-svg"/>
-                                                <div className="document-page-field-text left">{user.major}</div>
-                                            </React.Fragment>
+                                            user.description &&
+                                            <div className="document-page-field">
+                                                <DescriptionSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">توضیحات</div>
+                                                <div className="document-page-field-text">{user.description}</div>
+                                            </div>
                                         }
                                         {
-                                            user.university &&
-                                            <React.Fragment>
-                                                <UniversitySvg className="document-page-field-svg"/>
-                                                <div className="document-page-field-text">{user.university}</div>
-                                            </React.Fragment>
+                                            user.email &&
+                                            <div className="document-page-field inline">
+                                                <EmailSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">ایمیل</div>
+                                                <div className="document-page-field-text">{user.email}</div>
+                                            </div>
+                                        }
+                                        {
+                                            user.birth_date_year &&
+                                            <div className="document-page-field inline">
+                                                <CalendarSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">سن</div>
+                                                <div className="document-page-field-text">
+                                                    {parseInt(numberCorrection(new Date().toLocaleDateString("fa-ir").slice(0, 4))) - parseInt(user.birth_date_year)}
+                                                    <span> </span>
+                                                    <span>ساله</span>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div className="document-page-field inline">
+                                            <GradeSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-dialog">تحصیلات</div>
+                                            <div className="document-page-field-text left">{user.grade}</div>
+                                            {
+                                                user.major &&
+                                                <React.Fragment>
+                                                    <MajorSvg className="document-page-field-svg"/>
+                                                    <div className="document-page-field-text left">{user.major}</div>
+                                                </React.Fragment>
+                                            }
+                                            {
+                                                user.university &&
+                                                <React.Fragment>
+                                                    <UniversitySvg className="document-page-field-svg"/>
+                                                    <div className="document-page-field-text">{user.university}</div>
+                                                </React.Fragment>
+                                            }
+                                        </div>
+                                        {
+                                            user.range_of_activity &&
+                                            <div className="document-page-field inline">
+                                                <LocationSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">محدوده فعالیت</div>
+                                                <div className="document-page-field-text">{user.range_of_activity}</div>
+                                            </div>
+                                        }
+                                        {
+                                            user.specializations &&
+                                            <div className="document-page-field inline">
+                                                <BuildSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">تخصص‌ها</div>
+                                                <div className="document-page-field-text">{user.specializations}</div>
+                                            </div>
+                                        }
+                                        <div className="document-page-field inline">
+                                            <LanguageSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">
+                                                آشنایی {user.familiarity_with_language === "high" ? "زیاد" : user.familiarity_with_language === "low" ? "کم" : "متوسط"} با زبان
+                                            </div>
+                                        </div>
+                                        <div className="document-page-field inline">
+                                            <AreaSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">
+                                                آشنایی {user.familiarity_with_area === "high" ? "زیاد" : user.familiarity_with_area === "low" ? "کم" : "متوسط"} با منطقه
+                                            </div>
+                                        </div>
+                                        <div className="document-page-field inline">
+                                            <TourismSvg className="document-page-field-svg"/>
+                                            <div className="document-page-field-text">
+                                                آشنایی {user.familiarity_with_tourism === "high" ? "زیاد" : user.familiarity_with_tourism === "low" ? "کم" : "متوسط"} با تخصص گردشگری
+                                            </div>
+                                        </div>
+                                        {
+                                            user.experience &&
+                                            <div className="document-page-field inline">
+                                                <ExperienceSvg className="document-page-field-svg"/>
+                                                <div className="document-page-field-dialog">سابقه فعالیت</div>
+                                                <div className="document-page-field-text">{user.experience}</div>
+                                            </div>
                                         }
                                     </div>
-                                    {
-                                        user.range_of_activity &&
-                                        <div className="document-page-field">
-                                            <LocationSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">{user.range_of_activity}</div>
-                                        </div>
-                                    }
-                                    {
-                                        user.specializations &&
-                                        <div className="document-page-field">
-                                            <BuildSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">{user.specializations}</div>
-                                        </div>
-                                    }
-                                    <div className="document-page-field">
-                                        <LanguageSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text">
-                                            آشنایی {user.familiarity_with_language === "high" ? "زیاد" : user.familiarity_with_language === "low" ? "کم" : "متوسط"} با زبان
-                                        </div>
-                                    </div>
-                                    <div className="document-page-field">
-                                        <AreaSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text">
-                                            آشنایی {user.familiarity_with_area === "high" ? "زیاد" : user.familiarity_with_area === "low" ? "کم" : "متوسط"} با منطقه
-                                        </div>
-                                    </div>
-                                    <div className="document-page-field">
-                                        <TourismSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-text">
-                                            آشنایی {user.familiarity_with_tourism === "high" ? "زیاد" : user.familiarity_with_tourism === "low" ? "کم" : "متوسط"} با تخصص گردشگری
-                                        </div>
-                                    </div>
-                                    {
-                                        user.experience &&
-                                        <div className="document-page-field">
-                                            <ExperienceSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">{user.experience}</div>
-                                        </div>
-                                    }
-                                    {
-                                        user.description &&
-                                        <div className="document-page-field">
-                                            <DescriptionSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-text">{user.description}</div>
-                                        </div>
-                                    }
                                 </React.Fragment>
                                 :
                                 isLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>

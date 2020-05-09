@@ -143,6 +143,7 @@ class Header extends PureComponent
                     <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
                     <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
                     <NavLink to="/documents" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پرونده‌ها</Material></NavLink>
+                    <NavLink to="/routes" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مسیرها</Material></NavLink>
                     <NavLink to="/users" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">فعالین</Material></NavLink>
                     <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
                     <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
@@ -152,6 +153,7 @@ class Header extends PureComponent
                     <Link to="/"><h1 className="header-name">باشگاه یونسکو</h1></Link>
                     <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
                     <NavLink activeClassName="header-right-section-link-active" to="/documents"><Material className="header-right-section-link">پرونده‌ها</Material></NavLink>
+                    <NavLink activeClassName="header-right-section-link-active" to="/routes"><Material className="header-right-section-link">مسیرها</Material></NavLink>
                     <NavLink activeClassName="header-right-section-link-active" to="/users"><Material className="header-right-section-link">فعالین</Material></NavLink>
                     <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
                 </div>

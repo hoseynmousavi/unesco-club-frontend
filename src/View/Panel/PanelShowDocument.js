@@ -302,6 +302,25 @@ class PanelShowDocument extends PureComponent
 
     setPreviewSlider = () => this.setState({...this.state, previewSlider: !this.state.previewSlider})
 
+    toggleRoute = () =>
+    {
+        this.setState({...this.state, sendLoading: true}, () =>
+        {
+            const {id, setDocument} = this.props
+            api.patch("document", {document_id: id, is_route: !this.state.document.is_route})
+                .then(() =>
+                {
+                    const document = {...this.state.document, is_route: !this.state.document.is_route}
+                    this.setState({...this.state, sendLoading: false, document}, () =>
+                    {
+                        setDocument(document)
+                        NotificationManager.success("با موفقیت بروز شد!")
+                    })
+                })
+                .catch(() => this.setState({...this.state, sendLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
+        })
+    }
+
     render()
     {
         const {getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
@@ -320,6 +339,10 @@ class PanelShowDocument extends PureComponent
                                 </Material>
                             }
                         </div>
+                        <Material className="panel-checkbox" onClick={this.toggleRoute}>
+                            <div className={`panel-checkbox-item ${document.is_route ? "" : "hide"}`}/>
+                            مسیر
+                        </Material>
                         <div className="panel-show-doc-input-cont">
                             <MaterialInput defaultValue={document.summary} className={`panel-show-doc-input ${summary !== document.summary ? "changed" : ""}`} name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
                             {

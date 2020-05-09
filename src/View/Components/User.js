@@ -10,7 +10,7 @@ const User = props =>
     const {user} = props
     return (
         <Link className="home-page-docs-item" to={`/users/${user._id}`}>
-            <Material className="panel-document-item user">
+            <Material className="user-item-cont">
                 {
                     user.avatar ?
                         <img className="home-avatar-user" src={REST_URL + user.avatar} alt={user.name}/>

@@ -128,7 +128,7 @@ class CreateDocument extends PureComponent
     submit = () =>
     {
         const {title, summary, description, location, thumbnail, videos, pictures} = this
-        const {modalLoading, selectedCategories} = this.state
+        const {modalLoading, selectedCategories, is_route} = this.state
         if (!modalLoading)
         {
             if (title)
@@ -141,6 +141,7 @@ class CreateDocument extends PureComponent
                     summary && form.append("summary", summary)
                     description && form.append("description", description)
                     location && form.append("location", location)
+                    is_route && form.append("is_route", is_route)
                     videos.forEach((video, index) =>
                     {
                         form.append("film" + index, video.file)
@@ -204,9 +205,11 @@ class CreateDocument extends PureComponent
 
     setPreviewSlider = () => this.setState({...this.state, previewSlider: !this.state.previewSlider})
 
+    toggleRoute = () => this.setState({...this.state, is_route: !this.state.is_route})
+
     render()
     {
-        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent, previewSlider} = this.state
+        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent, previewSlider, is_route} = this.state
         const {toggleModal, categories} = this.props
         return (
             <React.Fragment>
@@ -214,6 +217,10 @@ class CreateDocument extends PureComponent
                     <div className="panel-add-item-model-cont static" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">ایجاد پرونده</div>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                        <Material className="panel-checkbox" onClick={this.toggleRoute}>
+                            <div className={`panel-checkbox-item ${is_route ? "" : "hide"}`}/>
+                            مسیر
+                        </Material>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
                         <MaterialInput isTextArea={true} className="sign-up-page-area" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>

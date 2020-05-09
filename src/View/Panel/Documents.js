@@ -129,7 +129,7 @@ class Documents extends PureComponent
                             {
                                 Object.values(documents).map(doc =>
                                     <Link key={doc._id} className="panel-document-item-link" to={`/panel/documents/${doc._id}`}>
-                                        <Material className="panel-document-item">
+                                        <Material className="panel-document-item panel">
                                             {
                                                 doc.thumbnail ?
                                                     <img className="panel-document-thumb" src={REST_URL + doc.thumbnail} alt=""/>
