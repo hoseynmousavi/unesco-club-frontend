@@ -94,9 +94,9 @@ class ImageShow extends PureComponent
             copyImage.style.right = "auto"
             setTimeout(() =>
             {
-                this.img.style.opacity = "1"
-                copyImage.remove()
-                backGround.remove()
+                if (this.img) this.img.style.opacity = "1"
+                if (copyImage) copyImage.remove()
+                if (backGround) backGround.remove()
             }, 300)
         })
     }

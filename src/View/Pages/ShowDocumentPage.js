@@ -52,14 +52,14 @@ class ShowDocumentPage extends PureComponent
                                     <div className="document-page-field">
                                         <TitleSvg className="document-page-field-svg"/>
                                         <div className="document-page-field-dialog">عنوان</div>
-                                        <div className="document-page-field-text">{document.title}</div>
+                                        <div className="document-page-field-text inline">{document.title}</div>
                                     </div>
                                     {
                                         document.summary &&
                                         <div className="document-page-field">
                                             <SummarySvg className="document-page-field-svg"/>
                                             <div className="document-page-field-dialog">خلاصه</div>
-                                            <div className="document-page-field-text">{document.summary}</div>
+                                            <div className="document-page-field-text inline">{document.summary}</div>
                                         </div>
                                     }
                                     {
@@ -67,7 +67,11 @@ class ShowDocumentPage extends PureComponent
                                         <div className="document-page-field">
                                             <DescriptionSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-dialog">توضیحات</div>
-                                            <div className="document-page-field-text">{document.description}</div>
+                                            <div className={`document-page-field-text inline ${document.pictures && document.pictures.length > 0 ? "have-img" : ""}`}>{document.description}</div>
+                                            {
+                                                document.pictures && document.pictures.length > 0 &&
+                                                <ImageShow key={document.pictures[0]._id} className="document-page-field-img" src={REST_URL + document.pictures[0].file} alt={document.pictures[0].description}/>
+                                            }
                                         </div>
                                     }
                                     {
@@ -75,7 +79,7 @@ class ShowDocumentPage extends PureComponent
                                         <div className="document-page-field">
                                             <LocationSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-dialog">لوکیشن</div>
-                                            <div className="document-page-field-text">{document.location}</div>
+                                            <div className="document-page-field-text inline">{document.location}</div>
                                         </div>
                                     }
                                     {
@@ -93,10 +97,10 @@ class ShowDocumentPage extends PureComponent
                                         </div>
                                     }
                                     {
-                                        document.pictures && document.pictures.length > 0 &&
+                                        document.pictures && document.pictures.length > 1 &&
                                         <div className="document-page-pics">
                                             {
-                                                document.pictures.map(img =>
+                                                document.pictures.slice(1, document.pictures.length).map(img =>
                                                     <ImageShow key={img._id} className="document-page-pics-item" src={REST_URL + img.file} alt={img.description}/>,
                                                 )
                                             }

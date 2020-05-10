@@ -18,6 +18,22 @@ class MySlider extends PureComponent
         this.changing = false
     }
 
+    componentDidMount()
+    {
+        this.interval = setInterval(() =>
+        {
+            const {showIndex} = this.state
+            const {nodes} = this.props
+            if (showIndex + 1 < nodes.length) this.setIndex(showIndex + 1)
+            else this.setIndex(0)
+        }, 20000)
+    }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.interval)
+    }
+
     dragMouseDown = (e) =>
     {
         e.preventDefault()
@@ -71,7 +87,17 @@ class MySlider extends PureComponent
         this.slider.onmouseleave = null
         this.slider.onmousemove = null
         this.changing = false
-        this.setState({...this.state, showIndex: parseInt(this.prevX / this.slider.clientWidth)})
+        this.setState({...this.state, showIndex: parseInt(this.prevX / this.slider.clientWidth)}, () =>
+        {
+            clearInterval(this.interval)
+            this.interval = setInterval(() =>
+            {
+                const {showIndex} = this.state
+                const {nodes} = this.props
+                if (showIndex + 1 < nodes.length) this.setIndex(showIndex + 1)
+                else this.setIndex(0)
+            }, 20000)
+        })
         setTimeout(() =>
         {
             if (this.slider) this.slider.style.transition = "initial"
@@ -81,13 +107,20 @@ class MySlider extends PureComponent
     setIndex(index)
     {
         this.setState({...this.state, showIndex: index}, () =>
+        {
+            clearInterval(this.interval)
+            this.interval = setInterval(() =>
             {
-                this.prevX = index * this.slider.clientWidth
-                this.slider.style.transition = "transform ease-in-out 0.2s"
-                this.slider.style.transform = `translateX(${this.prevX}px)`
-                setTimeout(() => this.slider.style.transition = "initial", 350)
-            },
-        )
+                const {showIndex} = this.state
+                const {nodes} = this.props
+                if (showIndex + 1 < nodes.length) this.setIndex(showIndex + 1)
+                else this.setIndex(0)
+            }, 20000)
+            this.prevX = index * this.slider.clientWidth
+            this.slider.style.transition = "transform ease-in-out 0.2s"
+            this.slider.style.transform = `translateX(${this.prevX}px)`
+            setTimeout(() => this.slider.style.transition = "initial", 350)
+        })
     }
 
     render()
@@ -113,7 +146,7 @@ class MySlider extends PureComponent
                     <div ref={e => this.slider = e} className="my-slider-scroll" onMouseDown={this.dragMouseDown} onTouchStart={this.onTouchStart}>
                         {
                             nodes.map((node, index) =>
-                                <div className="my-slider-node" key={"slider" + index}>
+                                <div className="my-slider-node" key={showIndex === index ? "show" + index : "slider" + index}>
                                     {node}
                                 </div>,
                             )

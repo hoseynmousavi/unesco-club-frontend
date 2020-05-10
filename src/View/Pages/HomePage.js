@@ -92,7 +92,7 @@ class HomePage extends PureComponent
                             </Link>
                         </div>
                         <div className="panel-document-cont home">
-                            {routes.map((doc, index) => <Document document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
+                            {routes.map((doc, index) => <Document document={doc} noBorder={index === routes.length - 1} key={doc._id}/>)}
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>

@@ -56,9 +56,10 @@
   top: 0;
   bottom: 0;
   color: white;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent);
   padding: 0 5% 0 50%;
   display: flex;
+  transition: all linear 0.2s;
   align-items: center;
 }
 
@@ -69,6 +70,7 @@
     margin-bottom: 160px;
   }
   animation: slider ease-out 2.5s;
+  transition: all linear 0.2s;
 }
 
 .home-page-documents {

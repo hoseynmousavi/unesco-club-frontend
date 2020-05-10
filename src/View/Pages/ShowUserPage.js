@@ -83,7 +83,7 @@ class ShowUserPage extends PureComponent
                                         }
                                         {
                                             user.email &&
-                                            <div className="document-page-field inline">
+                                            <div className="document-page-field">
                                                 <EmailSvg className="document-page-field-svg"/>
                                                 <div className="document-page-field-dialog">ایمیل</div>
                                                 <div className="document-page-field-text">{user.email}</div>
@@ -91,7 +91,7 @@ class ShowUserPage extends PureComponent
                                         }
                                         {
                                             user.birth_date_year &&
-                                            <div className="document-page-field inline">
+                                            <div className="document-page-field">
                                                 <CalendarSvg className="document-page-field-svg"/>
                                                 <div className="document-page-field-dialog">سن</div>
                                                 <div className="document-page-field-text">
@@ -101,7 +101,7 @@ class ShowUserPage extends PureComponent
                                                 </div>
                                             </div>
                                         }
-                                        <div className="document-page-field inline">
+                                        <div className="document-page-field">
                                             <GradeSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-dialog">تحصیلات</div>
                                             <div className="document-page-field-text left">{user.grade}</div>
@@ -122,7 +122,7 @@ class ShowUserPage extends PureComponent
                                         </div>
                                         {
                                             user.range_of_activity &&
-                                            <div className="document-page-field inline">
+                                            <div className="document-page-field">
                                                 <LocationSvg className="document-page-field-svg"/>
                                                 <div className="document-page-field-dialog">محدوده فعالیت</div>
                                                 <div className="document-page-field-text">{user.range_of_activity}</div>
@@ -130,25 +130,25 @@ class ShowUserPage extends PureComponent
                                         }
                                         {
                                             user.specializations &&
-                                            <div className="document-page-field inline">
+                                            <div className="document-page-field">
                                                 <BuildSvg className="document-page-field-svg"/>
                                                 <div className="document-page-field-dialog">تخصص‌ها</div>
                                                 <div className="document-page-field-text">{user.specializations}</div>
                                             </div>
                                         }
-                                        <div className="document-page-field inline">
+                                        <div className="document-page-field">
                                             <LanguageSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-text">
                                                 آشنایی {user.familiarity_with_language === "high" ? "زیاد" : user.familiarity_with_language === "low" ? "کم" : "متوسط"} با زبان
                                             </div>
                                         </div>
-                                        <div className="document-page-field inline">
+                                        <div className="document-page-field">
                                             <AreaSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-text">
                                                 آشنایی {user.familiarity_with_area === "high" ? "زیاد" : user.familiarity_with_area === "low" ? "کم" : "متوسط"} با منطقه
                                             </div>
                                         </div>
-                                        <div className="document-page-field inline">
+                                        <div className="document-page-field">
                                             <TourismSvg className="document-page-field-svg"/>
                                             <div className="document-page-field-text">
                                                 آشنایی {user.familiarity_with_tourism === "high" ? "زیاد" : user.familiarity_with_tourism === "low" ? "کم" : "متوسط"} با تخصص گردشگری
@@ -156,7 +156,7 @@ class ShowUserPage extends PureComponent
                                         </div>
                                         {
                                             user.experience &&
-                                            <div className="document-page-field inline">
+                                            <div className="document-page-field">
                                                 <ExperienceSvg className="document-page-field-svg"/>
                                                 <div className="document-page-field-dialog">سابقه فعالیت</div>
                                                 <div className="document-page-field-text">{user.experience}</div>

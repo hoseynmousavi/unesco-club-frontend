@@ -733,6 +733,9 @@
 
 .panel-document-item-summary {
   font-size: $regular-font-size;
+  text-align: justify;
+  text-align-last: center;
+  line-height: 25px;
 }
 
 .panel-show-doc-cont {
