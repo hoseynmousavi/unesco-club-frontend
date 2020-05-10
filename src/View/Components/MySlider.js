@@ -119,7 +119,10 @@ class MySlider extends PureComponent
             this.prevX = index * this.slider.clientWidth
             this.slider.style.transition = "transform ease-in-out 0.2s"
             this.slider.style.transform = `translateX(${this.prevX}px)`
-            setTimeout(() => this.slider.style.transition = "initial", 350)
+            setTimeout(() =>
+            {
+                if (this.slider) this.slider.style.transition = "initial"
+            }, 350)
         })
     }
 

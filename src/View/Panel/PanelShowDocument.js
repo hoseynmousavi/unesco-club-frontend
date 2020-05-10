@@ -10,6 +10,8 @@ import CancelSvg from "../../Media/Svgs/CancelSvg"
 import ImageSvg from "../../Media/Svgs/ImageSvg"
 import compressImage from "../../Helpers/compressImage"
 import VideoSvg from "../../Media/Svgs/VideoSvg"
+import GarbageSvg from "../../Media/Svgs/GarbageSvg"
+import {Redirect} from "react-router-dom"
 
 class PanelShowDocument extends PureComponent
 {
@@ -23,6 +25,8 @@ class PanelShowDocument extends PureComponent
             sendLoading: false,
             imageModal: false,
             videoModal: false,
+            error: false,
+            redirect: false,
         }
     }
 
@@ -58,6 +62,7 @@ class PanelShowDocument extends PureComponent
                         getLoading: false,
                     })
                 })
+                .catch(() => this.setState({...this.state, error: true, getLoading: false}))
         }
     }
 
@@ -323,137 +328,143 @@ class PanelShowDocument extends PureComponent
 
     render()
     {
-        const {getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
-        const {categories} = this.props
+        const {error, redirect, getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
+        const {categories, removeItem} = this.props
         return (
             <div className="panel-section">
                 {
-                    document &&
-                    <div className="panel-show-doc-cont">
-                        <div className="panel-show-doc-input-cont">
-                            <MaterialInput defaultValue={document.title} className={`panel-show-doc-input ${title !== document.title ? "changed" : ""}`} name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
-                            {
-                                title !== document.title &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("title")}>
-                                    <TickSvg className="panel-show-doc-input-svg"/>
+                    error ?
+                        <div>یافت نشد!</div>
+                        :
+                        redirect ?
+                            <Redirect to="/panel/documents"/>
+                            :
+                            document &&
+                            <div className="panel-show-doc-cont">
+                                <div className="panel-show-doc-input-cont">
+                                    <MaterialInput defaultValue={document.title} className={`panel-show-doc-input ${title !== document.title ? "changed" : ""}`} name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                                    {
+                                        title !== document.title &&
+                                        <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("title")}>
+                                            <TickSvg className="panel-show-doc-input-svg"/>
+                                        </Material>
+                                    }
+                                </div>
+                                <Material className="panel-checkbox" onClick={this.toggleRoute}>
+                                    <div className={`panel-checkbox-item ${document.is_route ? "" : "hide"}`}/>
+                                    مسیر
                                 </Material>
-                            }
-                        </div>
-                        <Material className="panel-checkbox" onClick={this.toggleRoute}>
-                            <div className={`panel-checkbox-item ${document.is_route ? "" : "hide"}`}/>
-                            مسیر
-                        </Material>
-                        <div className="panel-show-doc-input-cont">
-                            <MaterialInput defaultValue={document.summary} className={`panel-show-doc-input ${summary !== document.summary ? "changed" : ""}`} name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
-                            {
-                                summary !== document.summary &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("summary")}>
-                                    <TickSvg className="panel-show-doc-input-svg"/>
-                                </Material>
-                            }
-                        </div>
-                        <div className="panel-show-doc-input-cont">
-                            <MaterialInput defaultValue={document.description} className={`panel-show-doc-area ${description !== document.description ? "changed" : ""}`} isTextArea={true} name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
-                            {
-                                description !== document.description &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("description")}>
-                                    <TickSvg className="panel-show-doc-input-svg"/>
-                                </Material>
-                            }
-                        </div>
-                        <div className="panel-show-doc-input-cont">
-                            <MaterialInput defaultValue={document.location} className={`panel-show-doc-input ${location !== document.location ? "changed" : ""}`} name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
-                            {
-                                location !== document.location &&
-                                <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("location")}>
-                                    <TickSvg className="panel-show-doc-input-svg"/>
-                                </Material>
-                            }
-                        </div>
+                                <div className="panel-show-doc-input-cont">
+                                    <MaterialInput defaultValue={document.summary} className={`panel-show-doc-input ${summary !== document.summary ? "changed" : ""}`} name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
+                                    {
+                                        summary !== document.summary &&
+                                        <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("summary")}>
+                                            <TickSvg className="panel-show-doc-input-svg"/>
+                                        </Material>
+                                    }
+                                </div>
+                                <div className="panel-show-doc-input-cont">
+                                    <MaterialInput defaultValue={document.description} className={`panel-show-doc-area ${description !== document.description ? "changed" : ""}`} isTextArea={true} name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                                    {
+                                        description !== document.description &&
+                                        <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("description")}>
+                                            <TickSvg className="panel-show-doc-input-svg"/>
+                                        </Material>
+                                    }
+                                </div>
+                                <div className="panel-show-doc-input-cont">
+                                    <MaterialInput defaultValue={document.location} className={`panel-show-doc-input ${location !== document.location ? "changed" : ""}`} name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
+                                    {
+                                        location !== document.location &&
+                                        <Material className="panel-show-doc-input-svg-cont" backgroundColor="var(--success-color)" onClick={() => this.updateField("location")}>
+                                            <TickSvg className="panel-show-doc-input-svg"/>
+                                        </Material>
+                                    }
+                                </div>
 
-                        <Material className="panel-select-categories" onClick={this.toggleCategories}>افزودن دسته‌بندی</Material>
-                        <div className="panel-select-show-categories">
-                            {
-                                document.categories && document.categories.length > 0 ?
-                                    document.categories.map((cat, index) =>
-                                        <Material key={cat._id} className="panel-select-show-categories-item" onClick={() => this.removeCategory(cat._id, index)}>
-                                            {cat.name}
-                                            <span> </span>
-                                            <span>✕</span>
-                                        </Material>,
-                                    )
-                                    :
-                                    <div className="panel-select-show-categories-none">بدون دسته‌بندی</div>
-                            }
-                        </div>
+                                <Material className="panel-select-categories" onClick={this.toggleCategories}>افزودن دسته‌بندی</Material>
+                                <div className="panel-select-show-categories">
+                                    {
+                                        document.categories && document.categories.length > 0 ?
+                                            document.categories.map((cat, index) =>
+                                                <Material key={cat._id} className="panel-select-show-categories-item" onClick={() => this.removeCategory(cat._id, index)}>
+                                                    {cat.name}
+                                                    <span> </span>
+                                                    <span>✕</span>
+                                                </Material>,
+                                            )
+                                            :
+                                            <div className="panel-select-show-categories-none">بدون دسته‌بندی</div>
+                                    }
+                                </div>
 
-                        <Material className="panel-add-item-thumb-cont">
-                            <label className="panel-add-item-thumb">
+                                <Material className="panel-add-item-thumb-cont">
+                                    <label className="panel-add-item-thumb">
+                                        {
+                                            document.thumbnail ?
+                                                <img className="panel-add-item-thumb-file" src={REST_URL + document.thumbnail} alt=""/>
+                                                :
+                                                <ImageSvg className="panel-add-item-pic-svg image"/>
+                                        }
+                                        <input type="file" hidden accept="image/*" onChange={this.selectThumbnail}/>
+                                    </label>
+                                </Material>
+
+                                <Material onClick={this.toggleImageModal}>
+                                    <label className="panel-add-item-pic">
+                                        <CameraSvg className="panel-add-item-pic-svg"/>
+                                    </label>
+                                </Material>
+
                                 {
-                                    document.thumbnail ?
-                                        <img className="panel-add-item-thumb-file" src={REST_URL + document.thumbnail} alt=""/>
-                                        :
-                                        <ImageSvg className="panel-add-item-pic-svg image"/>
+                                    document.pictures && document.pictures.length > 0 &&
+                                    <div className="panel-add-item-show-pics dont-gesture">
+                                        {
+                                            document.pictures.map((item, index) =>
+                                                <div key={item._id} className="panel-add-item-show-pics-item-material">
+                                                    <img src={REST_URL + item.file} className="panel-add-item-show-pics-item" alt="" onClick={() => this.removePicture(item._id, index)}/>
+                                                    <CancelSvg className="panel-add-item-show-pics-item-cancel" onClick={() => this.removePicture(item._id, index)}/>
+
+                                                    <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont" onClick={() => this.updatePicSlider(item._id, index, !item.slider)}>
+                                                        <div className={`seyed-radio color-border ${item.slider ? "selected" : ""} `}/>
+                                                        <div className="seyed-radio-label">نمایش در اسلایدر</div>
+                                                    </Material>
+
+                                                    <div className="panel-add-item-show-pics-item-desc">
+                                                        {item.description}
+                                                    </div>
+                                                </div>,
+                                            )
+                                        }
+                                    </div>
                                 }
-                                <input type="file" hidden accept="image/*" onChange={this.selectThumbnail}/>
-                            </label>
-                        </Material>
 
-                        <Material onClick={this.toggleImageModal}>
-                            <label className="panel-add-item-pic">
-                                <CameraSvg className="panel-add-item-pic-svg"/>
-                            </label>
-                        </Material>
+                                <Material className="panel-add-item-video" onClick={this.toggleVideoModal}>
+                                    <label className="panel-add-item-pic">
+                                        <VideoSvg className="panel-add-item-video-svg"/>
+                                    </label>
+                                </Material>
 
-                        {
-                            document.pictures && document.pictures.length > 0 &&
-                            <div className="panel-add-item-show-pics dont-gesture">
                                 {
-                                    document.pictures.map((item, index) =>
-                                        <div key={item._id} className="panel-add-item-show-pics-item-material">
-                                            <img src={REST_URL + item.file} className="panel-add-item-show-pics-item" alt="" onClick={() => this.removePicture(item._id, index)}/>
-                                            <CancelSvg className="panel-add-item-show-pics-item-cancel" onClick={() => this.removePicture(item._id, index)}/>
-
-                                            <Material backgroundColor="var(--transparent-second)" className="seyed-radio-cont" onClick={() => this.updatePicSlider(item._id, index, !item.slider)}>
-                                                <div className={`seyed-radio color-border ${item.slider ? "selected" : ""} `}/>
-                                                <div className="seyed-radio-label">نمایش در اسلایدر</div>
-                                            </Material>
-
-                                            <div className="panel-add-item-show-pics-item-desc">
-                                                {item.description}
-                                            </div>
-                                        </div>,
-                                    )
+                                    document.films && document.films.length > 0 &&
+                                    <div className="panel-add-item-show-pics dont-gesture">
+                                        {
+                                            document.films.map((item, index) =>
+                                                <Material key={item._id} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(item._id, index)}>
+                                                    <video preload="none" className="panel-add-item-show-pics-item" controls controlsList="nodownload">
+                                                        <source src={REST_URL + item.file}/>
+                                                    </video>
+                                                    <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
+                                                    <div className="panel-add-item-show-pics-item-desc">
+                                                        {item.description}
+                                                    </div>
+                                                </Material>,
+                                            )
+                                        }
+                                    </div>
                                 }
+                                <Material className="panel-add-item-btn back-white" onClick={() => removeItem(document._id, () => this.setState({...this.state, redirect: true}))}><GarbageSvg className="panel-add-item-btn-del"/></Material>
                             </div>
-                        }
-
-                        <Material className="panel-add-item-video" onClick={this.toggleVideoModal}>
-                            <label className="panel-add-item-pic">
-                                <VideoSvg className="panel-add-item-video-svg"/>
-                            </label>
-                        </Material>
-
-                        {
-                            document.films && document.films.length > 0 &&
-                            <div className="panel-add-item-show-pics dont-gesture">
-                                {
-                                    document.films.map((item, index) =>
-                                        <Material key={item._id} className="panel-add-item-show-pics-item-material" onClick={() => this.removeVideo(item._id, index)}>
-                                            <video preload="none" className="panel-add-item-show-pics-item" controls controlsList="nodownload">
-                                                <source src={REST_URL + item.file}/>
-                                            </video>
-                                            <CancelSvg className="panel-add-item-show-pics-item-cancel"/>
-                                            <div className="panel-add-item-show-pics-item-desc">
-                                                {item.description}
-                                            </div>
-                                        </Material>,
-                                    )
-                                }
-                            </div>
-                        }
-
-                    </div>
                 }
 
                 {

@@ -88,7 +88,7 @@ class Documents extends PureComponent
         else window.history.back()
     }
 
-    removeItem(document_id)
+    removeItem = (document_id, callback) =>
     {
         let result = window.confirm("از حذف مطمئنید؟")
         if (result)
@@ -99,10 +99,12 @@ class Documents extends PureComponent
                     const documents = {...this.state.documents}
                     delete documents[document_id]
                     this.setState({...this.state, documents}, () =>
-                        NotificationManager.success("حذف شد"),
-                    )
+                    {
+                        NotificationManager.success("حذف شد")
+                        callback()
+                    })
                 })
-                .catch(() => NotificationManager.error("خطا در برقراری ارتباط!"))
+                .catch((e) => NotificationManager.error(e.message))
         }
     }
 
@@ -120,6 +122,7 @@ class Documents extends PureComponent
                                        categories={categories}
                                        document={documents[route.match.params.id]}
                                        setDocument={this.setDocument}
+                                       removeItem={this.removeItem}
                     />}
                 />
 
@@ -128,7 +131,7 @@ class Documents extends PureComponent
                         <div className="panel-document-cont">
                             {
                                 Object.values(documents).map(doc =>
-                                    <Link key={doc._id} className="panel-document-item-link" to={`/panel/documents/${doc._id}`}>
+                                    <Link key={doc._id} className="panel-document-item-link bigger" to={`/panel/documents/${doc._id}`}>
                                         <Material className="panel-document-item panel">
                                             {
                                                 doc.thumbnail ?
@@ -142,10 +145,10 @@ class Documents extends PureComponent
                                     </Link>,
                                 )
                             }
-                            <div className="panel-document-item-hide"/>
-                            <div className="panel-document-item-hide"/>
-                            <div className="panel-document-item-hide"/>
-                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide bigger"/>
+                            <div className="panel-document-item-hide bigger"/>
+                            <div className="panel-document-item-hide bigger"/>
+                            <div className="panel-document-item-hide bigger"/>
                         </div>
                         {
                             getLoading ?

@@ -266,7 +266,16 @@
   cursor: pointer;
   z-index: 1;
   font-size: $huge-font-size;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   transition: all linear 0.2s;
+
+  &.back-white {
+    background-color: var(--background-color);
+
+    &:hover {
+      background-color: var(--border-color);
+    }
+  }
 
   &:hover {
     background-color: var(--secondary-color);
@@ -275,6 +284,11 @@
   @media screen and (max-width: 480px) {
     bottom: calc(30px + 5%);
   }
+}
+
+.panel-add-item-btn-del {
+  width: 25px;
+  fill: var(--error-color);
 }
 
 .panel-add-item-model-cont {
@@ -620,12 +634,20 @@
   flex-grow: 1;
   padding: 0 15px;
   margin: 0 8px;
+
+  &.bigger {
+    width: 220px;
+  }
 }
 
 .panel-document-item-link {
   margin: 8px;
   flex-grow: 1;
   width: 180px;
+
+  &.bigger {
+    width: 250px;
+  }
 }
 
 .user-item-cont {
