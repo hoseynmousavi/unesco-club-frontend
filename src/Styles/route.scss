@@ -1,0 +1,100 @@
+@import "variables";
+
+.home-route-cont {
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+
+  &.page {
+    white-space: normal;
+    text-align: right;
+  }
+}
+
+.home-route-cont-slide {
+  transition: transform ease-in-out 0.3s;
+}
+
+.route-item-cont {
+  margin: 10px 0;
+  width: 25%;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+.route-item-img-effect {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all linear 0.2s;
+
+  &:hover {
+    + .route-item-img {
+      transform: scale(1.1);
+    }
+
+    opacity: 1;
+  }
+}
+
+.route-item-img-effect-svg {
+  fill: white;
+  width: 40px;
+}
+
+.route-item-img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  position: relative;
+  transition: all ease-out 0.2s;
+}
+
+.route-item-text {
+  display: block;
+  padding: 25px 15px;
+  margin-top: -100px;
+  background-color: var(--transparent-forth);
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: right;
+}
+
+.route-item-text-title {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: $title-font-size;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.route-item-text-summary {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: $regular-font-size;
+}
+
+.route-arrows {
+  margin: 0 50px;
+}

@@ -3,8 +3,8 @@ import api from "../../Functions/api"
 import {Route, Switch} from "react-router-dom"
 import {ClipLoader} from "react-spinners"
 import ShowDocumentPage from "./ShowDocumentPage"
-import Document from "../Components/Document"
 import LocationSvg from "../../Media/Svgs/LocationSvg"
+import RouteItem from "../Components/RouteItem"
 
 class RoutesPage extends PureComponent
 {
@@ -61,9 +61,10 @@ class RoutesPage extends PureComponent
     render()
     {
         const {documentsLoading, documents} = this.state
+        console.log(Object.values(documents))
         return (
             <Switch>
-                <Route path="/documents/:id" render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
+                <Route path="/routes/:id" render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
                     <div className="doc-page-cont">
@@ -72,13 +73,10 @@ class RoutesPage extends PureComponent
                                 <LocationSvg className="home-page-docs-title-svg"/>
                                 <div className="home-page-docs-title-text">مسیرها</div>
                             </div>
-                            <div className="panel-document-cont home">
-                                {Object.values(documents).map(doc => <Document document={doc} key={doc._id}/>)}
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
+                            <div className="home-route-cont page">
+                                <div ref={e => this.routeCont = e} className="home-route-cont-slide">
+                                    {Object.values(documents).map((route) => <RouteItem route={route} key={route._id}/>)}
+                                </div>
                             </div>
                             {
                                 documentsLoading ?

@@ -7,6 +7,9 @@ import VerifiedUserSvg from "../../Media/Svgs/VerifiedUserSvg"
 import User from "../Components/User"
 import Document from "../Components/Document"
 import LocationSvg from "../../Media/Svgs/LocationSvg"
+import RouteItem from "../Components/RouteItem"
+import Material from "../Components/Material"
+import RightArrow from "../../Media/Svgs/SmoothArrowSvg"
 
 class HomePage extends PureComponent
 {
@@ -23,6 +26,7 @@ class HomePage extends PureComponent
             users: [],
             usersLoading: true,
         }
+        this.prevX = 0
     }
 
     componentDidMount()
@@ -40,6 +44,34 @@ class HomePage extends PureComponent
 
         api.get("users", `?limit=15&page=1`)
             .then(users => this.setState({...this.state, users, usersLoading: false}))
+    }
+
+    goRight = () =>
+    {
+        if (this.prevX > 0)
+        {
+            this.prevX -= this.routeCont.clientWidth / (document.body.clientWidth > 480 ? 4 : 1)
+            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+        }
+        else
+        {
+            this.prevX = this.routeCont.scrollWidth - this.routeCont.clientWidth
+            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+        }
+    }
+
+    goLeft = () =>
+    {
+        if (this.prevX + this.routeCont.clientWidth < this.routeCont.scrollWidth)
+        {
+            this.prevX += this.routeCont.clientWidth / (document.body.clientWidth > 480 ? 4 : 1)
+            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+        }
+        else
+        {
+            this.prevX = 0
+            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+        }
     }
 
     render()
@@ -91,13 +123,16 @@ class HomePage extends PureComponent
                                 <div className="home-page-docs-title-text">مسیرها</div>
                             </Link>
                         </div>
-                        <div className="panel-document-cont home">
-                            {routes.map((doc, index) => <Document document={doc} noBorder={index === routes.length - 1} key={doc._id}/>)}
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
+                        <div className="home-route-cont">
+                            <div ref={e => this.routeCont = e} className="home-route-cont-slide">
+                                {routes.map((route) => <RouteItem route={route} key={route._id}/>)}
+                            </div>
+                            <Material className="my-slider-arrow right route-arrows" onClick={this.goRight}>
+                                <RightArrow/>
+                            </Material>
+                            <Material className="my-slider-arrow left route-arrows" onClick={this.goLeft}>
+                                <RightArrow/>
+                            </Material>
                         </div>
                     </div>
 

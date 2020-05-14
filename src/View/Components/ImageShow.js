@@ -53,7 +53,6 @@ class ImageShow extends PureComponent
             backGround.onclick = () => window.history.back()
             document.body.append(backGround)
             document.body.append(copyImage)
-            this.img.style.opacity = "0"
             copyImage.style.transition = "all ease-in-out 0.2s"
             setTimeout(() =>
             {
@@ -94,7 +93,6 @@ class ImageShow extends PureComponent
             copyImage.style.right = "auto"
             setTimeout(() =>
             {
-                if (this.img) this.img.style.opacity = "1"
                 if (copyImage) copyImage.remove()
                 if (backGround) backGround.remove()
             }, 300)
@@ -104,10 +102,10 @@ class ImageShow extends PureComponent
     render()
     {
         const {showPicture} = this.state
-        const {className, src, alt} = this.props
+        const {className, src, alt, id} = this.props
         return (
             <React.Fragment>
-                <img className={className} src={src} alt={alt} ref={e => this.img = e} onClick={this.openImage}/>
+                <img id={id} className={className} src={src} alt={alt} ref={e => this.img = e} onClick={this.openImage}/>
                 <Helmet>
                     {
                         showPicture ?
