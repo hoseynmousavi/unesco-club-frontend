@@ -74,11 +74,6 @@ class UsersPage extends PureComponent
                             </div>
                             <div className="panel-document-cont home">
                                 {Object.values(users).map(user => <User user={user} key={user._id}/>,)}
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
-                                <div className="home-page-docs-item-hide"/>
                             </div>
                             {
                                 usersLoading ?

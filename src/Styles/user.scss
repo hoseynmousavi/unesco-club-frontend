@@ -14,3 +14,23 @@
     height: 280px;
   }
 }
+
+.user-item {
+  width: calc(20% - 20px);
+  margin: 15px 10px;
+
+  @media screen and (max-width: 480px) {
+    width: calc(50% - 20px);
+  }
+}
+
+.home-avatar-user {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  fill: var(--secondary-color);
+
+  @media screen and (max-width: 480px) {
+    height: 150px;
+  }
+}

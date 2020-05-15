@@ -145,13 +145,16 @@ class HomePage extends PureComponent
                         </div>
                         <div className="panel-document-cont home">
                             {users.map(user => <User user={user} key={user._id}/>)}
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
-                            <div className="home-page-docs-item-hide"/>
                         </div>
                     </div>
+
+                    {/*<div className="home-page-videos">*/}
+                    {/*    <div className="h_iframe-aparat_embed_frame">*/}
+                    {/*        <span style={{display: "block", paddingTop: "57%"}}/>*/}
+                    {/*        <iframe src="https://www.aparat.com/video/video/embed/videohash/bmkMl/vt/frame" allowFullScreen={true}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
                 </div>
             </div>
         )

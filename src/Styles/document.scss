@@ -108,6 +108,10 @@
   width: 25px;
   fill: var(--dark-color);
 
+  &.margin-left {
+    margin-left: 8px;
+  }
+
   &:hover {
     + .document-page-field-dialog {
       transform: scale(1) translateX(100%);

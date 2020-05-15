@@ -82,6 +82,11 @@
   }
 }
 
+.home-page-videos {
+  width: 50%;
+  margin: auto;
+}
+
 .home-page-docs-title {
   text-align: right;
   font-weight: bold;
@@ -123,10 +128,34 @@
   width: 230px;
 }
 
-.home-avatar-user {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  fill: var(--secondary-color);
+.user-item-content-field {
+  font-size: $regular-font-size;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &.title {
+    font-weight: bold;
+  }
+}
+
+.user-item-content-field-svg {
+  vertical-align: top;
+  width: 20px;
+  fill: var(--dark-color);
+  margin-left: 8px;
+
+  &.cal {
+    width: 18px;
+  }
+}
+
+.user-item-content-field-text {
+  display: inline-block;
+  white-space: nowrap;
+  max-width: calc(100% - 48px);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
