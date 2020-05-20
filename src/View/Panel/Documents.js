@@ -131,7 +131,7 @@ class Documents extends PureComponent
                         <div className="panel-document-cont">
                             {
                                 Object.values(documents).map(doc =>
-                                    <Link key={doc._id} className="panel-document-item-link bigger" to={`/panel/documents/${doc._id}`}>
+                                    <Link key={doc._id} className="panel-document-item-link" to={`/panel/documents/${doc._id}`}>
                                         <Material className="panel-document-item panel">
                                             {
                                                 doc.thumbnail ?
@@ -141,14 +141,15 @@ class Documents extends PureComponent
                                             }
                                             <div className="panel-document-item-title">{doc.title}</div>
                                             {doc.summary && <div className="panel-document-item-summary">{doc.summary}</div>}
+                                            {doc.is_route && <div className="panel-doc-route-label">مسیر</div>}
                                         </Material>
                                     </Link>,
                                 )
                             }
-                            <div className="panel-document-item-hide bigger"/>
-                            <div className="panel-document-item-hide bigger"/>
-                            <div className="panel-document-item-hide bigger"/>
-                            <div className="panel-document-item-hide bigger"/>
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
+                            <div className="panel-document-item-hide"/>
                         </div>
                         {
                             getLoading ?

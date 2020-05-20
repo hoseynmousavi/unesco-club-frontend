@@ -467,6 +467,7 @@
   padding: 10px;
   background-color: var(--login-page-background-color);
   border-radius: 4px;
+  font-size: $title-font-size;
 }
 
 .panel-add-item-show-pics-item {
@@ -617,6 +618,13 @@
   margin: 0 0 40px 0;
 }
 
+.panel-add-img-video-input {
+  height: 50px;
+  background-color: white;
+  width: 100%;
+  margin: 0 0 15px 0;
+}
+
 .panel-document-cont {
   display: flex;
   flex-wrap: wrap;
@@ -630,24 +638,16 @@
 }
 
 .panel-document-item-hide {
-  width: 150px;
   flex-grow: 1;
   padding: 0 15px;
   margin: 0 8px;
-
-  &.bigger {
-    width: 220px;
-  }
+  width: 220px;
 }
 
 .panel-document-item-link {
   margin: 8px;
   flex-grow: 1;
-  width: 180px;
-
-  &.bigger {
-    width: 250px;
-  }
+  width: 250px;
 }
 
 .user-item-cont {
@@ -827,6 +827,7 @@
   width: 15px;
   height: 15px;
   background-color: var(--primary-color);
+  border-radius: 2px;
   display: inline-block;
   vertical-align: top;
   margin-top: 2px;
@@ -886,4 +887,16 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.panel-doc-route-label {
+  font-size: $small-font-size;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  color: var(--primary-color);
+  background-color: var(--transparent-third);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: bold;
 }

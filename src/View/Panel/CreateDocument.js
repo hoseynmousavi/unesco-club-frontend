@@ -10,6 +10,7 @@ import compressImage from "../../Helpers/compressImage"
 import api from "../../Functions/api"
 import TickSvg from "../../Media/Svgs/TickSvg"
 import {ClipLoader} from "react-spinners"
+import AparatSvg from "../../Media/Svgs/AparatSvg"
 
 class CreateDocument extends PureComponent
 {
@@ -20,6 +21,7 @@ class CreateDocument extends PureComponent
             modalLoading: false,
             picturePreviews: [],
             videoPreviews: [],
+            videoAparatPreviews: [],
             categoryModal: false,
             selectedCategories: [],
             imageModal: false,
@@ -29,6 +31,7 @@ class CreateDocument extends PureComponent
 
         this.pictures = []
         this.videos = []
+        this.aparats = []
     }
 
     setValue = (e) =>
@@ -56,6 +59,28 @@ class CreateDocument extends PureComponent
         })
     }
 
+    toggleVideoAparatModal = () =>
+    {
+        this.setState({...this.state, videoAparatModal: !this.state.videoAparatModal}, () =>
+        {
+            this.tempDesc = undefined
+            this.tempAparat = undefined
+        })
+    }
+
+    submitSelectAparatVideo = () =>
+    {
+        if (this.tempAparat)
+        {
+            this.setState({...this.state, videoAparatPreviews: [...this.state.videoAparatPreviews, this.tempAparat]}, () =>
+            {
+                this.aparats.push({link: this.tempAparat, description: this.tempDesc})
+                this.toggleVideoAparatModal()
+            })
+        }
+        else NotificationManager.warning("لینک را وارد کنید!")
+    }
+
     selectVideo = (e) =>
     {
         const video = e.target.files[0]
@@ -70,9 +95,14 @@ class CreateDocument extends PureComponent
     {
         const videoPreviews = [...this.state.videoPreviews]
         videoPreviews.splice(index, 1)
-        this.setState({...this.state, videoPreviews}, () =>
-            this.videos.splice(index, 1),
-        )
+        this.setState({...this.state, videoPreviews}, () => this.videos.splice(index, 1))
+    }
+
+    removeAparatVideo(index)
+    {
+        const videoAparatPreviews = [...this.state.videoAparatPreviews]
+        videoAparatPreviews.splice(index, 1)
+        this.setState({...this.state, videoAparatPreviews}, () => this.aparats.splice(index, 1))
     }
 
     submitSelectVideo = () =>
@@ -127,7 +157,7 @@ class CreateDocument extends PureComponent
 
     submit = () =>
     {
-        const {title, summary, description, location, thumbnail, videos, pictures} = this
+        const {title, summary, description, location, thumbnail, videos, aparats, pictures} = this
         const {modalLoading, selectedCategories, is_route} = this.state
         if (!modalLoading)
         {
@@ -142,6 +172,11 @@ class CreateDocument extends PureComponent
                     description && form.append("description", description)
                     location && form.append("location", location)
                     is_route && form.append("is_route", is_route)
+                    aparats.forEach((item, index) =>
+                    {
+                        form.append("aparat-link" + index, item.link)
+                        item.description && form.append("aparat" + index, item.description)
+                    })
                     videos.forEach((video, index) =>
                     {
                         form.append("film" + index, video.file)
@@ -209,7 +244,7 @@ class CreateDocument extends PureComponent
 
     render()
     {
-        const {thumbnailPreview, picturePreviews, videoPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent, previewSlider, is_route} = this.state
+        const {thumbnailPreview, picturePreviews, videoPreviews, videoAparatPreviews, modalLoading, selectedCategories, categoryModal, imageModal, videoModal, tempImagePreview, loadingPercent, previewSlider, is_route, videoAparatModal} = this.state
         const {toggleModal, categories} = this.props
         return (
             <React.Fragment>
@@ -296,6 +331,24 @@ class CreateDocument extends PureComponent
                             </div>
                         }
 
+                        <Material className="panel-add-item-video" onClick={this.toggleVideoAparatModal}>
+                            <label className="panel-add-item-pic">
+                                <AparatSvg className="panel-add-item-video-svg"/>
+                            </label>
+                        </Material>
+                        {
+                            videoAparatPreviews.length > 0 &&
+                            <div className="panel-add-item-show-pics dont-gesture">
+                                {
+                                    videoAparatPreviews.map((item, index) =>
+                                        <Material key={index} className="panel-add-item-show-pics-item-material" onClick={() => this.removeAparatVideo(index)}>
+                                            {item}
+                                        </Material>,
+                                    )
+                                }
+                            </div>
+                        }
+
                         <Material className={`sign-up-page-submit ${modalLoading ? "disabled" : ""}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
                     </div>
                 </div>
@@ -376,6 +429,17 @@ class CreateDocument extends PureComponent
                                 </label>
                             </Material>
                             <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectVideo : null}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+                {
+                    videoAparatModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleVideoAparatModal}/>
+                        <div className="panel-select-all-categories center">
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <MaterialInput className="panel-add-img-video-input" name="tempAparat" backgroundColor="white" label={<span>لینک آپارات <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                            <Material className={`panel-select-all-categories-btn img`} onClick={this.submitSelectAparatVideo}>ثبت</Material>
                         </div>
                     </React.Fragment>
                 }
