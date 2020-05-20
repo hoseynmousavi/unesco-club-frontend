@@ -83,8 +83,64 @@
 }
 
 .home-page-videos {
-  width: 50%;
-  margin: auto;
+  margin-bottom: 50px;
+  position: relative;
+  text-align: right;
+  overflow: hidden;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.home-page-video-show {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(70% - 20px);
+  margin-left: 20px;
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.home-page-video-side {
+  display: inline-block;
+  vertical-align: top;
+  width: 30%;
+
+  @media screen and (min-width: 480px) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+.home-page-video-side-item {
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: 480px) {
+    &:after {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+  }
 }
 
 .home-page-docs-title {

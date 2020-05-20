@@ -12,6 +12,7 @@ import compressImage from "../../Helpers/compressImage"
 import VideoSvg from "../../Media/Svgs/VideoSvg"
 import GarbageSvg from "../../Media/Svgs/GarbageSvg"
 import {Redirect} from "react-router-dom"
+import AparatSvg from "../../Media/Svgs/AparatSvg"
 
 class PanelShowDocument extends PureComponent
 {
@@ -241,6 +242,39 @@ class PanelShowDocument extends PureComponent
         })
     }
 
+    toggleVideoAparatModal = () =>
+    {
+        this.setState({...this.state, videoAparatModal: !this.state.videoAparatModal}, () =>
+        {
+            this.tempDesc = undefined
+            this.tempAparat = undefined
+        })
+    }
+
+    submitSelectAparatVideo = () =>
+    {
+        this.setState({...this.state, loadingPercent: 0, sendLoading: true}, () =>
+        {
+            const {id, setDocument} = this.props
+            let form = new FormData()
+            form.append("document_id", id)
+            form.append("link", this.tempAparat)
+            this.tempDesc && form.append("description", this.tempDesc)
+            api.post("document-aparat", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+                .then((created) =>
+                {
+                    const document = {...this.state.document, aparats: [...this.state.document.aparats || [], created]}
+                    this.setState({...this.state, sendLoading: false, document}, () =>
+                    {
+                        setDocument(document)
+                        this.toggleVideoAparatModal()
+                        NotificationManager.success("با اضافه بروز شد!")
+                    })
+                })
+                .catch(() => this.setState({...this.state, sendLoading: false}, () => NotificationManager.error("مشکلی پیش آمد! اینترنت خود را بررسی کنید!")))
+        })
+    }
+
     submitSelectVideo = () =>
     {
         this.setState({...this.state, loadingPercent: 0, sendLoading: true}, () =>
@@ -276,6 +310,27 @@ class PanelShowDocument extends PureComponent
                     const {setDocument} = this.props
                     let document = {...this.state.document}
                     document.films.splice(index, 1)
+                    this.setState({...this.state, document}, () =>
+                    {
+                        setDocument(document)
+                        NotificationManager.success("با موفقیت حذف شد!")
+                    })
+                })
+                .catch(() => NotificationManager.error("خطایی پیش آمد! اینترنت خود را بررسی کنید!"))
+        }
+    }
+
+    removeAparatVideo(aparat_id, index)
+    {
+        let result = window.confirm("از حذف مطمئنید؟")
+        if (result)
+        {
+            api.del("document-aparat", {aparat_id})
+                .then(() =>
+                {
+                    const {setDocument} = this.props
+                    let document = {...this.state.document}
+                    document.aparats.splice(index, 1)
                     this.setState({...this.state, document}, () =>
                     {
                         setDocument(document)
@@ -328,7 +383,7 @@ class PanelShowDocument extends PureComponent
 
     render()
     {
-        const {error, redirect, getLoading, document, title, summary, description, location, categoryModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
+        const {error, redirect, getLoading, document, title, summary, description, location, categoryModal, videoAparatModal, sendLoading, loadingPercent, imageModal, tempImagePreview, videoModal, previewSlider} = this.state
         const {categories, removeItem} = this.props
         return (
             <div className="panel-section">
@@ -463,6 +518,29 @@ class PanelShowDocument extends PureComponent
                                         }
                                     </div>
                                 }
+
+                                <Material className="panel-add-item-video" onClick={this.toggleVideoAparatModal}>
+                                    <label className="panel-add-item-pic">
+                                        <AparatSvg className="panel-add-item-video-svg"/>
+                                    </label>
+                                </Material>
+
+                                {
+                                    document.aparats && document.aparats.length > 0 &&
+                                    <div className="panel-add-item-show-pics dont-gesture">
+                                        {
+                                            document.aparats.map((item, index) =>
+                                                <Material key={item._id} className="panel-add-item-show-pics-item-material" onClick={() => this.removeAparatVideo(item._id, index)}>
+                                                    <div>{item.link}</div>
+                                                    <div className="panel-add-item-show-pics-item-desc">
+                                                        {item.description}
+                                                    </div>
+                                                </Material>,
+                                            )
+                                        }
+                                    </div>
+                                }
+
                                 <Material className="panel-add-item-btn back-white" onClick={() => removeItem(document._id, () => this.setState({...this.state, redirect: true}))}><GarbageSvg className="panel-add-item-btn-del"/></Material>
                             </div>
                 }
@@ -566,6 +644,18 @@ class PanelShowDocument extends PureComponent
                                 </label>
                             </Material>
                             <Material className={`panel-select-all-categories-btn img ${tempImagePreview ? "" : "disabled"}`} onClick={tempImagePreview ? this.submitSelectVideo : null}>ثبت</Material>
+                        </div>
+                    </React.Fragment>
+                }
+
+                {
+                    videoAparatModal &&
+                    <React.Fragment>
+                        <div className="panel-select-all-categories-back" onClick={this.toggleVideoAparatModal}/>
+                        <div className="panel-select-all-categories center">
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setTempValue}/>
+                            <MaterialInput className="panel-add-img-video-input" name="tempAparat" backgroundColor="white" label={<span>لینک آپارات <span className="sign-up-page-required">*</span></span>} getValue={this.setTempValue}/>
+                            <Material className={`panel-select-all-categories-btn img`} onClick={this.submitSelectAparatVideo}>ثبت</Material>
                         </div>
                     </React.Fragment>
                 }

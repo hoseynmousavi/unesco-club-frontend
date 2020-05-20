@@ -70,12 +70,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 ::-webkit-scrollbar-track {
   border-radius: 5px;
-  background-color: var(--background-color);
+  background-color: var(--border-color);
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: var(--border-color);
+  background-color: #a09e9e;
 }
 
 ::-webkit-scrollbar-thumb:hover {

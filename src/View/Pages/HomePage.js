@@ -10,6 +10,7 @@ import LocationSvg from "../../Media/Svgs/LocationSvg"
 import RouteItem from "../Components/RouteItem"
 import Material from "../Components/Material"
 import RightArrow from "../../Media/Svgs/SmoothArrowSvg"
+import ShowVideoSvg from "../../Media/Svgs/ShowVideoSvg"
 
 class HomePage extends PureComponent
 {
@@ -25,6 +26,9 @@ class HomePage extends PureComponent
             routesLoading: true,
             users: [],
             usersLoading: true,
+            aparats: [],
+            aparatsLoading: true,
+            showVideoLinkIndex: 0,
         }
         this.prevX = 0
     }
@@ -44,6 +48,14 @@ class HomePage extends PureComponent
 
         api.get("users", `?limit=15&page=1`)
             .then(users => this.setState({...this.state, users, usersLoading: false}))
+
+        api.get("document-aparat")
+            .then(aparats => this.setState({...this.state, aparats, aparatsLoading: false}))
+    }
+
+    selectAparat(index)
+    {
+        this.setState({...this.state, showVideoLinkIndex: index})
     }
 
     goRight = () =>
@@ -76,7 +88,7 @@ class HomePage extends PureComponent
 
     render()
     {
-        const {pictures, routes, routesLoading, documents, picturesLoading, documentsLoading, users, usersLoading} = this.state
+        const {pictures, routes, routesLoading, documents, picturesLoading, documentsLoading, users, usersLoading, aparats, aparatsLoading, showVideoLinkIndex} = this.state
         return (
             <div className="home-page-cont">
                 {
@@ -151,12 +163,36 @@ class HomePage extends PureComponent
                         </div>
                     }
 
-                    {/*<div className="home-page-videos">*/}
-                    {/*    <div className="h_iframe-aparat_embed_frame">*/}
-                    {/*        <span style={{display: "block", paddingTop: "57%"}}/>*/}
-                    {/*        <iframe src="https://www.aparat.com/video/video/embed/videohash/bmkMl/vt/frame" allowFullScreen={true}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    {
+                        aparats.length > 0 &&
+                        <div className={`home-page-documents ${aparatsLoading ? "" : "loaded"}`}>
+                            <div className="home-page-docs-title users">
+                                <ShowVideoSvg className="home-page-docs-title-svg"/>
+                                <div className="home-page-docs-title-text">ویدیوها</div>
+                            </div>
+                            <div className="home-page-videos">
+                                <div className="home-page-video-show">
+                                    <div className="h_iframe-aparat_embed_frame">
+                                        <span style={{display: "block", paddingTop: "57%"}}/>
+                                        <iframe title={aparats[showVideoLinkIndex].description || aparats[showVideoLinkIndex].link} src={`https://www.aparat.com/video/video/embed/videohash/${aparats[showVideoLinkIndex].link}/vt/frame`} allowFullScreen={true}/>
+                                    </div>
+                                </div>
+                                <div className="home-page-video-side">
+                                    {
+                                        [...aparats].map((item, index) =>
+                                            index !== showVideoLinkIndex &&
+                                            <Material backgroundColor="rgba(255,255,255,0.3)" className="home-page-video-side-item" key={item._id} onClick={() => this.selectAparat(index)}>
+                                                <div className="h_iframe-aparat_embed_frame">
+                                                    <span style={{display: "block", paddingTop: "57%"}}/>
+                                                    <iframe title={item.description || item.link} src={`https://www.aparat.com/video/video/embed/videohash/${item.link}/vt/frame`} allowFullScreen={true}/>
+                                                </div>
+                                            </Material>,
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                 </div>
             </div>
