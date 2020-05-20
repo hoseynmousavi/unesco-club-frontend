@@ -136,17 +136,20 @@ class HomePage extends PureComponent
                         </div>
                     </div>
 
-                    <div className={`home-page-documents ${usersLoading ? "" : "loaded"}`}>
-                        <div className="home-page-docs-title users">
-                            <Link to="/users">
-                                <VerifiedUserSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">فعالین</div>
-                            </Link>
+                    {
+                        users.length > 0 &&
+                        <div className={`home-page-documents ${usersLoading ? "" : "loaded"}`}>
+                            <div className="home-page-docs-title users">
+                                <Link to="/users">
+                                    <VerifiedUserSvg className="home-page-docs-title-svg"/>
+                                    <div className="home-page-docs-title-text">فعالین</div>
+                                </Link>
+                            </div>
+                            <div className="panel-document-cont home">
+                                {users.map(user => <User user={user} key={user._id}/>)}
+                            </div>
                         </div>
-                        <div className="panel-document-cont home">
-                            {users.map(user => <User user={user} key={user._id}/>)}
-                        </div>
-                    </div>
+                    }
 
                     {/*<div className="home-page-videos">*/}
                     {/*    <div className="h_iframe-aparat_embed_frame">*/}

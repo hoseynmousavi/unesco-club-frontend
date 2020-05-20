@@ -67,13 +67,13 @@ class UsersPage extends PureComponent
 
                 <React.Fragment>
                     <div className="doc-page-cont">
-                        <div className={`home-page-documents ${Object.values(users).length === 0 ? "" : "loaded"}`}>
+                        <div className={`home-page-documents ${Object.values(users).length === 0 && usersLoading ? "" : "loaded"}`}>
                             <div className="home-page-docs-title page">
                                 <VerifiedUserSvg className="home-page-docs-title-svg"/>
                                 <div className="home-page-docs-title-text">فعالین</div>
                             </div>
                             <div className="panel-document-cont home">
-                                {Object.values(users).map(user => <User user={user} key={user._id}/>,)}
+                                {Object.values(users).map(user => <User user={user} key={user._id}/>)}
                             </div>
                             {
                                 usersLoading ?
