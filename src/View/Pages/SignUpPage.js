@@ -67,7 +67,7 @@ class SignUpPage extends PureComponent
 
     submit = () =>
     {
-        const {phone, name, email, birth_date_year, major, grade, university, range_of_activity, specializations, experience, current_organ, description, avatar} = this
+        const {phone, name, email, birth_date_year, major, grade, university, range_of_activity, specializations, experience, current_organ, description, avatar, instagram} = this
         const {familiarity_with_language, familiarity_with_area, familiarity_with_tourism} = this.state
         if (
             (phone && phone.length === 11 && !isNaN(phone)) &&
@@ -93,6 +93,7 @@ class SignUpPage extends PureComponent
                 if (specializations) form.append("specializations", specializations)
                 if (experience) form.append("experience", experience)
                 if (current_organ) form.append("current_organ", current_organ)
+                if (instagram) form.append("instagram", instagram)
                 if (avatar)
                 {
                     compressImage(avatar)
@@ -225,6 +226,7 @@ class SignUpPage extends PureComponent
                     <MaterialInput className="sign-up-page-input" name="experience" backgroundColor="white" label="سابقه فعالیت" getValue={this.setValue}/>
                     <MaterialInput className="sign-up-page-input" name="current_organ" backgroundColor="white" label="مجموعه درحال فعالیت" getValue={this.setValue}/>
                     <MaterialInput className="sign-up-page-input" name="description" backgroundColor="white" label={<span>توضیحات <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                    <MaterialInput className="sign-up-page-input ltr" name="instagram" backgroundColor="white" label={<span>آیدی اینستاگرام</span>} getValue={this.setValue}/>
                     <Material className="sign-up-page-submit" backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
                 </div>
             </div>

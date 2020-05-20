@@ -19,7 +19,7 @@ const User = props =>
                     user.avatar ?
                         <img className="home-avatar-user" src={REST_URL + user.avatar} alt={user.name}/>
                         :
-                        <Profile className="home-avatar-user"/>
+                        <Profile className="home-avatar-user default"/>
                 }
                 <div className="user-item-content-field title">
                     <TitleSvg className="user-item-content-field-svg"/>

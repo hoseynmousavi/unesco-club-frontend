@@ -65,6 +65,7 @@
 }
 
 .document-page-field {
+  display: block;
   position: relative;
   text-align: right;
   padding: 10px 15px;
@@ -107,6 +108,12 @@
   vertical-align: top;
   width: 25px;
   fill: var(--dark-color);
+
+  &.insta {
+    width: 20px;
+    margin-right: 2.5px;
+    margin-left: 2.5px;
+  }
 
   &.margin-left {
     margin-left: 8px;

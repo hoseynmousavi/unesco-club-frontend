@@ -30,7 +30,17 @@
   object-fit: cover;
   fill: var(--secondary-color);
 
+  @media screen and (min-width: 480px) {
+    &.default {
+      width: 70%;
+    }
+  }
+
   @media screen and (max-width: 480px) {
     height: 150px;
+
+    &.default {
+      width: 80%;
+    }
   }
 }

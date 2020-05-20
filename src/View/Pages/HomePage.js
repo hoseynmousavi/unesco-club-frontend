@@ -158,7 +158,7 @@ class HomePage extends PureComponent
                                 </Link>
                             </div>
                             <div className="panel-document-cont home">
-                                {users.map(user => <User user={user} key={user._id}/>)}
+                                {[...users, ...users, ...users, ...users, ...users, ...users].map(user => <User user={user} key={user._id}/>)}
                             </div>
                         </div>
                     }

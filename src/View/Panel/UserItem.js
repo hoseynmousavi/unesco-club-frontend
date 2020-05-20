@@ -242,6 +242,17 @@ class UserItem extends PureComponent
                             {user.description}
                         </div>
                     </div>
+                    {
+                        user.instagram &&
+                        <div className="panel-users-item-detail-row">
+                            <div className="panel-users-item-detail-row-title">
+                                اینستاگرام
+                            </div>
+                            <a href={`https://www.instagram.com/${user.instagram}`} target="_blank" rel="noopener noreferrer" className="panel-users-item-detail-row-value">
+                                {user.instagram}
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         )

@@ -18,6 +18,7 @@ import AreaSvg from "../../Media/Svgs/AreaSvg"
 import TourismSvg from "../../Media/Svgs/TourismSvg"
 import ExperienceSvg from "../../Media/Svgs/ExperienceSvg"
 import OfficialTickSvg from "../../Media/Svgs/OfficialTickSvg"
+import InstaSvg from "../../Media/Svgs/InstaSvg"
 
 class ShowUserPage extends PureComponent
 {
@@ -161,6 +162,14 @@ class ShowUserPage extends PureComponent
                                                 <div className="document-page-field-dialog">سابقه فعالیت</div>
                                                 <div className="document-page-field-text">{user.experience}</div>
                                             </div>
+                                        }
+                                        {
+                                            user.instagram &&
+                                            <a href={`https://www.instagram.com/${user.instagram}`} target="_blank" rel="noopener noreferrer" className="document-page-field">
+                                                <InstaSvg className="document-page-field-svg insta"/>
+                                                <div className="document-page-field-dialog">اینستاگرام</div>
+                                                <div className="document-page-field-text">{user.instagram}</div>
+                                            </a>
                                         }
                                     </div>
                                 </React.Fragment>
