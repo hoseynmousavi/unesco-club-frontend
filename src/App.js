@@ -86,7 +86,7 @@ class App extends PureComponent
         const {admin} = this.state
         return (
             <main className="main">
-                <Header/>
+                <Header admin={admin}/>
                 <Suspense fallback={null}>
                     <Switch>
                         <Route path="/sign-up" render={() => <SignUpPage/>}/>

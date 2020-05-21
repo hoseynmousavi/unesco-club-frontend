@@ -2,7 +2,7 @@ import React, {PureComponent} from "react"
 import Material from "./Material"
 import {Link, NavLink} from "react-router-dom"
 import Hamburger from "./Hamburger"
-import TickSvg from "../../Media/Svgs/TickSvg"
+import Logo from "../../Media/Images/Logo.png"
 
 class Header extends PureComponent
 {
@@ -129,6 +129,7 @@ class Header extends PureComponent
     render()
     {
         const {collapseSidebar} = this.state
+        const {admin} = this.props
         return (
             <div className="header-cont">
 
@@ -146,7 +147,7 @@ class Header extends PureComponent
                     <NavLink to="/routes" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مسیرها</Material></NavLink>
                     <NavLink to="/users" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">فعالین</Material></NavLink>
                     <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
-                    <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>
+                    {admin && <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>}
                 </div>
 
                 <div className="header-section show-desktop">
@@ -158,8 +159,11 @@ class Header extends PureComponent
                     <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
                 </div>
                 <div className="header-section">
-                    <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>
-                    <Link to="/"><TickSvg className="header-logo"/></Link>
+                    {admin && <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>}
+                    <div className="header-logo-text">Tourism and Environment club</div>
+                    <Link to="/">
+                        <img src={Logo} alt="Tourism and Environment club" className="header-logo"/>
+                    </Link>
                 </div>
             </div>
         )
