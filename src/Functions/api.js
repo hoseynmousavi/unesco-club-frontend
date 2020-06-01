@@ -2,7 +2,7 @@ import axios from "axios"
 import {NotificationManager} from "react-notifications"
 
 // export const REST_URL = "http://localhost:1445"
-export const REST_URL = "http://api.irteuc.com"
+export const REST_URL = "https://api.irteuc.com"
 
 function get(url, param = "", dontToast)
 {
