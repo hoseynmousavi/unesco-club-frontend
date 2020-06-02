@@ -137,7 +137,7 @@ class Header extends PureComponent
                     <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
                 </Material>
 
-                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه یونسکو</h1></Link>
+                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه{!collapseSidebar ? " گردشگری و محیط زیست" : ""} یونسکو</h1></Link>
 
                 <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
                 <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
@@ -151,7 +151,7 @@ class Header extends PureComponent
                 </div>
 
                 <div className="header-section show-desktop">
-                    <Link to="/"><h1 className="header-name">باشگاه یونسکو</h1></Link>
+                    <Link to="/"><h1 className="header-name">باشگاه گردشگری و محیط زیست یونسکو</h1></Link>
                     <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
                     <NavLink activeClassName="header-right-section-link-active" to="/documents"><Material className="header-right-section-link">پرونده‌ها</Material></NavLink>
                     <NavLink activeClassName="header-right-section-link-active" to="/routes"><Material className="header-right-section-link">مسیرها</Material></NavLink>

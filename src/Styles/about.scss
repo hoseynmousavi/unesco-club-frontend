@@ -1,0 +1,21 @@
+@import "variables";
+
+.about-page-cont {
+  padding: 10px 5%;
+}
+
+.about-page-text {
+  font-size: $title-font-size;
+  white-space: pre-wrap;
+  font-weight: bold;
+  line-height: 30px;
+  text-align: justify;
+  text-align-last: right;
+}
+
+.about-page-text-phone {
+  direction: ltr;
+  text-align: left;
+  display: inline-block;
+  color: var(--primary-color);
+}

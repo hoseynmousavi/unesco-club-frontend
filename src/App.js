@@ -10,6 +10,7 @@ const RoutesPage = lazy(() => import("./View/Pages/RoutesPage"))
 const UsersPage = lazy(() => import("./View/Pages/UsersPage"))
 const HomePage = lazy(() => import("./View/Pages/HomePage"))
 const PanelPage = lazy(() => import("./View/Panel/PanelPage"))
+const AboutPage = lazy(() => import("./View/Pages/AboutPage"))
 const NotFoundPage = lazy(() => import("./View/Pages/NotFoundPage"))
 
 class App extends PureComponent
@@ -93,6 +94,7 @@ class App extends PureComponent
                         <Route path="/documents" render={() => <DocumentsPage/>}/>
                         <Route path="/routes" render={() => <RoutesPage/>}/>
                         <Route path="/users" render={() => <UsersPage/>}/>
+                        <Route path="/about-us" render={() => <AboutPage/>}/>
                         <Route path="/panel" render={() => <PanelPage admin={admin} setAdmin={this.setAdmin}/>}/>
                         <Route exact path="/" render={() => <HomePage/>}/>
                         <Route path="*" status={404} render={() => <NotFoundPage/>}/>
