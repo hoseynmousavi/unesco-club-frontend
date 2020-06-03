@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.irteuc",
+    "sha256_cert_fingerprints":
+    ["7A:49:19:1F:87:47:63:A3:D1:C2:D0:20:A3:AC:62:16:7B:39:3C:DB:2B:B3:B3:9D:F0:14:AB:70:9F:0D:F5:D7"]
+  }
+}]
