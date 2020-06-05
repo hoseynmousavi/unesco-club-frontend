@@ -61,9 +61,12 @@ class Users extends PureComponent
             <div className="panel-section">
                 <div className="panel-page-section-title">ثبت‌نام‌ها</div>
                 {
-                    Object.values(users).map(user =>
-                        <UserItem user={user} key={user._id}/>,
-                    )
+                    Object.values(users).length > 0 ?
+                        Object.values(users).map(user =>
+                            <UserItem user={user} key={user._id}/>,
+                        )
+                        :
+                        Object.values(users).length === 0 && !getLoading && <div className="panel-section-loading-cont">فعّالی یافت نشد!</div>
                 }
                 {
                     getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>

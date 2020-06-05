@@ -137,7 +137,7 @@ class Header extends PureComponent
                     <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
                 </Material>
 
-                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه{!collapseSidebar ? " گردشگری و محیط زیست" : ""} یونسکو</h1></Link>
+                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه گردشگری و محیط زیست یونسکو</h1></Link>
 
                 <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
                 <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
@@ -160,7 +160,7 @@ class Header extends PureComponent
                 </div>
                 <div className="header-section">
                     {admin && <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>}
-                    <div className="header-logo-text">Tourism and Environment club</div>
+                    <div className="header-logo-text">Tourism and Environment Club</div>
                     <Link to="/">
                         <img src={Logo} alt="Tourism and Environment club" className="header-logo"/>
                     </Link>

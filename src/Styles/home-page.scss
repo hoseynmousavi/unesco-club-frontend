@@ -97,6 +97,11 @@
   width: calc(70% - 20px);
   margin-left: 20px;
 
+  &.full {
+    width: 100%;
+    margin-left: 0;
+  }
+
   @media screen and (max-width: 480px) {
     width: 100%;
     margin-left: 0;

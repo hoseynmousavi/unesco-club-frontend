@@ -171,7 +171,7 @@ class HomePage extends PureComponent
                                 <div className="home-page-docs-title-text">ویدیوها</div>
                             </div>
                             <div className="home-page-videos">
-                                <div className="home-page-video-show">
+                                <div className={`home-page-video-show ${aparats.length === 1 ? "full" : ""}`}>
                                     <div className="h_iframe-aparat_embed_frame">
                                         <span style={{display: "block", paddingTop: "57%"}}/>
                                         <iframe title={aparats[showVideoLinkIndex].description || aparats[showVideoLinkIndex].link} src={`https://www.aparat.com/video/video/embed/videohash/${aparats[showVideoLinkIndex].link}/vt/frame`} allowFullScreen={true}/>
