@@ -149,10 +149,11 @@ class Categories extends PureComponent
                         </div>,
                     )
                 }
-                {
-                    getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                }
-
+                <div className="loading-section-cont">
+                    {
+                        getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                    }
+                </div>
                 <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
                 {
                     isModalOpen &&

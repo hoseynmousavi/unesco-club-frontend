@@ -75,12 +75,14 @@ class UsersPage extends PureComponent
                             <div className="panel-document-cont home">
                                 {Object.values(users).map(user => <User user={user} key={user._id}/>)}
                             </div>
-                            {
-                                usersLoading ?
-                                    <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                                    :
-                                    Object.values(users).length === 0 && <div className="panel-section-loading-cont">کاربری یافت نشد!</div>
-                            }
+                            <div className="loading-section-cont">
+                                {
+                                    usersLoading ?
+                                        <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                                        :
+                                        Object.values(users).length === 0 && <div className="panel-section-loading-cont">کاربری یافت نشد!</div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </React.Fragment>

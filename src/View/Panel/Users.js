@@ -68,9 +68,11 @@ class Users extends PureComponent
                         :
                         Object.values(users).length === 0 && !getLoading && <div className="panel-section-loading-cont">فعّالی یافت نشد!</div>
                 }
-                {
-                    getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                }
+                <div className="loading-section-cont">
+                    {
+                        getLoading && <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                    }
+                </div>
             </div>
         )
     }

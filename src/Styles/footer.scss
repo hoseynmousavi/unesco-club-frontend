@@ -1,0 +1,118 @@
+@import "variables";
+
+.footer-container {
+  padding: 50px 5% 0 5%;
+  text-align: right;
+  background-color: var(--dark-color);
+  color: var(--background-color);
+  margin-top: auto;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2) inset;
+}
+
+.footer-logo-cont {
+  margin-bottom: 50px;
+}
+
+.footer-logo-section {
+  display: inline-block;
+  white-space: nowrap;
+  width: 250px;
+  cursor: pointer;
+
+  &.app {
+    margin-right: 70px;
+
+    @media screen and (max-width: 480px) {
+      margin-right: 0;
+      margin-top: 15px;
+    }
+  }
+}
+
+.footer-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.footer-desc {
+  display: inline-block;
+  margin-right: 16px;
+  vertical-align: top;
+  font-weight: bold;
+  margin-top: 13px;
+  font-size: $small-font-size;
+}
+
+.footer-parts {
+  display: flex;
+  @media screen and (max-width: 480px) {
+    flex-wrap: wrap;
+  }
+}
+
+.footer-part {
+  display: inline-block;
+  width: 250px;
+  margin-left: 70px;
+
+  &.second {
+    flex-grow: 1;
+  }
+
+  &.last {
+    font-weight: bold;
+    font-size: $title-font-size;
+    text-align: center;
+    flex-grow: 1;
+    margin-left: 0;
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    &:first-child {
+      flex-grow: 1;
+    }
+  }
+}
+
+.footer-part-title {
+  font-weight: bold;
+  font-size: $title-font-size;
+  border-bottom: 1px solid var(--dark-color);
+  padding-bottom: 5px;
+  display: inline-block;
+  padding-left: 10px;
+}
+
+.footer-part-text {
+  font-size: $title-font-size;
+  margin: 20px 0;
+  display: block;
+}
+
+.footer-part-svg {
+  width: 20px;
+  vertical-align: top;
+  margin-left: 8px;
+  fill: var(--background-color);
+}
+
+.footer-part-address {
+  display: inline-block;
+  width: calc(100% - 28px);
+  line-height: 28px;
+  margin-top: -4px;
+}
+
+.footer-last-line {
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid var(--secondary-color);
+  text-align: center;
+  font-size: $title-font-size;
+}

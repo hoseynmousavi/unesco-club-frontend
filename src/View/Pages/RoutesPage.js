@@ -78,12 +78,14 @@ class RoutesPage extends PureComponent
                                     {Object.values(documents).map((route) => <RouteItem route={route} key={route._id}/>)}
                                 </div>
                             </div>
-                            {
-                                documentsLoading ?
-                                    <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                                    :
-                                    Object.values(documents).length === 0 && <div className="panel-section-loading-cont">مسیری یافت نشد!</div>
-                            }
+                            <div className="loading-section-cont">
+                                {
+                                    documentsLoading ?
+                                        <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                                        :
+                                        Object.values(documents).length === 0 && <div className="panel-section-loading-cont">مسیری یافت نشد!</div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </React.Fragment>

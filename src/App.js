@@ -1,8 +1,9 @@
 import React, {lazy, PureComponent, Suspense} from "react"
-import {Route, Switch} from "react-router-dom"
 import {NotificationContainer} from "react-notifications"
-import Header from "./View/Components/Header"
+import {Route, Switch} from "react-router-dom"
 import api from "./Functions/api"
+import Header from "./View/Components/Header"
+import Footer from "./View/Components/Footer"
 
 const SignUpPage = lazy(() => import("./View/Pages/SignUpPage"))
 const DocumentsPage = lazy(() => import("./View/Pages/DocumentsPage"))
@@ -86,22 +87,25 @@ class App extends PureComponent
     {
         const {admin} = this.state
         return (
-            <main className="main">
+            <React.Fragment>
                 <Header admin={admin}/>
-                <Suspense fallback={null}>
-                    <Switch>
-                        <Route path="/sign-up" render={() => <SignUpPage/>}/>
-                        <Route path="/documents" render={() => <DocumentsPage/>}/>
-                        <Route path="/routes" render={() => <RoutesPage/>}/>
-                        <Route path="/users" render={() => <UsersPage/>}/>
-                        <Route path="/about-us" render={() => <AboutPage/>}/>
-                        <Route path="/panel" render={() => <PanelPage admin={admin} setAdmin={this.setAdmin}/>}/>
-                        <Route exact path="/" render={() => <HomePage/>}/>
-                        <Route path="*" status={404} render={() => <NotFoundPage/>}/>
-                    </Switch>
-                </Suspense>
+                <main className="main">
+                    <Suspense fallback={null}>
+                        <Switch>
+                            <Route path="/sign-up" render={() => <SignUpPage/>}/>
+                            <Route path="/documents" render={() => <DocumentsPage/>}/>
+                            <Route path="/routes" render={() => <RoutesPage/>}/>
+                            <Route path="/users" render={() => <UsersPage/>}/>
+                            <Route path="/about-us" render={() => <AboutPage/>}/>
+                            <Route path="/panel" render={() => <PanelPage admin={admin} setAdmin={this.setAdmin}/>}/>
+                            <Route exact path="/" render={() => <HomePage/>}/>
+                            <Route path="*" status={404} render={() => <NotFoundPage/>}/>
+                        </Switch>
+                    </Suspense>
+                </main>
+                <Footer/>
                 <NotificationContainer/>
-            </main>
+            </React.Fragment>
         )
     }
 }

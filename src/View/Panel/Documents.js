@@ -151,13 +151,14 @@ class Documents extends PureComponent
                             <div className="panel-document-item-hide"/>
                             <div className="panel-document-item-hide"/>
                         </div>
-                        {
-                            getLoading ?
-                                <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
-                                :
-                                Object.values(documents).length === 0 && <div className="panel-section-loading-cont">پرونده ای یافت نشد!</div>
-                        }
-
+                        <div className="loading-section-cont">
+                            {
+                                getLoading ?
+                                    <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
+                                    :
+                                    Object.values(documents).length === 0 && <div className="panel-section-loading-cont">پرونده ای یافت نشد!</div>
+                            }
+                        </div>
                         <Material className="panel-add-item-btn" onClick={this.toggleModal}>+</Material>
                         {isModalOpen && <CreateDocument toggleModal={this.toggleModal} categories={categories} addDocument={this.addDocument}/>}
                     </div>
