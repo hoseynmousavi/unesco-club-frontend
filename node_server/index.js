@@ -26,6 +26,8 @@ app.route("/static/:folder/:file").get((req, res) =>
 
 app.route("/.well-known/assetlinks.json").get((req, res) => res.sendFile(path.join(__dirname, "assetlinks.json")))
 
+app.route("/zohoverify/verifyforzoho.html").get((req, res) => res.sendFile(path.join(__dirname, "zohoverify/verifyforzoho.html")))
+
 app.route("/:file").get((req, res) =>
 {
     res.setHeader("Access-Control-Allow-Origin", "*")
