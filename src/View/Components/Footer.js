@@ -42,7 +42,7 @@ const Footer = () =>
             </div>
             <div className="footer-part second">
                 <div className="footer-part-title">ارتباط با ما</div>
-                <a href="mailto://health.in.touch.co@gmail.com" className="footer-part-text">
+                <a href="mailto://info@irteuc.com" className="footer-part-text">
                     <EmailSvg className="footer-part-svg"/>
                     info@irteuc.com
                 </a>
@@ -50,11 +50,11 @@ const Footer = () =>
                     <InstaSvg className="footer-part-svg"/>
                     unescotec
                 </a>
-                <a href="tel://health.in.touch.co@gmail.com" className="footer-part-text">
+                <a href="tel:02188924411" className="footer-part-text">
                     <PhoneSvg className="footer-part-svg"/>
                     02188924411
                 </a>
-                <a href="tel://health.in.touch.co@gmail.com" className="footer-part-text">
+                <a href="tel:09381908500" className="footer-part-text">
                     <WhatsappSvg className="footer-part-svg"/>
                     09381908500
                 </a>
