@@ -60,29 +60,31 @@ class HomePage extends PureComponent
 
     goRight = () =>
     {
+        const {lang} = this.props
         if (this.prevX > 0)
         {
             this.prevX -= this.routeCont.clientWidth / (document.body.clientWidth > 480 ? 4 : 1)
-            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+            this.routeCont.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
         }
         else
         {
             this.prevX = this.routeCont.scrollWidth - this.routeCont.clientWidth
-            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+            this.routeCont.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
         }
     }
 
     goLeft = () =>
     {
+        const {lang} = this.props
         if (this.prevX + this.routeCont.clientWidth < this.routeCont.scrollWidth)
         {
             this.prevX += this.routeCont.clientWidth / (document.body.clientWidth > 480 ? 4 : 1)
-            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+            this.routeCont.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
         }
         else
         {
             this.prevX = 0
-            this.routeCont.style.transform = `translateX(${this.prevX}px)`
+            this.routeCont.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
         }
     }
 
@@ -95,6 +97,7 @@ class HomePage extends PureComponent
                 {
                     pictures && pictures.length > 0 &&
                     <MySlider className={`home-page-slider ${picturesLoading ? "" : "loaded"} dont-gesture`}
+                              lang={lang}
                               dots={true}
                               arrows={true}
                               marginArrows="0 50px"
@@ -104,7 +107,8 @@ class HomePage extends PureComponent
                                       {
                                           pic.description &&
                                           <div className="home-page-slider-item-desc">
-                                              <div className="home-page-slider-item-desc-text">{pic.description}</div>
+                                              <div className={`home-page-slider-item-desc-text ${lang}`}>{pic.description}</div>
+                                              <span> </span>
                                           </div>
                                       }
                                   </div>,
@@ -140,10 +144,10 @@ class HomePage extends PureComponent
                             <div ref={e => this.routeCont = e} className="home-route-cont-slide">
                                 {routes.map((route) => <RouteItem route={route} key={route._id}/>)}
                             </div>
-                            <Material className="my-slider-arrow right route-arrows" onClick={this.goRight}>
+                            <Material className={`my-slider-arrow route-arrows ${lang === "fa" ? "right" : "left"}`} onClick={this.goRight}>
                                 <RightArrow/>
                             </Material>
-                            <Material className="my-slider-arrow left route-arrows" onClick={this.goLeft}>
+                            <Material className={`my-slider-arrow route-arrows ${lang !== "fa" ? "right" : "left"}`} onClick={this.goLeft}>
                                 <RightArrow/>
                             </Material>
                         </div>

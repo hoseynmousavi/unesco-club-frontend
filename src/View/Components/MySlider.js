@@ -46,10 +46,12 @@ class MySlider extends PureComponent
     elementDrag = (e) =>
     {
         e.preventDefault()
-        this.deltaX = this.posX - e.clientX
+        const {lang} = this.props
+        if (lang === "fa") this.deltaX = this.posX - e.clientX
+        else this.deltaX = e.clientX - this.posX
         this.posX = e.clientX
         this.prevX = this.prevX - this.deltaX > 0 && this.prevX - this.deltaX <= this.slider.scrollWidth - this.slider.clientWidth ? this.prevX - this.deltaX : this.prevX
-        this.slider.style.transform = `translateX(${this.prevX}px)`
+        this.slider.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
     }
 
     onTouchStart = (e) =>
@@ -62,19 +64,29 @@ class MySlider extends PureComponent
 
     onTouchMove = (e) =>
     {
-        this.deltaX = this.posX - e.touches[0].clientX
-        this.deltaY = this.posY - e.touches[0].clientY
-        this.posX = e.touches[0].clientX
+        const {lang} = this.props
+        if (lang === "fa")
+        {
+            this.deltaX = this.posX - e.touches[0].clientX
+            this.deltaY = this.posY - e.touches[0].clientY
+        }
+        else
+        {
+            this.deltaX = e.touches[0].clientX - this.posX
+            this.deltaY = e.touches[0].clientY - this.posY
+        }
         if (this.changing || (this.deltaY < 5 && this.deltaY > -5))
         {
+            this.posX = e.touches[0].clientX
             this.prevX = this.prevX - this.deltaX > 0 && this.prevX - this.deltaX <= this.slider.scrollWidth - this.slider.clientWidth ? this.prevX - this.deltaX : this.prevX
-            this.slider.style.transform = `translateX(${this.prevX}px)`
+            this.slider.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
             this.changing = true
         }
     }
 
     closeDragElement = () =>
     {
+        const {lang} = this.props
         if (!(this.deltaX > 3) && (this.deltaX < -3 || this.prevX % this.slider.clientWidth > this.slider.clientWidth / 2))
         {
             if (this.prevX - this.deltaX > 0 && this.prevX - this.deltaX <= this.slider.scrollWidth - this.slider.clientWidth)
@@ -82,7 +94,7 @@ class MySlider extends PureComponent
         }
         else this.prevX = this.prevX - this.prevX % this.slider.clientWidth
         this.slider.style.transition = "transform ease-in-out 0.2s"
-        this.slider.style.transform = `translateX(${this.prevX}px)`
+        this.slider.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
         this.slider.onmouseup = null
         this.slider.onmouseleave = null
         this.slider.onmousemove = null
@@ -108,6 +120,7 @@ class MySlider extends PureComponent
     {
         this.setState({...this.state, showIndex: index}, () =>
         {
+            const {lang} = this.props
             clearInterval(this.interval)
             this.interval = setInterval(() =>
             {
@@ -118,7 +131,7 @@ class MySlider extends PureComponent
             }, 20000)
             this.prevX = index * this.slider.clientWidth
             this.slider.style.transition = "transform ease-in-out 0.2s"
-            this.slider.style.transform = `translateX(${this.prevX}px)`
+            this.slider.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
             setTimeout(() =>
             {
                 if (this.slider) this.slider.style.transition = "initial"
@@ -128,17 +141,17 @@ class MySlider extends PureComponent
 
     render()
     {
-        const {className, nodes, dots, marginDots, arrows, marginArrows, dotSelectedColor, dotColor} = this.props
+        const {className, nodes, dots, marginDots, arrows, marginArrows, dotSelectedColor, dotColor, lang} = this.props
         const {showIndex} = this.state
         return (
             <div className={`my-slider-component ${className}`}>
                 {
                     arrows &&
                     <React.Fragment>
-                        <Material className="my-slider-arrow right" style={marginArrows ? {margin: marginArrows} : {}} onClick={() => showIndex - 1 >= 0 && this.setIndex(showIndex - 1)}>
+                        <Material className={`my-slider-arrow ${lang === "fa" ? "right" : "left"}`} style={marginArrows ? {margin: marginArrows} : {}} onClick={() => showIndex - 1 >= 0 && this.setIndex(showIndex - 1)}>
                             <RightArrow/>
                         </Material>
-                        <Material className="my-slider-arrow left" style={marginArrows ? {margin: marginArrows} : {}} onClick={() => showIndex + 1 < nodes.length && this.setIndex(showIndex + 1)}>
+                        <Material className={`my-slider-arrow ${lang !== "fa" ? "right" : "left"}`} style={marginArrows ? {margin: marginArrows} : {}} onClick={() => showIndex + 1 < nodes.length && this.setIndex(showIndex + 1)}>
                             <RightArrow/>
                         </Material>
                     </React.Fragment>
