@@ -15,16 +15,17 @@ class PanelPage extends PureComponent
 
     render()
     {
-        const {admin, setAdmin, lang} = this.props
+        const {admin, setAdmin, lang, route} = this.props
+        const {path} = route.match
         if (admin)
             return (
                 <div className="panel-page-container">
-                    <PanelSidebar/>
+                    <PanelSidebar route={route}/>
                     <div className="panel-page-content">
                         <Switch>
-                            <Route path="/panel/users" render={() => <Users/>}/>
-                            <Route path="/panel/documents" render={() => <Documents/>}/>
-                            <Route path="/panel/categories" render={() => <Categories/>}/>
+                            <Route path={`${path}/panel/users`} render={() => <Users/>}/>
+                            <Route path={`${path}/panel/documents`} render={() => <Documents/>}/>
+                            <Route path={`${path}/panel/categories`} render={() => <Categories/>}/>
                             <Route path="*" render={() => <div className="panel-welcome">خوش اومدی ادمین :)</div>}/>
                         </Switch>
                     </div>

@@ -76,15 +76,17 @@ class PanelSidebar extends PureComponent
 
     render()
     {
+        const {route} = this.props
+        const {url} = route.match
         return (
             <React.Fragment>
                 <div className="panel-side-bar" ref={e => this.sidebar = e} onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove} onTouchEnd={this.onTouchEnd}>
                     <Material className="panel-side-bar-mobile-line" onClick={this.switchSide}>
                         <div className="panel-side-bar-line"/>
                     </Material>
-                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/users"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">فعالین</Material></NavLink>
-                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/documents"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">پرونده‌ها</Material></NavLink>
-                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to="/panel/categories"><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">دسته‌بندی‌ها</Material></NavLink>
+                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to={`${url}/panel/users`}><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">فعالین</Material></NavLink>
+                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to={`${url}/panel/documents`}><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">پرونده‌ها</Material></NavLink>
+                    <NavLink onClick={this.hideSidebar} className="panel-side-bar-item-link" activeClassName="selected" to={`${url}/panel/categories`}><Material backgroundColor="rgba(0,0,0,0.5)" className="panel-side-bar-item">دسته‌بندی‌ها</Material></NavLink>
                 </div>
                 <div className="panel-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
             </React.Fragment>

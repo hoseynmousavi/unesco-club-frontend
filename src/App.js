@@ -31,6 +31,9 @@ class App extends PureComponent
 
         const {location} = this.props
 
+        if (location.pathname.slice(0, 3) === "/en") this.setState({...this.state, lang: "en"}, () => localStorage.setItem("language", "en"))
+        else localStorage.removeItem("language")
+
         if (
             location.pathname.includes("/add") || location.pathname.includes("/show-picture")
         )
@@ -42,27 +45,27 @@ class App extends PureComponent
             document.location.reload()
         }
 
-        if (location.pathname.slice(0, 3) === "/en") this.setState({...this.state, lang: "en"}, () => localStorage.setItem("language", "en"))
-        else localStorage.removeItem("language")
-
         let admin = null
 
-        if (localStorage.hasOwnProperty("admin"))
+        setTimeout(() =>
         {
-            admin = JSON.parse(localStorage.getItem("admin"))
-            this.setState({...this.state, admin}, () =>
+            if (localStorage.hasOwnProperty("admin"))
             {
-                api.post("admin/verify-token")
-                    .then((data) => this.setAdmin(data))
-                    .catch((e) =>
-                    {
-                        if (e?.response?.status === 403)
+                admin = JSON.parse(localStorage.getItem("admin"))
+                this.setState({...this.state, admin}, () =>
+                {
+                    api.post("admin/verify-token")
+                        .then((data) => this.setAdmin(data))
+                        .catch((e) =>
                         {
-                            this.logout()
-                        }
-                    })
-            })
-        }
+                            if (e?.response?.status === 403)
+                            {
+                                this.logout()
+                            }
+                        })
+                })
+            }
+        }, 100)
     }
 
     setAdmin = (admin) =>
@@ -119,7 +122,7 @@ class App extends PureComponent
                                     <Route path={`${route.match.path}/routes`} render={route => <RoutesPage lang={lang} path={route.match.path}/>}/>
                                     <Route path={`${route.match.path}/users`} render={route => <UsersPage lang={lang} path={route.match.path}/>}/>
                                     <Route path={`${route.match.path}/about-us`} render={() => <AboutPage lang={lang}/>}/>
-                                    <Route path={`${route.match.path}/panel`} render={() => <PanelPage lang={lang} admin={admin} setAdmin={this.setAdmin}/>}/>
+                                    <Route path={`${route.match.path}/panel`} render={() => <PanelPage lang={lang} admin={admin} setAdmin={this.setAdmin} route={route}/>}/>
                                     <Route exact path={`${route.match.path}`} render={() => <HomePage lang={lang}/>}/>
                                     <Route path="*" status={404} render={() => <NotFoundPage lang={lang}/>}/>
                                 </Switch>

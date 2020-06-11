@@ -11,6 +11,10 @@
   line-height: 30px;
   text-align: justify;
   text-align-last: right;
+
+  &.en {
+    text-align-last: left;
+  }
 }
 
 .about-page-text-phone {
