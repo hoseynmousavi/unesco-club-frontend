@@ -4,6 +4,7 @@ import {Route, Switch, Redirect} from "react-router-dom"
 import api from "./Functions/api"
 import Header from "./View/Components/Header"
 import Footer from "./View/Components/Footer"
+import {Helmet} from "react-helmet"
 
 const SignUpPage = lazy(() => import("./View/Pages/SignUpPage"))
 const DocumentsPage = lazy(() => import("./View/Pages/DocumentsPage"))
@@ -32,7 +33,12 @@ class App extends PureComponent
         const {location} = this.props
 
         if (location.pathname.slice(0, 3) === "/en") this.setState({...this.state, lang: "en"}, () => localStorage.setItem("language", "en"))
-        else localStorage.removeItem("language")
+        else if (location.pathname.slice(0, 3) === "/fa") localStorage.removeItem("language")
+        else
+        {
+            const cacheLng = localStorage.getItem("language")
+            if (cacheLng && cacheLng === "en") this.setState({...this.state, lang: "en"})
+        }
 
         if (
             location.pathname.includes("/add") || location.pathname.includes("/show-picture")
@@ -86,9 +92,7 @@ class App extends PureComponent
 
     logout()
     {
-        this.setState({...this.state, admin: null}, () =>
-            localStorage.removeItem("admin"),
-        )
+        this.setState({...this.state, admin: null}, () => localStorage.removeItem("admin"))
     }
 
     switchLanguage = () =>
@@ -109,8 +113,14 @@ class App extends PureComponent
     {
         const {admin, lang} = this.state
         const {location} = this.props
+        const cacheLng = localStorage.getItem("language")
         return (
             <div className={`body ${lang}`}>
+
+                <Helmet>
+                    <title>{lang === "fa" ? "باشگاه گردشگری و محیط زیست یونسکو" : "Tourism and Environment Club"}</title>
+                </Helmet>
+
                 <Header admin={admin} lang={lang} switchLanguage={this.switchLanguage}/>
                 <main className="main">
                     <Suspense fallback={null}>
@@ -127,7 +137,7 @@ class App extends PureComponent
                                     <Route path="*" status={404} render={() => <NotFoundPage lang={lang}/>}/>
                                 </Switch>
                             }/>
-                            <Redirect to={`/${lang}${location.pathname === "/" ? "" : location.pathname}`}/>
+                            <Redirect to={`/${cacheLng ? cacheLng : lang}${location.pathname === "/" ? "" : location.pathname}`}/>
                         </Switch>
                     </Suspense>
                 </main>
