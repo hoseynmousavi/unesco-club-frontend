@@ -127,12 +127,13 @@
     white-space: nowrap;
     font-size: $small-font-size;
     transition: all linear 0.2s;
+    margin-left: 0;
 
     &.on-side {
       position: relative;
       z-index: 10;
       color: var(--secondary-color);
-      font-size: $title-font-size;
+      font-size: $regular-font-size;
 
       @media screen and (max-width: 330px) {
         font-size: $small-font-size;
