@@ -57,13 +57,22 @@ class Header extends PureComponent
 
     onTouchMove(e)
     {
-        this.deltaY = this.posY - e.touches[0].clientY
-        this.deltaX = this.posX - e.touches[0].clientX
+        const {lang} = this.props
+        if (lang === "fa")
+        {
+            this.deltaY = this.posY - e.touches[0].clientY
+            this.deltaX = this.posX - e.touches[0].clientX
+        }
+        else
+        {
+            this.deltaY = e.touches[0].clientY - this.posY
+            this.deltaX = e.touches[0].clientX - this.posX
+        }
         if (this.changing || (this.started && this.deltaY < 5 && this.deltaY > -5 && (this.deltaX > 5 || this.deltaX < -5)))
         {
             this.posX = e.touches[0].clientX
             this.prevX = this.prevX - this.deltaX >= 0 ? this.prevX - this.deltaX <= this.sidebar.clientWidth ? this.prevX - this.deltaX : this.sidebar.clientWidth : 0
-            this.sidebar.style.transform = `translateX(${this.prevX}px)`
+            this.sidebar.style.transform = `translateX(${lang === "fa" ? this.prevX : -this.prevX}px)`
             this.sidebarBack.style.opacity = `${1 - (this.prevX / this.sidebar.clientWidth)}`
             this.sidebarBack.style.height = `100vh`
             if (this.started)
@@ -112,9 +121,10 @@ class Header extends PureComponent
 
     hideSidebar = () =>
     {
+        const {lang} = this.props
         this.setState({...this.state, collapseSidebar: true})
         this.sidebar.style.transition = "transform linear 0.1s"
-        this.sidebar.style.transform = `translateX(100%)`
+        this.sidebar.style.transform = lang === "fa" ? `translateX(100%)` : `translateX(-100%)`
         this.sidebarBack.style.transition = "opacity linear 0.3s, height linear 0s 0.4s"
         this.sidebarBack.style.opacity = `0`
         this.sidebarBack.style.height = `0`
@@ -126,10 +136,17 @@ class Header extends PureComponent
         }, 250)
     }
 
+    switchLang = () =>
+    {
+        const {switchLanguage} = this.props
+        switchLanguage()
+        this.hideSidebar()
+    }
+
     render()
     {
         const {collapseSidebar} = this.state
-        const {admin} = this.props
+        const {admin, lang} = this.props
         return (
             <div className="header-cont">
 
@@ -137,30 +154,31 @@ class Header extends PureComponent
                     <Hamburger className="header-hamburger-mobile" collapse={collapseSidebar} onClick={collapseSidebar ? this.showSidebar : this.hideSidebar}/>
                 </Material>
 
-                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>باشگاه گردشگری و محیط زیست یونسکو</h1></Link>
+                <Link className="show-mobile" to="/"><h1 className={`header-name ${collapseSidebar ? "" : "on-side"}`}>{lang === "fa" ? "باشگاه گردشگری و محیط زیست یونسکو" : "Tourism and Environment Club"}</h1></Link>
 
                 <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
-                <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
-                    <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">خانه</Material></Link>
-                    <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">ثبت نام</Material></NavLink>
-                    <NavLink to="/documents" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پرونده‌ها</Material></NavLink>
-                    <NavLink to="/routes" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مسیرها</Material></NavLink>
-                    <NavLink to="/users" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">فعالین</Material></NavLink>
-                    <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></NavLink>
-                    {admin && <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">پنل اعضا</Material></NavLink>}
+                <div className={`header-sidebar-container ${lang}`} style={{transform: lang === "fa" ? "translateX(100%)" : "translateX(-100%)"}} ref={e => this.sidebar = e}>
+                    <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn margin-top">{lang === "fa" ? "خانه" : "home"}</Material></Link>
+                    <NavLink to="/sign-up" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "ثبت نام" : "sign up"}</Material></NavLink>
+                    <NavLink to="/documents" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "پرونده‌ها" : "documents"}</Material></NavLink>
+                    <NavLink to="/routes" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "مسیرها" : "routes"}</Material></NavLink>
+                    <NavLink to="/users" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "فعالین" : "users"}</Material></NavLink>
+                    <NavLink to="/about-us" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "درباره ما" : "about us"}</Material></NavLink>
+                    <Material className="header-sidebar-switch" onClick={this.switchLang}>{lang === "fa" ? "تغییر زبان به انگلیسی" : "switch to persian"}</Material>
+                    {admin && <NavLink to="/panel" activeClassName="active" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">{lang === "fa" ? "پنل اعضا" : "panel"}</Material></NavLink>}
                 </div>
 
                 <div className="header-section show-desktop">
-                    <Link to="/"><h1 className="header-name">باشگاه گردشگری و محیط زیست یونسکو</h1></Link>
-                    <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">ثبت نام</Material></NavLink>
-                    <NavLink activeClassName="header-right-section-link-active" to="/documents"><Material className="header-right-section-link">پرونده‌ها</Material></NavLink>
-                    <NavLink activeClassName="header-right-section-link-active" to="/routes"><Material className="header-right-section-link">مسیرها</Material></NavLink>
-                    <NavLink activeClassName="header-right-section-link-active" to="/users"><Material className="header-right-section-link">فعالین</Material></NavLink>
-                    <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">درباره ما</Material></NavLink>
+                    <Link to="/"><h1 className="header-name">{lang === "fa" ? "باشگاه گردشگری و محیط زیست یونسکو" : "Tourism and Environment Club"}</h1></Link>
+                    <NavLink activeClassName="header-right-section-link-active" to="/sign-up"><Material className="header-right-section-link">{lang === "fa" ? "ثبت نام" : "sign up"}</Material></NavLink>
+                    <NavLink activeClassName="header-right-section-link-active" to="/documents"><Material className="header-right-section-link">{lang === "fa" ? "پرونده‌ها" : "documents"}</Material></NavLink>
+                    <NavLink activeClassName="header-right-section-link-active" to="/routes"><Material className="header-right-section-link">{lang === "fa" ? "مسیرها" : "routes"}</Material></NavLink>
+                    <NavLink activeClassName="header-right-section-link-active" to="/users"><Material className="header-right-section-link">{lang === "fa" ? "فعالین" : "users"}</Material></NavLink>
+                    <NavLink activeClassName="header-right-section-link-active" to="/about-us"><Material className="header-right-section-link">{lang === "fa" ? "درباره ما" : "about us"}</Material></NavLink>
                 </div>
                 <div className="header-section">
-                    {admin && <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">پنل اعضا</Material></NavLink>}
-                    <div className="header-logo-text">Tourism and Environment Club</div>
+                    {admin && <NavLink activeClassName="header-right-section-link-active" className="show-desktop" to="/panel"><Material className="header-right-section-link">{lang === "fa" ? "پنل اعضا" : "panel"}</Material></NavLink>}
+                    <Material className="header-sidebar-switch-desk" onClick={this.switchLang}>{lang === "fa" ? "تغییر زبان به انگلیسی" : "switch to persian"}</Material>
                     <Link to="/">
                         <img src={Logo} alt="Tourism and Environment club" className="header-logo"/>
                     </Link>

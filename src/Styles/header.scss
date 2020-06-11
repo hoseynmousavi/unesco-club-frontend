@@ -22,13 +22,13 @@
 }
 
 .show-desktop {
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     display: none;
   }
 }
 
 .show-mobile {
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 1150px) {
     display: none;
   }
 }
@@ -41,7 +41,7 @@
 
 .header-hamburger-mobile-material {
   display: none;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     z-index: 5;
     margin-right: -7.5px;
     width: 50px;
@@ -70,6 +70,22 @@
   transition: all linear 0.2s;
 }
 
+.header-sidebar-switch-desk {
+  font-size: $small-font-size;
+  margin: 0 25px;
+  cursor: pointer;
+  padding: 7px 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  transition: all linear 0.2s;
+
+  @media screen and (max-width: 1150px) {
+    display: none;
+  }
+}
+
 .header-right-section-link-active {
   .header-right-section-link {
     background-color: var(--login-page-background-color);
@@ -88,7 +104,7 @@
   font-size: $small-font-size;
   margin: 0 5px 0 15px;
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     display: none;
   }
 }
@@ -97,7 +113,7 @@
   font-size: $huge-font-size;
   margin-left: 20px;
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     white-space: nowrap;
     font-size: $small-font-size;
     transition: all linear 0.2s;
@@ -117,7 +133,7 @@
 
 .header-sidebar-back {
   display: none;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     display: block;
     position: fixed;
     top: 0;
@@ -132,7 +148,7 @@
 
 .header-sidebar-container {
   display: none;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1150px) {
     display: block;
     position: fixed;
     top: 0;
@@ -141,6 +157,11 @@
     width: 80%;
     background-color: white;
     z-index: 4;
+
+    &.en {
+      right: auto;
+      left: 0;
+    }
   }
 }
 
@@ -165,4 +186,16 @@
   &.margin-top {
     margin-top: 80px;
   }
+}
+
+.header-sidebar-switch {
+  font-size: $title-font-size;
+  font-weight: bold;
+  transition: all linear 0.2s;
+  color: var(--dark-color);
+  border-top: 1px solid var(--login-page-background-color);
+  border-bottom: 1px solid var(--login-page-background-color);
+  padding: 20px 15px;
+  margin-top: -1px;
+  background-color: inherit;
 }

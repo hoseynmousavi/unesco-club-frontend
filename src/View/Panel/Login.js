@@ -26,7 +26,7 @@ class Login extends PureComponent
     submit = () =>
     {
         const {username, password} = this
-        const {setAdmin} = this.props
+        const {setAdmin, lang} = this.props
         if (username && password && password.length > 5)
         {
             this.setState({...this.state, loading: true}, () =>
@@ -42,23 +42,24 @@ class Login extends PureComponent
                     {
                         this.setState({...this.state, loading: false}, () =>
                         {
-                            if (err?.response?.status === 404) NotificationManager.error("کاربری با این اطلاعات یافت نشد!")
-                            else NotificationManager.error("خطا در برقراری ارتباط!")
+                            if (err?.response?.status === 404) NotificationManager.error(lang === "fa" ? "کاربری با این اطلاعات یافت نشد!" : "no user found with this information!")
+                            else NotificationManager.error(lang === "fa" ? "خطا در برقراری ارتباط!" : "error communicating")
                         })
                     })
             })
         }
         else
         {
-            if (!username) NotificationManager.error("نام کاربری خود را وارد کنید!")
-            if (!password) NotificationManager.error("رمز عبور خود را وارد کنید!")
-            else if (password.length < 6) NotificationManager.error("رمز عبور وارد شده معتبر نیست!")
+            if (!username) NotificationManager.error(lang === "fa" ? "نام کاربری خود را وارد کنید!" : "enter your username!")
+            if (!password) NotificationManager.error(lang === "fa" ? "رمز عبور خود را وارد کنید!" : "enter your password!")
+            else if (password.length < 6) NotificationManager.error(lang === "fa" ? "رمز عبور وارد شده معتبر نیست!" : "entered password is not even valid!")
         }
     }
 
     render()
     {
         const {loading} = this.state
+        const {lang} = this.props
         return (
             <div className="sign-up-page-cont admin">
 
@@ -70,10 +71,10 @@ class Login extends PureComponent
                 }
 
                 <div className="sign-up-page-form admin">
-                    <div className="sign-up-page-title">ورود</div>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="username" backgroundColor="white" maxLength={11} label={<span>نام کاربری</span>} getValue={this.setValue}/>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="password" type="password" backgroundColor="white" maxLength={50} label={<span>رمز عبور</span>} getValue={this.setValue}/>
-                    <Material className="sign-up-page-submit" backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
+                    <div className="sign-up-page-title">{lang === "fa" ? "ورود" : "login"}</div>
+                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="username" backgroundColor="white" maxLength={11} label={<span>{lang === "fa" ? "نام کاربری" : "username"}</span>} getValue={this.setValue}/>
+                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="password" type="password" backgroundColor="white" maxLength={50} label={<span>{lang === "fa" ? "رمز عبور" : "password"}</span>} getValue={this.setValue}/>
+                    <Material className={`sign-up-page-submit ${lang}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>{lang === "fa" ? "ثبت" : "submit"}</Material>
                 </div>
             </div>
         )

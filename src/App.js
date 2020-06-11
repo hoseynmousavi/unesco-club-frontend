@@ -1,6 +1,6 @@
 import React, {lazy, PureComponent, Suspense} from "react"
 import {NotificationContainer} from "react-notifications"
-import {Route, Switch} from "react-router-dom"
+import {Route, Switch, Redirect} from "react-router-dom"
 import api from "./Functions/api"
 import Header from "./View/Components/Header"
 import Footer from "./View/Components/Footer"
@@ -21,6 +21,7 @@ class App extends PureComponent
         super(props)
         this.state = {
             admin: null,
+            lang: "fa",
         }
     }
 
@@ -29,6 +30,7 @@ class App extends PureComponent
         window.scroll({top: 0})
 
         const {location} = this.props
+
         if (
             location.pathname.includes("/add") || location.pathname.includes("/show-picture")
         )
@@ -39,6 +41,9 @@ class App extends PureComponent
             window.history.replaceState("", "", currentPath ? currentPath : "/")
             document.location.reload()
         }
+
+        if (location.pathname.slice(0, 3) === "/en") this.setState({...this.state, lang: "en"}, () => localStorage.setItem("language", "en"))
+        else localStorage.removeItem("language")
 
         let admin = null
 
@@ -83,29 +88,49 @@ class App extends PureComponent
         )
     }
 
+    switchLanguage = () =>
+    {
+        const {location} = this.props
+        let lang
+        if (this.state.lang === "fa") lang = "en"
+        else lang = "fa"
+        this.setState({...this.state, lang}, () =>
+        {
+            window.history.replaceState("", "", `/${lang}${location.pathname.replace("/en", "").replace("/fa", "")}`)
+            if (lang === "en") localStorage.setItem("language", "en")
+            else localStorage.removeItem("language")
+        })
+    }
+
     render()
     {
-        const {admin} = this.state
+        const {admin, lang} = this.state
+        const {location} = this.props
         return (
-            <React.Fragment>
-                <Header admin={admin}/>
+            <div className={`body ${lang}`}>
+                <Header admin={admin} lang={lang} switchLanguage={this.switchLanguage}/>
                 <main className="main">
                     <Suspense fallback={null}>
                         <Switch>
-                            <Route path="/sign-up" render={() => <SignUpPage/>}/>
-                            <Route path="/documents" render={() => <DocumentsPage/>}/>
-                            <Route path="/routes" render={() => <RoutesPage/>}/>
-                            <Route path="/users" render={() => <UsersPage/>}/>
-                            <Route path="/about-us" render={() => <AboutPage/>}/>
-                            <Route path="/panel" render={() => <PanelPage admin={admin} setAdmin={this.setAdmin}/>}/>
-                            <Route exact path="/" render={() => <HomePage/>}/>
-                            <Route path="*" status={404} render={() => <NotFoundPage/>}/>
+                            <Route path="/:lang(fa|en)" render={route =>
+                                <Switch>
+                                    <Route path={`${route.match.path}/sign-up`} render={() => <SignUpPage lang={lang}/>}/>
+                                    <Route path={`${route.match.path}/documents`} render={route => <DocumentsPage lang={lang} path={route.match.path}/>}/>
+                                    <Route path={`${route.match.path}/routes`} render={route => <RoutesPage lang={lang} path={route.match.path}/>}/>
+                                    <Route path={`${route.match.path}/users`} render={route => <UsersPage lang={lang} path={route.match.path}/>}/>
+                                    <Route path={`${route.match.path}/about-us`} render={() => <AboutPage lang={lang}/>}/>
+                                    <Route path={`${route.match.path}/panel`} render={() => <PanelPage lang={lang} admin={admin} setAdmin={this.setAdmin}/>}/>
+                                    <Route exact path={`${route.match.path}`} render={() => <HomePage lang={lang}/>}/>
+                                    <Route path="*" status={404} render={() => <NotFoundPage lang={lang}/>}/>
+                                </Switch>
+                            }/>
+                            <Redirect to={`/${lang}${location.pathname === "/" ? "" : location.pathname}`}/>
                         </Switch>
                     </Suspense>
                 </main>
-                <Footer/>
+                <Footer lang={lang}/>
                 <NotificationContainer/>
-            </React.Fragment>
+            </div>
         )
     }
 }

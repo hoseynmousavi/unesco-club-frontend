@@ -638,6 +638,11 @@
     width: calc(100% + 20px);
     margin-right: -10px;
     margin-bottom: 50px;
+
+    &.en {
+      margin-right: 0;
+      margin-left: -10px;
+    }
   }
 }
 

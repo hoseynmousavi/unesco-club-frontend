@@ -19,12 +19,20 @@ function get(url, param = "", dontToast)
             const cacheData = localStorage.getItem(url + "/" + param)
             if (cacheData)
             {
-                if (err?.response?.status !== 404 && !dontToast) NotificationManager.warning("عدم دسترسی به اینترنت، بارگزاری آفلاین...")
+                if (err?.response?.status !== 404 && !dontToast)
+                {
+                    const lang = localStorage.getItem("language")
+                    NotificationManager.warning(lang && lang === "en" ? "lack of internet access, offline loading ..." : "عدم دسترسی به اینترنت، بارگزاری آفلاین...")
+                }
                 return JSON.parse(cacheData)
             }
             else
             {
-                if (err?.response?.status !== 404 && !dontToast) NotificationManager.error("برنامه در گرفتن اطلاعات با خطا مواجه شد!")
+                if (err?.response?.status !== 404 && !dontToast)
+                {
+                    const lang = localStorage.getItem("language")
+                    NotificationManager.error(lang && lang === "en" ? "error in receiving information!" : "برنامه در گرفتن اطلاعات با خطا مواجه شد!")
+                }
                 throw err
             }
         })

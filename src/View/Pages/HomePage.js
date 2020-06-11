@@ -89,6 +89,7 @@ class HomePage extends PureComponent
     render()
     {
         const {pictures, routes, routesLoading, documents, picturesLoading, documentsLoading, users, usersLoading, aparats, aparatsLoading, showVideoLinkIndex} = this.state
+        const {lang} = this.props
         return (
             <div className="home-page-cont">
                 {
@@ -112,13 +113,13 @@ class HomePage extends PureComponent
                 }
                 <div className="home-page-cont-child">
                     <div className={`home-page-documents ${documentsLoading ? "" : "loaded"}`}>
-                        <div className="home-page-docs-title">
+                        <div className={`home-page-docs-title ${lang}`}>
                             <Link to="/documents">
                                 <DescriptionSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">پرونده‌ها</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "پرونده‌ها" : "documents"}</div>
                             </Link>
                         </div>
-                        <div className="panel-document-cont home">
+                        <div className={`panel-document-cont home ${lang}`}>
                             {documents.map((doc, index) => <Document document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
@@ -129,10 +130,10 @@ class HomePage extends PureComponent
                     </div>
 
                     <div className={`home-page-documents ${routesLoading ? "" : "loaded"}`}>
-                        <div className="home-page-docs-title users">
+                        <div className={`home-page-docs-title users ${lang}`}>
                             <Link to="/routes">
                                 <LocationSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">مسیرها</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "مسیرها" : "routes"}</div>
                             </Link>
                         </div>
                         <div className="home-route-cont">
@@ -151,13 +152,13 @@ class HomePage extends PureComponent
                     {
                         users.length > 0 &&
                         <div className={`home-page-documents ${usersLoading ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title users">
+                            <div className={`home-page-docs-title users ${lang}`}>
                                 <Link to="/users">
                                     <VerifiedUserSvg className="home-page-docs-title-svg"/>
-                                    <div className="home-page-docs-title-text">فعالین</div>
+                                    <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "فعالین" : "users"}</div>
                                 </Link>
                             </div>
-                            <div className="panel-document-cont home">
+                            <div className={`panel-document-cont home ${lang}`}>
                                 {users.map(user => <User user={user} key={user._id}/>)}
                             </div>
                         </div>
@@ -166,9 +167,9 @@ class HomePage extends PureComponent
                     {
                         aparats.length > 0 &&
                         <div className={`home-page-documents ${aparatsLoading ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title users">
+                            <div className={`home-page-docs-title users ${lang}`}>
                                 <ShowVideoSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">ویدیوها</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "ویدیوها" : "videos"}</div>
                             </div>
                             <div className="home-page-videos">
                                 <div className={`home-page-video-show ${aparats.length === 1 ? "full" : ""}`}>

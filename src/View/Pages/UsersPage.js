@@ -61,16 +61,17 @@ class UsersPage extends PureComponent
     render()
     {
         const {usersLoading, users} = this.state
+        const {path, lang} = this.props
         return (
             <Switch>
-                <Route path="/users/:id" render={(route) => <ShowUserPage id={route.match.params.id}/>}/>
+                <Route path={`${path}/:id`} render={(route) => <ShowUserPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
                     <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(users).length === 0 && usersLoading ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title page">
+                            <div className={`home-page-docs-title page ${lang}`}>
                                 <VerifiedUserSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">فعالین</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "فعالین" : "users"}</div>
                             </div>
                             <div className="panel-document-cont home">
                                 {Object.values(users).map(user => <User user={user} key={user._id}/>)}
@@ -80,7 +81,7 @@ class UsersPage extends PureComponent
                                     usersLoading ?
                                         <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
                                         :
-                                        Object.values(users).length === 0 && <div className="panel-section-loading-cont">کاربری یافت نشد!</div>
+                                        Object.values(users).length === 0 && <div className="panel-section-loading-cont">{lang === "fa" ? "کاربری یافت نشد!" : "no user found!"}</div>
                                 }
                             </div>
                         </div>

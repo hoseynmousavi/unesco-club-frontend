@@ -15,7 +15,7 @@ class PanelPage extends PureComponent
 
     render()
     {
-        const {admin, setAdmin} = this.props
+        const {admin, setAdmin, lang} = this.props
         if (admin)
             return (
                 <div className="panel-page-container">
@@ -30,7 +30,7 @@ class PanelPage extends PureComponent
                     </div>
                 </div>
             )
-        else return <Login setAdmin={setAdmin}/>
+        else return <Login lang={lang} setAdmin={setAdmin}/>
     }
 }
 

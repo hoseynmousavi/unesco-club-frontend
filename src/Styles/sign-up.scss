@@ -47,6 +47,17 @@
   height: 50px;
   margin: 15px 0 20px 0;
 
+  &.en {
+    input, area {
+      text-align: left;
+    }
+
+    .material-input-label, .material-input-label-out {
+      right: auto;
+      left: 6px;
+    }
+  }
+
   &.ltr {
     direction: ltr;
   }
@@ -89,6 +100,11 @@
   padding: 10px 0;
   margin-top: 20px;
   cursor: pointer;
+
+  &.en {
+    margin-right: 0;
+    margin-left: -20px;
+  }
 
   &.disabled {
     cursor: not-allowed;
@@ -154,6 +170,11 @@
 .seyed-radio-label {
   font-size: $regular-font-size;
   margin-right: 10px;
+
+  &.en {
+    margin-right: 0;
+    margin-left: 10px;
+  }
 
   &.colored {
     color: var(--primary-color);

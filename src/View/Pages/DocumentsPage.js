@@ -61,16 +61,17 @@ class DocumentsPage extends PureComponent
     render()
     {
         const {documentsLoading, documents} = this.state
+        const {path, lang} = this.props
         return (
             <Switch>
-                <Route path="/documents/:id" render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
+                <Route path={`${path}/:id`} render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
                     <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title page">
+                            <div className={`home-page-docs-title page ${lang}`}>
                                 <DescriptionSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">پرونده‌ها</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "پرونده‌ها" : "documents"}</div>
                             </div>
                             <div className="panel-document-cont home">
                                 {Object.values(documents).map(doc => <Document document={doc} key={doc._id}/>)}
@@ -85,7 +86,7 @@ class DocumentsPage extends PureComponent
                                     documentsLoading ?
                                         <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
                                         :
-                                        Object.values(documents).length === 0 && <div className="panel-section-loading-cont">پرونده ای یافت نشد!</div>
+                                        Object.values(documents).length === 0 && <div className="panel-section-loading-cont">{lang === "fa" ? "پرونده ای یافت نشد!" : "no document found!"}</div>
                                 }
                             </div>
                         </div>

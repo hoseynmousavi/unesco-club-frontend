@@ -61,17 +61,17 @@ class RoutesPage extends PureComponent
     render()
     {
         const {documentsLoading, documents} = this.state
-        console.log(Object.values(documents))
+        const {path, lang} = this.props
         return (
             <Switch>
-                <Route path="/routes/:id" render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
+                <Route path={`${path}/:id`} render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
 
                 <React.Fragment>
                     <div className="doc-page-cont">
                         <div className={`home-page-documents ${Object.values(documents).length === 0 ? "" : "loaded"}`}>
-                            <div className="home-page-docs-title page">
+                            <div className={`home-page-docs-title page ${lang}`}>
                                 <LocationSvg className="home-page-docs-title-svg"/>
-                                <div className="home-page-docs-title-text">مسیرها</div>
+                                <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "مسیرها" : "routes"}</div>
                             </div>
                             <div className="home-route-cont page">
                                 <div ref={e => this.routeCont = e} className="home-route-cont-slide">
@@ -83,7 +83,7 @@ class RoutesPage extends PureComponent
                                     documentsLoading ?
                                         <div className="panel-section-loading-cont"><ClipLoader size={20} color="var(--primary-color)"/></div>
                                         :
-                                        Object.values(documents).length === 0 && <div className="panel-section-loading-cont">مسیری یافت نشد!</div>
+                                        Object.values(documents).length === 0 && <div className="panel-section-loading-cont">{lang === "fa" ? "مسیری یافت نشد!" : "no route found!"}</div>
                                 }
                             </div>
                         </div>

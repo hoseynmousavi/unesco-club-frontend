@@ -155,6 +155,10 @@
   margin-top: 50px;
   margin-bottom: 5px;
 
+  &.en {
+    text-align: left;
+  }
+
   &.users {
     padding-top: 80px;
     border-top: 1px solid var(--primary-color);
@@ -173,8 +177,13 @@
 .home-page-docs-title-text {
   display: inline-block;
   vertical-align: top;
-  margin-top: 2px;
+  margin-top: 3px;
   margin-right: 10px;
+
+  &.en {
+    margin-right: 0;
+    margin-left: 10px;
+  }
 }
 
 .home-page-docs-item-hide {

@@ -7,6 +7,7 @@
   border-radius: 5px;
   background-color: var(--transparent-third);
   min-height: calc(100vh - 120px);
+  direction: rtl;
 
   &.user {
     background-color: white;
