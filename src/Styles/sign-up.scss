@@ -41,6 +41,19 @@
 .sign-up-page-area {
   margin: 15px 0 40px 0;
   height: 100px;
+
+  &.en {
+    input, textarea {
+      text-align: left;
+      direction: ltr;
+    }
+
+    .material-input-label, .material-input-label-out {
+      direction: ltr;
+      right: auto;
+      left: 6px;
+    }
+  }
 }
 
 .sign-up-page-input {
@@ -48,11 +61,13 @@
   margin: 15px 0 20px 0;
 
   &.en {
-    input, area {
+    input, textarea {
       text-align: left;
+      direction: ltr;
     }
 
     .material-input-label, .material-input-label-out {
+      direction: ltr;
       right: auto;
       left: 6px;
     }

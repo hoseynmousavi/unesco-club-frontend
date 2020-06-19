@@ -37,60 +37,61 @@ class ShowDocumentPage extends PureComponent
     render()
     {
         const {notFound, error, document, isLoading} = this.state
+        const {lang} = this.props
         return (
             <div className="document-page-cont">
                 {
                     error ?
-                        <div className="document-page-err">خطایی رخ داد؛ دوباره تلاش کنید!</div>
+                        <div className="document-page-err">{lang === "fa" ? "خطایی رخ داد؛ دوباره تلاش کنید!" : "an error occurred; try again!"}</div>
                         :
                         notFound ?
-                            <div className="document-page-err">پرونده مورد نظر یافت نشد!</div>
+                            <div className="document-page-err">{lang === "fa" ? "پرونده مورد نظر یافت نشد!" : "the file was not found!"}</div>
                             :
                             document ?
                                 <React.Fragment>
-                                    {document.thumbnail && <ImageShow className="document-page-thumb" src={REST_URL + document.thumbnail} alt={document.title}/>}
-                                    <div className="document-page-field">
-                                        <TitleSvg className="document-page-field-svg"/>
-                                        <div className="document-page-field-dialog">عنوان</div>
-                                        <div className="document-page-field-text inline">{document.title}</div>
+                                    {document.thumbnail && <ImageShow className="document-page-thumb" src={REST_URL + document.thumbnail} alt={lang === "fa" ? document.title : document.title_en}/>}
+                                    <div className={`document-page-field ${lang}`}>
+                                        <TitleSvg className={`document-page-field-svg ${lang}`}/>
+                                        <div className={`document-page-field-dialog ${lang}`}>{lang === "fa" ? "عنوان" : "title"}</div>
+                                        <div className={`document-page-field-text inline ${lang}`}>{lang === "fa" ? document.title : document.title_en}</div>
                                     </div>
                                     {
-                                        document.summary &&
+                                        ((lang === "fa" && document.summary) || (lang === "en" && document.summary_en)) &&
                                         <div className="document-page-field">
-                                            <SummarySvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-dialog">خلاصه</div>
-                                            <div className="document-page-field-text inline">{document.summary}</div>
+                                            <SummarySvg className={`document-page-field-svg ${lang}`}/>
+                                            <div className={`document-page-field-dialog ${lang}`}>{lang === "fa" ? "خلاصه" : "summary"}</div>
+                                            <div className={`document-page-field-text inline ${lang}`}>{lang === "fa" ? document.summary : document.summary_en}</div>
                                         </div>
                                     }
                                     {
-                                        document.description &&
+                                        ((lang === "fa" && document.description) || (lang === "en" && document.description_en)) &&
                                         <div className="document-page-field">
-                                            <DescriptionSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-dialog">توضیحات</div>
-                                            <div className={`document-page-field-text inline ${document.pictures && document.pictures.length > 0 ? "have-img" : ""}`}>{document.description}</div>
+                                            <DescriptionSvg className={`document-page-field-svg ${lang}`}/>
+                                            <div className={`document-page-field-dialog ${lang}`}>{lang === "fa" ? "توضیحات" : "description"}</div>
+                                            <div className={`document-page-field-text inline ${lang} ${document.pictures && document.pictures.length > 0 ? "have-img" : ""}`}>{lang === "fa" ? document.description : document.description_en}</div>
                                             {
                                                 document.pictures && document.pictures.length > 0 &&
-                                                <ImageShow key={document.pictures[0]._id} className="document-page-field-img" src={REST_URL + document.pictures[0].file} alt={document.pictures[0].description}/>
+                                                <ImageShow key={document.pictures[0]._id} className={`document-page-field-img ${lang}`} src={REST_URL + document.pictures[0].file} alt={document.pictures[0].description}/>
                                             }
                                         </div>
                                     }
                                     {
-                                        document.location &&
+                                        ((lang === "fa" && document.location) || (lang === "en" && document.location_en)) &&
                                         <div className="document-page-field">
-                                            <LocationSvg className="document-page-field-svg"/>
-                                            <div className="document-page-field-dialog">لوکیشن</div>
-                                            <div className="document-page-field-text inline">{document.location}</div>
+                                            <LocationSvg className={`document-page-field-svg ${lang}`}/>
+                                            <div className={`document-page-field-dialog ${lang}`}>{lang === "fa" ? "لوکیشن" : "location"}</div>
+                                            <div className={`document-page-field-text inline ${lang}`}>{lang === "fa" ? document.location : document.location_en}</div>
                                         </div>
                                     }
                                     {
                                         document.categories && document.categories.length > 0 &&
-                                        <div className="document-page-cats">
-                                            <CategorySvg className="document-page-field-svg cat"/>
-                                            <div className="document-page-field-dialog">دسته‌بندی</div>
+                                        <div className={`document-page-cats ${lang}`}>
+                                            <CategorySvg className={`document-page-field-svg cat ${lang}`}/>
+                                            <div className={`document-page-field-dialog ${lang}`}>{lang === "fa" ? "دسته‌بندی" : "category"}</div>
                                             {
                                                 document.categories.map(cat =>
                                                     <Material key={cat._id} className="panel-select-show-categories-item">
-                                                        {cat.name}
+                                                        {lang === "fa" ? cat.name : cat.name_en}
                                                     </Material>,
                                                 )
                                             }

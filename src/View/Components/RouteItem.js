@@ -8,7 +8,7 @@ class RouteItem extends PureComponent
 {
     render()
     {
-        const {route} = this.props
+        const {route, lang} = this.props
         return (
             <div className="route-item-cont">
                 <div className="route-item-img-effect" onClick={() => document.getElementById(route.thumbnail).click()}>
@@ -16,8 +16,8 @@ class RouteItem extends PureComponent
                 </div>
                 <ImageShow id={route.thumbnail} className="route-item-img" src={REST_URL + route.thumbnail} alt=""/>
                 <Link to={`/routes/${route._id}`} className="route-item-text">
-                    <div className="route-item-text-title">{route.title}</div>
-                    <div className="route-item-text-summary">{route.summary}</div>
+                    <div className="route-item-text-title">{lang === "fa" ? route.title : route.title_en}</div>
+                    <div className="route-item-text-summary">{lang === "fa" ? route.summary : route.summary_en}</div>
                 </Link>
             </div>
         )

@@ -115,9 +115,10 @@ class Documents extends PureComponent
     render()
     {
         const {isModalOpen, categories, documents, getLoading} = this.state
+        const {path} = this.props
         return (
             <Switch>
-                <Route path="/panel/documents/:id" render={(route) =>
+                <Route path={`${path}/:id`} render={(route) =>
                     <PanelShowDocument id={route.match.params.id}
                                        categories={categories}
                                        document={documents[route.match.params.id]}

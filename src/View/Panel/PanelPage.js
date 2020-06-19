@@ -24,7 +24,7 @@ class PanelPage extends PureComponent
                     <div className="panel-page-content">
                         <Switch>
                             <Route path={`${path}/panel/users`} render={() => <Users/>}/>
-                            <Route path={`${path}/panel/documents`} render={() => <Documents/>}/>
+                            <Route path={`${path}/panel/documents`} render={route => <Documents path={route.match.path}/>}/>
                             <Route path={`${path}/panel/categories`} render={() => <Categories/>}/>
                             <Route path="*" render={() => <div className="panel-welcome">خوش اومدی ادمین :)</div>}/>
                         </Switch>

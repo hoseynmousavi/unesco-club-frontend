@@ -7,7 +7,7 @@ import HyperLinkSvg from "../../Media/Svgs/HyperlinkSvg"
 
 const Document = props =>
 {
-    const {document, noBorder} = props
+    const {document, noBorder, lang} = props
     return (
         <Link className="home-page-docs-item" to={`/documents/${document._id}`}>
             <Material className={`panel-document-item ${noBorder ? "border-none" : ""}`}>
@@ -18,8 +18,8 @@ const Document = props =>
                         <div className="panel-document-thumb-default-cont"><PdfSvg className="panel-document-thumb-default"/></div>
                 }
                 <div className="panel-document-thumb-effect"><HyperLinkSvg className="panel-document-thumb-effect-svg"/></div>
-                <div className="panel-document-item-title">{document.title}</div>
-                {document.summary && <div className="panel-document-item-summary">{document.summary}</div>}
+                <div className="panel-document-item-title">{lang === "en" ? document.title_en : document.title}</div>
+                {document.summary && <div className="panel-document-item-summary">{lang === "en" ? document.summary_en : document.summary}</div>}
             </Material>
         </Link>
     )

@@ -75,15 +75,15 @@ class Categories extends PureComponent
 
     submit = () =>
     {
-        const {name, description} = this
+        const {name, description, name_en, description_en} = this
         const {modalLoading} = this.state
         if (!modalLoading)
         {
-            if (name)
+            if (name && name_en)
             {
                 this.setState({...this.state, modalLoading: true}, () =>
                 {
-                    api.post("document/category", {name, description: description ? description : undefined})
+                    api.post("document/category", {name, name_en, description_en: description_en ? description_en : undefined, description: description ? description : undefined})
                         .then(category =>
                         {
                             NotificationManager.success("با موفقیت ساخته شد!")
@@ -102,7 +102,7 @@ class Categories extends PureComponent
             }
             else
             {
-                if (!name) NotificationManager.error("نام را وارد کنید!")
+                if (!name || !name_en) NotificationManager.error("نام و name را وارد کنید!")
             }
         }
     }
@@ -143,8 +143,8 @@ class Categories extends PureComponent
                 {
                     Object.values(categories).map(category =>
                         <div key={category._id} className="panel-row-cont">
-                            <div className="panel-row-item">{category.name}</div>
-                            <div className="panel-row-item">{category.description}</div>
+                            <div className="panel-row-item">{category.name} | {category.name_en}</div>
+                            <div className="panel-row-item">{category.description} | {category.description_en}</div>
                             <div className="panel-row-item-small"><CancelSvg className="panel-row-item-remove" onClick={() => this.removeItem(category._id)}/></div>
                         </div>,
                     )
@@ -161,7 +161,9 @@ class Categories extends PureComponent
                         <div className="panel-add-item-model-cont">
                             <div className="sign-up-page-title">ایجاد دسته‌بندی</div>
                             <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="name" backgroundColor="white" label={<span>نام <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                            <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input en" name="name_en" backgroundColor="white" label={<span>name <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
                             <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input en" name="description_en" backgroundColor="white" label={<span>description</span>} getValue={this.setValue}/>
                             <Material className={`sign-up-page-submit ${modalLoading ? "disabled" : ""}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>ثبت</Material>
                         </div>
                         <div className="panel-add-item-back" onClick={this.toggleModal}/>

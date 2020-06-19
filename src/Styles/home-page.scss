@@ -61,6 +61,13 @@
   display: flex;
   transition: all linear 0.2s;
   align-items: center;
+
+  &.en {
+    right: auto;
+    left: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent);
+    padding: 0 50% 0 5%;
+  }
 }
 
 .home-page-slider-item-desc-text {
@@ -71,6 +78,10 @@
   }
   animation: slider ease-out 2.5s;
   transition: all linear 0.2s;
+
+  &.en {
+    animation: slider-en ease-out 2.5s;
+  }
 }
 
 .home-page-documents {

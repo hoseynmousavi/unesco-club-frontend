@@ -72,8 +72,8 @@ class Login extends PureComponent
 
                 <div className="sign-up-page-form admin">
                     <div className="sign-up-page-title">{lang === "fa" ? "ورود" : "login"}</div>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="username" backgroundColor="white" maxLength={11} label={<span>{lang === "fa" ? "نام کاربری" : "username"}</span>} getValue={this.setValue}/>
-                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="password" type="password" backgroundColor="white" maxLength={50} label={<span>{lang === "fa" ? "رمز عبور" : "password"}</span>} getValue={this.setValue}/>
+                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="username" backgroundColor="white" label={<span>{lang === "fa" ? "نام کاربری" : "username"}</span>} getValue={this.setValue}/>
+                    <MaterialInput onKeyDown={this.submitOnEnter} className={`sign-up-page-input ${lang}`} name="password" type="password" backgroundColor="white" label={<span>{lang === "fa" ? "رمز عبور" : "password"}</span>} getValue={this.setValue}/>
                     <Material className={`sign-up-page-submit ${lang}`} backgroundColor="rgba(255,255,255,0.3)" onClick={this.submit}>{lang === "fa" ? "ثبت" : "submit"}</Material>
                 </div>
             </div>

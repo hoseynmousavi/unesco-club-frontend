@@ -105,9 +105,9 @@ class HomePage extends PureComponent
                                   <div className="home-page-slider-item-cont">
                                       <img className="home-page-slider-item" src={REST_URL + pic.file} alt={pic.description}/>
                                       {
-                                          pic.description &&
-                                          <div className="home-page-slider-item-desc">
-                                              <div className={`home-page-slider-item-desc-text ${lang}`}>{pic.description}</div>
+                                          ((lang === "fa" && pic.description) || (lang === "en" && pic.description_en)) &&
+                                          <div className={`home-page-slider-item-desc ${lang}`}>
+                                              <div className={`home-page-slider-item-desc-text ${lang}`}>{lang === "fa" ? pic.description : pic.description_en}</div>
                                               <span> </span>
                                           </div>
                                       }
@@ -124,7 +124,7 @@ class HomePage extends PureComponent
                             </Link>
                         </div>
                         <div className={`panel-document-cont home ${lang}`}>
-                            {documents.map((doc, index) => <Document document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
+                            {documents.map((doc, index) => <Document lang={lang} document={doc} noBorder={index === documents.length - 1} key={doc._id}/>)}
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
                             <div className="home-page-docs-item-hide"/>
@@ -142,7 +142,7 @@ class HomePage extends PureComponent
                         </div>
                         <div className="home-route-cont">
                             <div ref={e => this.routeCont = e} className="home-route-cont-slide">
-                                {routes.map((route) => <RouteItem route={route} key={route._id}/>)}
+                                {routes.map((route) => <RouteItem lang={lang} route={route} key={route._id}/>)}
                             </div>
                             <Material className={`my-slider-arrow route-arrows ${lang === "fa" ? "right" : "left"}`} onClick={this.goRight}>
                                 <RightArrow/>

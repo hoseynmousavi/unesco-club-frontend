@@ -40,6 +40,21 @@
   }
   100% {
     opacity: 1;
+    margin-right: 0;
+  }
+}
+
+@keyframes slider-en {
+  0% {
+    opacity: 0;
+    margin-left: 30px;
+  }
+  60% {
+    opacity: 0;
+    margin-left: 30px;
+  }
+  100% {
+    opacity: 1;
     margin-left: 0;
   }
 }

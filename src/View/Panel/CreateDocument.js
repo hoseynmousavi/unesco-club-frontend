@@ -54,6 +54,7 @@ class CreateDocument extends PureComponent
     {
         this.setState({...this.state, videoModal: !this.state.videoModal, tempImagePreview: undefined}, () =>
         {
+            this.tempDescEn = undefined
             this.tempDesc = undefined
             this.tempImg = undefined
         })
@@ -63,6 +64,7 @@ class CreateDocument extends PureComponent
     {
         this.setState({...this.state, videoAparatModal: !this.state.videoAparatModal}, () =>
         {
+            this.tempDescEn = undefined
             this.tempDesc = undefined
             this.tempAparat = undefined
         })
@@ -74,7 +76,7 @@ class CreateDocument extends PureComponent
         {
             this.setState({...this.state, videoAparatPreviews: [...this.state.videoAparatPreviews, this.tempAparat]}, () =>
             {
-                this.aparats.push({link: this.tempAparat, description: this.tempDesc})
+                this.aparats.push({link: this.tempAparat, description: this.tempDesc, description_en: this.tempDescEn})
                 this.toggleVideoAparatModal()
             })
         }
@@ -110,7 +112,7 @@ class CreateDocument extends PureComponent
         const {tempImagePreview} = this.state
         this.setState({...this.state, videoPreviews: [...this.state.videoPreviews, tempImagePreview]}, () =>
         {
-            this.videos.push({file: this.tempImg, description: this.tempDesc})
+            this.videos.push({file: this.tempImg, description: this.tempDesc, description_en: this.tempDescEn})
             this.toggleVideoModal()
         })
     }
@@ -119,6 +121,7 @@ class CreateDocument extends PureComponent
     {
         this.setState({...this.state, imageModal: !this.state.imageModal, tempImagePreview: undefined, previewSlider: undefined}, () =>
         {
+            this.tempDescEn = undefined
             this.tempDesc = undefined
             this.tempImg = undefined
         })
@@ -148,7 +151,7 @@ class CreateDocument extends PureComponent
         const {picturePreviews, tempImagePreview, previewSlider} = this.state
         this.setState({...this.state, picturePreviews: [...picturePreviews, tempImagePreview]}, () =>
         {
-            this.pictures.push({file: this.tempImg, description: this.tempDesc, slider: previewSlider})
+            this.pictures.push({file: this.tempImg, description: this.tempDesc, description_en: this.tempDescEn, slider: previewSlider})
             this.toggleImageModal()
         })
     }
@@ -157,30 +160,36 @@ class CreateDocument extends PureComponent
 
     submit = () =>
     {
-        const {title, summary, description, location, thumbnail, videos, aparats, pictures} = this
+        const {title, summary, description, location, title_en, summary_en, description_en, location_en, thumbnail, videos, aparats, pictures} = this
         const {modalLoading, selectedCategories, is_route} = this.state
         if (!modalLoading)
         {
-            if (title)
+            if (title && title_en)
             {
                 this.setState({...this.state, modalLoading: true, loadingPercent: 0}, () =>
                 {
                     let form = new FormData()
                     form.append("title", title)
+                    form.append("title_en", title_en)
                     selectedCategories.length > 0 && form.append("categories", JSON.stringify(selectedCategories))
                     summary && form.append("summary", summary)
+                    summary_en && form.append("summary_en", summary_en)
                     description && form.append("description", description)
+                    description_en && form.append("description_en", description_en)
                     location && form.append("location", location)
+                    location_en && form.append("location_en", location_en)
                     is_route && form.append("is_route", is_route)
                     aparats.forEach((item, index) =>
                     {
                         form.append("aparat-link" + index, item.link)
                         item.description && form.append("aparat" + index, item.description)
+                        item.description_en && form.append("aparat-en" + index, item.description_en)
                     })
                     videos.forEach((video, index) =>
                     {
                         form.append("film" + index, video.file)
                         video.description && form.append("film" + index, video.description)
+                        video.description_en && form.append("film" + index + "en", video.description_en)
                     })
                     compressImage(thumbnail).then(thumb =>
                     {
@@ -194,6 +203,7 @@ class CreateDocument extends PureComponent
                                 {
                                     form.append("picture" + index, image)
                                     pic.description && form.append("picture" + index, pic.description)
+                                    pic.description_en && form.append("picture" + index + "en", pic.description_en)
                                     pic.slider && form.append("picture" + index + "slider", pic.slider)
                                     counter++
                                     if (counter === pictures.length) this.send(form)
@@ -204,7 +214,7 @@ class CreateDocument extends PureComponent
                     })
                 })
             }
-            else NotificationManager.error("عنوان پرونده را وارد کنید!")
+            else NotificationManager.error("عنوان پرونده و title را وارد کنید!")
         }
     }
 
@@ -252,13 +262,17 @@ class CreateDocument extends PureComponent
                     <div className="panel-add-item-model-cont static" onClick={e => e.stopPropagation()}>
                         <div className="sign-up-page-title">ایجاد پرونده</div>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="title" backgroundColor="white" label={<span>عنوان <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input en" name="title_en" backgroundColor="white" label={<span>title <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
                         <Material className="panel-checkbox" onClick={this.toggleRoute}>
                             <div className={`panel-checkbox-item ${is_route ? "" : "hide"}`}/>
                             مسیر
                         </Material>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="summary" backgroundColor="white" label={<span>خلاصه</span>} getValue={this.setValue}/>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input en" name="summary_en" backgroundColor="white" label={<span>summary</span>} getValue={this.setValue}/>
                         <MaterialInput isTextArea={true} className="sign-up-page-area" name="description" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                        <MaterialInput isTextArea={true} className="sign-up-page-area en" name="description_en" backgroundColor="white" label={<span>description</span>} getValue={this.setValue}/>
                         <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input" name="location" backgroundColor="white" label={<span>لوکیشن</span>} getValue={this.setValue}/>
+                        <MaterialInput onKeyDown={this.submitOnEnter} className="sign-up-page-input en" name="location_en" backgroundColor="white" label={<span>location</span>} getValue={this.setValue}/>
 
                         <Material className="panel-select-categories" onClick={this.toggleCategories}>افزودن دسته‌بندی</Material>
 
@@ -386,8 +400,9 @@ class CreateDocument extends PureComponent
                     imageModal &&
                     <React.Fragment>
                         <div className="panel-select-all-categories-back" onClick={this.toggleImageModal}/>
-                        <div className="panel-select-all-categories center">
+                        <div className="panel-select-all-categories center bigger">
                             <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area en" name="tempDescEn" backgroundColor="white" label={<span>description</span>} getValue={this.setValue}/>
                             <Material className="panel-add-item-pic-cont">
                                 <label className="panel-add-item-pic">
                                     {
@@ -413,8 +428,9 @@ class CreateDocument extends PureComponent
                     videoModal &&
                     <React.Fragment>
                         <div className="panel-select-all-categories-back" onClick={this.toggleVideoModal}/>
-                        <div className="panel-select-all-categories center">
+                        <div className="panel-select-all-categories center bigger">
                             <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area en" name="tempDescEn" backgroundColor="white" label={<span>description</span>} getValue={this.setValue}/>
                             <Material className="panel-add-item-pic-cont">
                                 <label className="panel-add-item-pic">
                                     {
@@ -436,8 +452,9 @@ class CreateDocument extends PureComponent
                     videoAparatModal &&
                     <React.Fragment>
                         <div className="panel-select-all-categories-back" onClick={this.toggleVideoAparatModal}/>
-                        <div className="panel-select-all-categories center">
+                        <div className="panel-select-all-categories center bigger">
                             <MaterialInput isTextArea={true} className="panel-add-img-video-area" name="tempDesc" backgroundColor="white" label={<span>توضیحات</span>} getValue={this.setValue}/>
+                            <MaterialInput isTextArea={true} className="panel-add-img-video-area en" name="tempDescEn" backgroundColor="white" label={<span>description</span>} getValue={this.setValue}/>
                             <MaterialInput className="panel-add-img-video-input" name="tempAparat" backgroundColor="white" label={<span>لینک آپارات <span className="sign-up-page-required">*</span></span>} getValue={this.setValue}/>
                             <Material className={`panel-select-all-categories-btn img`} onClick={this.submitSelectAparatVideo}>ثبت</Material>
                         </div>

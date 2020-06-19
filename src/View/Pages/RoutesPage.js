@@ -64,7 +64,7 @@ class RoutesPage extends PureComponent
         const {path, lang} = this.props
         return (
             <Switch>
-                <Route path={`${path}/:id`} render={(route) => <ShowDocumentPage id={route.match.params.id}/>}/>
+                <Route path={`${path}/:id`} render={(route) => <ShowDocumentPage lang={lang} id={route.match.params.id}/>}/>
 
                 <React.Fragment>
                     <div className="doc-page-cont">
