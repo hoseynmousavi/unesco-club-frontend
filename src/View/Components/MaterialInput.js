@@ -1,7 +1,7 @@
-import React, {Component} from "react"
+import React, {PureComponent} from "react"
 import * as PropTypes from "prop-types"
 
-class MaterialInput extends Component
+class MaterialInput extends PureComponent
 {
     static propTypes = {
         className: PropTypes.string.isRequired,
@@ -24,23 +24,15 @@ class MaterialInput extends Component
             value: "",
             focused: false,
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleFocus = this.handleFocus.bind(this)
-        this.handleBlur = this.handleBlur.bind(this)
-        this.handleKeyDown = this.handleKeyDown.bind(this)
-        this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount()
     {
         const {defaultValue} = this.props
-        if (defaultValue)
-        {
-            this.setState({...this.state, value: defaultValue})
-        }
+        if (defaultValue) this.setState({...this.state, value: defaultValue})
     }
 
-    handleChange(e)
+    handleChange = e =>
     {
         const event = {...e}
         const value = event.target.value
@@ -48,30 +40,18 @@ class MaterialInput extends Component
         if ((!maxLength) || (maxLength && value.length <= maxLength))
         {
             this.setState({...this.state, value}, () =>
-                this.props.getValue(event)
+                this.props.getValue(event),
             )
         }
     }
 
-    handleFocus()
-    {
-        this.setState({...this.state, focused: true})
-    }
+    handleFocus = () => this.setState({...this.state, focused: true})
 
-    handleBlur()
-    {
-        this.setState({...this.state, focused: false})
-    }
+    handleBlur = () => this.setState({...this.state, focused: false})
 
-    handleKeyDown(e)
-    {
-        this.props.onKeyDown && this.props.onKeyDown(e)
-    }
+    handleKeyDown = e => this.props.onKeyDown && this.props.onKeyDown(e)
 
-    handleClick()
-    {
-        this.textRef.focus()
-    }
+    handleClick = () => this.textRef.focus()
 
     render()
     {
@@ -110,7 +90,7 @@ class MaterialInput extends Component
                         />
                 }
 
-                <label className={focused || value.length > 0 ? "material-input-label-out" : "material-input-label"}
+                <label className={focused || value.toString().length > 0 ? "material-input-label-out" : "material-input-label"}
                        style={{backgroundColor: backgroundColor ? backgroundColor : "white"}}
                        onClick={this.handleClick}>
                     {label}
