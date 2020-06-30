@@ -120,7 +120,7 @@ class SignUpPage extends PureComponent
 
     postData(form)
     {
-        api.post("user", form, "", (e) => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
+        api.post("user", form, "", e => this.setState({...this.state, loadingPercent: Math.floor((e.loaded * 100) / e.total)}))
             .then(() =>
                 this.setState({...this.state, loading: false}, () =>
                     NotificationManager.success(this.props.lang === "fa" ? "ثبت نام با موفقیت انجام شد!" : "registration was successful!"),
