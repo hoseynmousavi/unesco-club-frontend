@@ -96,7 +96,7 @@ class HomePage extends PureComponent
             <div className="home-page-cont">
                 {
                     pictures && pictures.length > 0 &&
-                    <MySlider className={`home-page-slider ${picturesLoading ? "" : "loaded"} dont-gesture`}
+                    <MySlider key={lang} className={`home-page-slider ${picturesLoading ? "" : "loaded"} dont-gesture`}
                               lang={lang}
                               dots={true}
                               arrows={true}
