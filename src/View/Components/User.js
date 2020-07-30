@@ -11,7 +11,7 @@ import CalendarSvg from "../../Media/Svgs/CalendarSvg"
 
 const User = props =>
 {
-    const {user} = props
+    const {user, lang} = props
     return (
         <Link className="user-item" to={`/users/${user._id}`}>
             <Material className="user-item-content">
@@ -22,21 +22,21 @@ const User = props =>
                         <Profile className="home-avatar-user default"/>
                 }
                 <div className="user-item-content-field title">
-                    <TitleSvg className="user-item-content-field-svg"/>
+                    <TitleSvg className={`user-item-content-field-svg ${lang}`}/>
                     <div className="user-item-content-field-text">{user.name}</div>
-                    {user.have_tick && <OfficialTickSvg className="panel-document-item-official"/>}
+                    {user.have_tick && <OfficialTickSvg className={`panel-document-item-official ${lang}`}/>}
                 </div>
                 {
                     user.description &&
                     <div className="user-item-content-field">
-                        <DescriptionSvg className="user-item-content-field-svg"/>
+                        <DescriptionSvg className={`user-item-content-field-svg ${lang}`}/>
                         <div className="user-item-content-field-text">{user.description}</div>
                     </div>
                 }
                 {
                     user.birth_date_year &&
                     <div className="user-item-content-field">
-                        <CalendarSvg className="user-item-content-field-svg cal"/>
+                        <CalendarSvg className={`user-item-content-field-svg cal ${lang}`}/>
                         {parseInt(numberCorrection(new Date().toLocaleDateString("fa-ir").slice(0, 4))) - parseInt(user.birth_date_year)}
                         <span> </span>
                         <span>ساله</span>

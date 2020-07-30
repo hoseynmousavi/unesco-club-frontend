@@ -74,7 +74,7 @@ class UsersPage extends PureComponent
                                 <div className={`home-page-docs-title-text ${lang}`}>{lang === "fa" ? "فعالین" : "users"}</div>
                             </div>
                             <div className="panel-document-cont home">
-                                {Object.values(users).map(user => <User user={user} key={user._id}/>)}
+                                {Object.values(users).map(user => <User lang={lang} user={user} key={user._id}/>)}
                             </div>
                             <div className="loading-section-cont">
                                 {

@@ -163,7 +163,7 @@ class HomePage extends PureComponent
                                 </Link>
                             </div>
                             <div className={`panel-document-cont home ${lang}`}>
-                                {users.map(user => <User user={user} key={user._id}/>)}
+                                {users.map(user => <User lang={lang} user={user} key={user._id}/>)}
                             </div>
                         </div>
                     }

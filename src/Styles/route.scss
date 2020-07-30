@@ -74,6 +74,10 @@
   z-index: 1;
   color: white;
   text-align: right;
+
+  &.en {
+    text-align: left;
+  }
 }
 
 .route-item-text-title {

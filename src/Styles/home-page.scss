@@ -228,6 +228,11 @@
   fill: var(--dark-color);
   margin-left: 8px;
 
+  &.en {
+    margin-left: 0;
+    margin-right: 8px;
+  }
+
   &.cal {
     width: 18px;
   }

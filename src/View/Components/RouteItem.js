@@ -15,7 +15,7 @@ class RouteItem extends PureComponent
                     <ZoomSvg className="route-item-img-effect-svg"/>
                 </div>
                 <ImageShow id={route.thumbnail} className="route-item-img" src={REST_URL + route.thumbnail} alt=""/>
-                <Link to={`/routes/${route._id}`} className="route-item-text">
+                <Link to={`/routes/${route._id}`} className={`route-item-text ${lang}`}>
                     <div className="route-item-text-title">{lang === "fa" ? route.title : route.title_en}</div>
                     <div className="route-item-text-summary">{lang === "fa" ? route.summary : route.summary_en}</div>
                 </Link>
